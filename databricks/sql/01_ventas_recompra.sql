@@ -1,7 +1,7 @@
 -- ============================================================================
 -- Parte 1, punto 1 - Spark SQL (Fabric Lakehouse y Databricks)
 -- Misma lógica que sqlserver/01_ventas_recompra.sql; solo cambia el dialecto.
--- Tablas Silver: main.silver.clientes, main.silver.pedidos (las crea el notebook andina_etl_spark).
+-- Tablas Silver: silver.clientes, silver.pedidos (las crea el notebook andina_etl_spark).
 -- Definiciones:
 --   venta neta    = valor_bruto - descuento, solo estado ENTREGADO, por fecha_pedido
 --   persona       = id_cliente_maestro (une los clientes duplicados por documento)
@@ -12,41 +12,39 @@
 -- No se ejecutó en Fabric ni en Databricks; sí en Spark 3.5 local (ver tests/test_sql_spark.py).
 -- ============================================================================
 
--- Catálogo "main" (por defecto en Unity Catalog); cámbialo si usas otro.
 -- 0) Vista de cliente maestro (en SQL Server y DuckDB ya existe como vista)
 CREATE OR REPLACE TEMP VIEW v_cliente_maestro AS
 SELECT id_cliente,
        MIN(id_cliente) OVER (PARTITION BY COALESCE(documento_limpio, id_cliente)) AS id_cliente_maestro
-FROM main.silver.clientes;
+FROM silver.clientes;
 
--- A) Venta neta mensual por canal con variación frente al mes anterior
-WITH mensual AS (
-    SELECT CAST(date_trunc('month', fecha_pedido_dia) AS DATE) AS mes,
-           canal,
-           SUM(valor_neto) AS venta_neta,
-           COUNT(*)        AS pedidos
-    FROM main.silver.pedidos
-    WHERE estado = 'ENTREGADO'
-    GROUP BY CAST(date_trunc('month', fecha_pedido_dia) AS DATE), canal
+-- A) Calendario completo del contrato del caso: enero 2025 a septiembre 2026.
+-- Sin venta: cero; previo cero o inexistente: variacion NULL.
+WITH meses AS (SELECT explode(sequence(DATE '2025-01-01',DATE '2026-09-01',INTERVAL 1 MONTH)) AS mes),
+canales AS (SELECT 'APP' AS canal UNION SELECT 'WEB' UNION SELECT 'TIENDA'
+            UNION SELECT DISTINCT canal FROM silver.pedidos),
+mensual AS (
+    SELECT CAST(date_trunc('month', fecha_pedido_dia) AS DATE) AS mes, canal, SUM(valor_neto) AS venta_neta, COUNT(*) AS pedidos
+    FROM silver.pedidos WHERE estado = 'ENTREGADO' GROUP BY CAST(date_trunc('month', fecha_pedido_dia) AS DATE), canal
+), completo AS (
+    SELECT m.mes,c.canal,COALESCE(v.pedidos,0) AS pedidos,COALESCE(v.venta_neta,0) AS venta_neta
+    FROM meses m CROSS JOIN canales c LEFT JOIN mensual v ON v.mes=m.mes AND v.canal=c.canal
 ), con_anterior AS (
-    SELECT mes, canal, pedidos, venta_neta,
-           LAG(venta_neta) OVER (PARTITION BY canal ORDER BY mes) AS venta_mes_anterior
-    FROM mensual
+    SELECT *,LAG(venta_neta) OVER (PARTITION BY canal ORDER BY mes) AS venta_mes_anterior FROM completo
 )
-SELECT mes, canal, pedidos, venta_neta, venta_mes_anterior,
-       ROUND(100.0 * (venta_neta - venta_mes_anterior) / NULLIF(venta_mes_anterior, 0), 2) AS variacion_pct
-FROM con_anterior
-ORDER BY canal, mes;
+SELECT mes,canal,pedidos,venta_neta,venta_mes_anterior,
+       ROUND(100.0*(venta_neta-venta_mes_anterior)/NULLIF(venta_mes_anterior,0),2) AS variacion_pct
+FROM con_anterior ORDER BY canal,mes;
 
 -- B) Recompra por cohorte de registro a 1, 3 y 6 meses
 WITH personas AS (
     SELECT m.id_cliente_maestro AS persona, MIN(c.cohorte_registro) AS cohorte
-    FROM main.silver.clientes c
+    FROM silver.clientes c
     JOIN v_cliente_maestro m ON m.id_cliente = c.id_cliente
     GROUP BY m.id_cliente_maestro
 ), entregados AS (
     SELECT m.id_cliente_maestro AS persona, p.fecha_pedido_dia AS fecha
-    FROM main.silver.pedidos p
+    FROM silver.pedidos p
     JOIN v_cliente_maestro m ON m.id_cliente = p.id_cliente
     WHERE p.estado = 'ENTREGADO'
 ), primer AS (
@@ -60,7 +58,7 @@ WITH personas AS (
     JOIN entregados e ON e.persona = pr.persona
     GROUP BY pr.persona, pr.fecha_primero
 ), limite AS (
-    SELECT MAX(fecha_pedido_dia) AS ultima FROM main.silver.pedidos
+    SELECT MAX(fecha_pedido_dia) AS ultima FROM silver.pedidos
 )
 SELECT p.cohorte,
        COUNT(*)         AS personas_cohorte,

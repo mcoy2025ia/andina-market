@@ -19,6 +19,7 @@ from pathlib import Path
 
 import duckdb
 import pandas as pd
+from .contracts import validar_archivo
 
 META = ["_ingested_at", "_run_id", "_source_file", "_source_sha256"]
 
@@ -44,7 +45,7 @@ def sha256_archivo(ruta: Path) -> str:
 
 
 def _leer_csv_crudo(ruta: Path) -> pd.DataFrame:
-    return pd.read_csv(ruta, dtype=str, keep_default_na=False, na_values=[""])
+    return pd.read_csv(ruta, dtype=str, encoding="utf-8-sig", keep_default_na=False, na_values=[""])
 
 
 def aterrizar(con: duckdb.DuckDBPyConnection, raw_dir: Path, bronze_dir: Path,
@@ -55,6 +56,7 @@ def aterrizar(con: duckdb.DuckDBPyConnection, raw_dir: Path, bronze_dir: Path,
     DataFrame, no del CSV: así lo que se transforma es exactamente lo que quedó guardado."""
     con.execute(ESQUEMA_BRONZE)
     origen = raw_dir / f"{tabla}.csv"
+    contrato = validar_archivo(origen, tabla)
     sha = sha256_archivo(origen)
     filas = con.execute("SELECT ruta FROM bronze_manifest WHERE tabla = ? AND sha256 = ?", [tabla, sha]).fetchall()
 
@@ -70,7 +72,7 @@ def aterrizar(con: duckdb.DuckDBPyConnection, raw_dir: Path, bronze_dir: Path,
         destino = bronze_dir / tabla / f"ingest_date={ahora:%Y-%m-%d}" / f"{tabla}_{sha[:12]}.parquet"
         destino.parent.mkdir(parents=True, exist_ok=True)
         con.register("bronze_stg", df)
-        con.execute(f"COPY bronze_stg TO '{destino.as_posix()}' (FORMAT parquet, COMPRESSION zstd)")
+        con.execute(f"COPY bronze_stg TO '{destino.as_posix().replace(chr(39), chr(39)*2)}' (FORMAT parquet, COMPRESSION zstd)")
         con.unregister("bronze_stg")
         con.execute("INSERT INTO bronze_manifest VALUES (?,?,?,?,?,?)",
                     [tabla, sha, str(destino), len(df), run_id, ahora])
@@ -80,4 +82,4 @@ def aterrizar(con: duckdb.DuckDBPyConnection, raw_dir: Path, bronze_dir: Path,
     # no queremos que DuckDB la convierta en una columna más de la fuente.
     leido = con.execute(
         f"SELECT * EXCLUDE ({', '.join(META)}) FROM read_parquet(?, hive_partitioning = false)", [ruta]).df()
-    return leido, {"ruta": ruta, "nuevo": nuevo, "sha256": sha, "filas": len(leido)}
+    return leido, {"ruta": ruta, "nuevo": nuevo, "sha256": sha, "filas": len(leido), "contrato": contrato}

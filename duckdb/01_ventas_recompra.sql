@@ -9,21 +9,23 @@
 --   madurez      = solo cuenta a la persona si primer_pedido + N meses <= última fecha de datos
 -- ============================================================================
 
--- A) Venta neta mensual por canal con variación frente al mes anterior
-WITH mensual AS (
-    SELECT date_trunc('month', fecha_pedido_dia)::DATE AS mes, canal,
-           SUM(valor_neto) AS venta_neta, COUNT(*) AS pedidos
-    FROM silver_pedidos
-    WHERE estado = 'ENTREGADO'
-    GROUP BY 1, 2
+-- A) Calendario completo del contrato del caso: enero 2025 a septiembre 2026.
+-- Sin venta: cero; previo cero o inexistente: variacion NULL.
+WITH meses AS (SELECT cast(d AS DATE) AS mes FROM generate_series(DATE '2025-01-01',DATE '2026-09-01',INTERVAL 1 MONTH) t(d)),
+canales AS (SELECT 'APP' AS canal UNION SELECT 'WEB' UNION SELECT 'TIENDA'
+            UNION SELECT DISTINCT canal FROM silver_pedidos),
+mensual AS (
+    SELECT date_trunc('month', fecha_pedido_dia)::DATE AS mes, canal, SUM(valor_neto) AS venta_neta, COUNT(*) AS pedidos
+    FROM silver_pedidos WHERE estado = 'ENTREGADO' GROUP BY date_trunc('month', fecha_pedido_dia)::DATE, canal
+), completo AS (
+    SELECT m.mes,c.canal,COALESCE(v.pedidos,0) AS pedidos,COALESCE(v.venta_neta,0) AS venta_neta
+    FROM meses m CROSS JOIN canales c LEFT JOIN mensual v ON v.mes=m.mes AND v.canal=c.canal
 ), con_anterior AS (
-    SELECT *, LAG(venta_neta) OVER (PARTITION BY canal ORDER BY mes) AS venta_mes_anterior
-    FROM mensual
+    SELECT *,LAG(venta_neta) OVER (PARTITION BY canal ORDER BY mes) AS venta_mes_anterior FROM completo
 )
-SELECT mes, canal, pedidos, venta_neta, venta_mes_anterior,
-       ROUND(100.0 * (venta_neta - venta_mes_anterior) / NULLIF(venta_mes_anterior, 0), 2) AS variacion_pct
-FROM con_anterior
-ORDER BY canal, mes;
+SELECT mes,canal,pedidos,venta_neta,venta_mes_anterior,
+       ROUND(100.0*(venta_neta-venta_mes_anterior)/NULLIF(venta_mes_anterior,0),2) AS variacion_pct
+FROM con_anterior ORDER BY canal,mes;
 
 -- B) Recompra por cohorte de registro a 1, 3 y 6 meses
 WITH personas AS (

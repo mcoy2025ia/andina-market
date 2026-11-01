@@ -36,7 +36,7 @@ def leer(nombre):
 def predecir(metodo, textos, modelo):
     if metodo == "reglas":
         return [clasificar_reglas(t) for t in textos], None
-    clf = ClasificadorLLM(crear_llamada_deepseek(modelo))
+    clf = ClasificadorLLM(crear_llamada_deepseek(modelo), modelo=modelo)
     res = clf.clasificar(textos)
     return [r["tipo"] for r in res], {"llamadas": clf.llamadas, "invalidos": sum(not r["valido"] for r in res)}
 

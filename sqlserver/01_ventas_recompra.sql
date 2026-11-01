@@ -11,24 +11,23 @@
 -- Nota: no se ejecutó contra un SQL Server real; la lógica se validó en DuckDB (ver duckdb/).
 -- ============================================================================
 
--- A) Venta neta mensual por canal con variación frente al mes anterior
-;WITH mensual AS (
-    SELECT DATEFROMPARTS(YEAR(fecha_pedido_dia), MONTH(fecha_pedido_dia), 1) AS mes,
-           canal,
-           SUM(valor_neto) AS venta_neta,
-           COUNT(*)        AS pedidos
-    FROM silver.pedidos
-    WHERE estado = 'ENTREGADO'
-    GROUP BY DATEFROMPARTS(YEAR(fecha_pedido_dia), MONTH(fecha_pedido_dia), 1), canal
+-- A) Calendario completo del contrato del caso: enero 2025 a septiembre 2026.
+-- Sin venta: cero; previo cero o inexistente: variacion NULL.
+ ;WITH meses AS (SELECT DATEADD(MONTH,n,CAST('2025-01-01' AS DATE)) AS mes FROM (VALUES (0),(1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17),(18),(19),(20)) v(n)),
+canales AS (SELECT 'APP' AS canal UNION SELECT 'WEB' UNION SELECT 'TIENDA'
+            UNION SELECT DISTINCT canal FROM silver.pedidos),
+mensual AS (
+    SELECT DATEFROMPARTS(YEAR(fecha_pedido_dia),MONTH(fecha_pedido_dia),1) AS mes, canal, SUM(valor_neto) AS venta_neta, COUNT(*) AS pedidos
+    FROM silver.pedidos WHERE estado = 'ENTREGADO' GROUP BY DATEFROMPARTS(YEAR(fecha_pedido_dia),MONTH(fecha_pedido_dia),1), canal
+), completo AS (
+    SELECT m.mes,c.canal,COALESCE(v.pedidos,0) AS pedidos,COALESCE(v.venta_neta,0) AS venta_neta
+    FROM meses m CROSS JOIN canales c LEFT JOIN mensual v ON v.mes=m.mes AND v.canal=c.canal
 ), con_anterior AS (
-    SELECT mes, canal, pedidos, venta_neta,
-           LAG(venta_neta) OVER (PARTITION BY canal ORDER BY mes) AS venta_mes_anterior
-    FROM mensual
+    SELECT *,LAG(venta_neta) OVER (PARTITION BY canal ORDER BY mes) AS venta_mes_anterior FROM completo
 )
-SELECT mes, canal, pedidos, venta_neta, venta_mes_anterior,
-       ROUND(100.0 * (venta_neta - venta_mes_anterior) / NULLIF(venta_mes_anterior, 0), 2) AS variacion_pct
-FROM con_anterior
-ORDER BY canal, mes;
+SELECT mes,canal,pedidos,venta_neta,venta_mes_anterior,
+       ROUND(100.0*(venta_neta-venta_mes_anterior)/NULLIF(venta_mes_anterior,0),2) AS variacion_pct
+FROM con_anterior ORDER BY canal,mes;
 
 -- B) Recompra por cohorte de registro a 1, 3 y 6 meses
 ;WITH personas AS (

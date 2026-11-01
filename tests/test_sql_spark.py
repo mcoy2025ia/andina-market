@@ -2,6 +2,7 @@
 Se omite sin PySpark, sin Java o sin data/warehouse.duckdb (corre antes scripts/cargar_datos.py),
 y en Windows sin HADOOP_HOME (ver conftest.motivo_para_omitir_spark)."""
 import re
+import os
 from pathlib import Path
 
 import pytest
@@ -14,7 +15,7 @@ if motivo := motivo_para_omitir_spark(escribe_archivos=True):
     pytest.skip(motivo, allow_module_level=True)
 
 RAIZ = Path(__file__).resolve().parents[1]
-DB = RAIZ / "data" / "warehouse.duckdb"
+DB = Path(os.environ.get("ANDINA_TEST_DB", str(RAIZ / "data" / "warehouse.duckdb")))
 if not DB.exists():
     pytest.skip("falta data/warehouse.duckdb", allow_module_level=True)
 

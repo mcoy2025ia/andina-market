@@ -8,6 +8,7 @@ problemas aparece dos veces; para contar registros afectados se usa COUNT(DISTIN
 from __future__ import annotations
 
 import hashlib
+from decimal import Decimal, InvalidOperation
 import json
 import re
 import unicodedata
@@ -74,6 +75,24 @@ def hash_filas(df: pd.DataFrame, columnas: list[str]) -> pd.Series:
     Sirve para detectar si un registro cambió entre cargas."""
     valores = [hash_texto(t) for t in df[columnas].itertuples(index=False, name=None)]
     return pd.Series(valores, index=df.index, dtype="object")
+
+
+def parsear_pesos(serie: pd.Series) -> pd.Series:
+    """Contrato actual: pesos enteros BIGINT; rechazar fracciones, nunca truncar.
+
+    Se aceptan .0 y signo; cambiar a centavos exige un nuevo contrato de negocio.
+    Decimal evita perder precisión en valores mayores que 2**53.
+    """
+    def uno(valor):
+        texto = str(valor).strip()
+        if not re.fullmatch(r"[+-]?\d+(?:\.0+)?", texto):
+            return pd.NA
+        try:
+            n = int(Decimal(texto))
+            return n if -(2**63) <= n < 2**63 else pd.NA
+        except (InvalidOperation, ValueError, OverflowError):
+            return pd.NA
+    return pd.Series([uno(x) for x in serie], index=serie.index, dtype='Int64')
 
 
 def parsear_fecha_pago(serie: pd.Series) -> pd.Series:
@@ -177,8 +196,8 @@ def validar_pedidos(raw: pd.DataFrame, cfg: Config, clientes_ids: set[str],
     estado = _texto(df["estado"]).str.upper()
     fp = _a_fecha(df["fecha_pedido"])
     fe = _a_fecha(df["fecha_entrega"])
-    vb = pd.to_numeric(df["valor_bruto"], errors="coerce")
-    ds = pd.to_numeric(df["descuento"], errors="coerce")
+    vb = parsear_pesos(df["valor_bruto"])
+    ds = parsear_pesos(df["descuento"])
     fp_dia = fp.dt.normalize()
 
     reglas = {
@@ -243,7 +262,7 @@ def validar_pagos(raw: pd.DataFrame, cfg: Config, pedidos_dia: pd.Series,
 
     fpago = parsear_fecha_pago(df["fecha_pago"])
     fcarga = _a_fecha(df["fecha_carga"])
-    valor = pd.to_numeric(df["valor"], errors="coerce")
+    valor = parsear_pesos(df["valor"])
     medio = _texto(df["medio_pago"])
     en_silver = df["id_pedido"].isin(pedidos_dia.index)
     # Con Silver vacío, map() devuelve float y la comparación con fechas falla (pandas 3).

@@ -1,0 +1,35 @@
+descripcion,propuesta_ia,anotador_1,anotador_2,decision_final,motivo,particion
+"El equipo no enciende, quiero cambio",equipo_no_enciende,,,,,desarrollo
+El pago fue rechazado pero el dinero salió de mi cuenta,pago_rechazado_con_cargo,,,,,desarrollo
+"El pedido llegó incompleto, falta un producto",pedido_incompleto,,,,,desarrollo
+El pedido no ha llegado y ya pasó la fecha prometida,pedido_no_llega,,,,,desarrollo
+El producto llegó dañado,producto_danado,,,,,desarrollo
+El producto no corresponde a la descripción de la página,producto_distinto_descripcion,,,,,desarrollo
+"Excelente atención del asesor, muy rápido",felicitacion_atencion,,,,,desarrollo
+"Gracias, el cambio fue muy ágil",felicitacion_cambio,,,,,desarrollo
+La transportadora dice que entregó pero no recibí nada,entrega_no_recibida,,,,,desarrollo
+Me cobraron dos veces el mismo pedido,cobro_duplicado,,,,,desarrollo
+Necesito cambiar la dirección de entrega,cambio_direccion,,,,,desarrollo
+No me aplicaron el descuento del cupón,cupon_no_aplicado,,,,,desarrollo
+No puedo iniciar sesión en la app,login_app,,,,,desarrollo
+Quiero actualizar mis datos personales,actualizar_datos,,,,,desarrollo
+Recibí una talla diferente a la que pedí,talla_incorrecta,,,,,desarrollo
+Solicito el reembolso de un pedido cancelado,reembolso_cancelado,,,,,desarrollo
+Solicito eliminar mi cuenta y mis datos,eliminar_cuenta,,,,,desarrollo
+"el equipo no enciende, quiero cambio",equipo_no_enciende,,,,,desarrollo
+el pago fue rechazado pero el dinero salió de mi cuenta,pago_rechazado_con_cargo,,,,,desarrollo
+"el pedido llegó incompleto, falta un producto",pedido_incompleto,,,,,desarrollo
+el pedido no ha llegado y ya pasó la fecha prometida,pedido_no_llega,,,,,desarrollo
+el producto llegó dañado,producto_danado,,,,,desarrollo
+el producto no corresponde a la descripción de la página,producto_distinto_descripcion,,,,,desarrollo
+"excelente atención del asesor, muy rápido",felicitacion_atencion,,,,,desarrollo
+"gracias, el cambio fue muy ágil",felicitacion_cambio,,,,,desarrollo
+la transportadora dice que entregó pero no recibí nada,entrega_no_recibida,,,,,desarrollo
+me cobraron dos veces el mismo pedido,cobro_duplicado,,,,,desarrollo
+necesito cambiar la dirección de entrega,cambio_direccion,,,,,desarrollo
+no me aplicaron el descuento del cupón,cupon_no_aplicado,,,,,desarrollo
+no puedo iniciar sesión en la app,login_app,,,,,desarrollo
+quiero actualizar mis datos personales,actualizar_datos,,,,,desarrollo
+recibí una talla diferente a la que pedí,talla_incorrecta,,,,,desarrollo
+solicito el reembolso de un pedido cancelado,reembolso_cancelado,,,,,desarrollo
+solicito eliminar mi cuenta y mis datos,eliminar_cuenta,,,,,desarrollo

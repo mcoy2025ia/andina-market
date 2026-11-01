@@ -215,7 +215,9 @@ def test_recalcular_gold_reconstruye_todos_los_dias(entorno):
     con = duckdb.connect(str(db))
     con.execute("DELETE FROM gold_venta_neta_diaria")  # p. ej., tras cambiar la definición de venta
     con.close()
-    assert ejecutar(raw, db)["dias_recalculados"] == 0  # sin datos nuevos no se recalcula nada
+    from andina_etl.operations import PublicacionBloqueada
+    with pytest.raises(PublicacionBloqueada, match="no concilian"):
+        ejecutar(raw, db)  # ahora la compuerta detecta la corrupción sin publicarla
     r = ejecutar(raw, db, recalcular_gold=True)
     assert r["dias_recalculados"] == 4  # los 4 días con pedidos en Silver, de cualquier estado
     assert _foto(db) == esperado

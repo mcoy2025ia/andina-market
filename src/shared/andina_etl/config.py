@@ -14,6 +14,10 @@ class Config:
     # re-enviadas por la fuente sin reprocesar todo el histórico.
     lookback_dias: int = 3
 
+    def __post_init__(self):
+        if self.fecha_min > self.fecha_max or self.lookback_dias < 0:
+            raise ValueError('Rango de fechas o lookback inválido')
+
 
 # Estado que cuenta como venta (definición del caso: pedidos entregados).
 ESTADO_VENTA = "ENTREGADO"

@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS gold_venta_neta_diaria (
 """
 
 CLAVES = {
+    "silver_tickets": "id_ticket",
     "silver_clientes": "id_cliente",
     "silver_pedidos": "id_pedido",
     "silver_pagos": "id_pago",

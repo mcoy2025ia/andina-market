@@ -5,6 +5,7 @@ El notebook lleva las reglas pegadas en una celda para que no dependa de subir a
 """
 import json
 import uuid
+import hashlib
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[3]
@@ -30,6 +31,7 @@ Mismo proceso que `python -m andina_etl`, escrito para Spark: **CSV → Bronze (
 
 CONFIG = '''# === 1. Configuración: lo único que cambia entre Fabric y Databricks ===
 import uuid
+import hashlib
 from datetime import datetime
 from pyspark.sql import functions as F
 
@@ -268,7 +270,7 @@ display(spark.table(T("cuarentena")).groupBy("tabla_origen", "regla_violada")
 
 
 def celda(tipo, texto):
-    base = {"id": uuid.uuid4().hex[:8], "cell_type": tipo, "metadata": {}, "source": texto.splitlines(keepends=True)}
+    base = {"id": hashlib.sha256((tipo + texto).encode()).hexdigest()[:8], "cell_type": tipo, "metadata": {}, "source": texto.splitlines(keepends=True)}
     if tipo == "code":
         base.update({"outputs": [], "execution_count": None})
     return base

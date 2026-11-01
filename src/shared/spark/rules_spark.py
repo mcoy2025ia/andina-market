@@ -36,6 +36,13 @@ def _txt(nombre: str) -> Column:
     return F.when(limpio == "", F.lit(None)).otherwise(limpio)
 
 
+def _pesos(nombre: str) -> Column:
+    # Mismo contrato de pesos enteros que pandas. Sin paso por double.
+    texto = F.trim(F.col(nombre))
+    return F.when(texto.rlike(r"^[+-]?\d+(\.0+)?$"),
+                  F.expr(f"try_cast(try_cast({nombre} as decimal(38,0)) as bigint)"))
+
+
 def _ts(nombre: str) -> Column:
     """Fecha o fecha-hora ISO; NULL si no se puede leer."""
     return F.coalesce(
@@ -149,8 +156,8 @@ def validar_pedidos(raw: DataFrame, fecha_min: str, fecha_max: str,
           .withColumn("x_estado", F.upper(_txt("estado")))
           .withColumn("x_fp", _ts("fecha_pedido"))
           .withColumn("x_fe", _ts("fecha_entrega"))
-          .withColumn("x_vb", F.expr("try_cast(valor_bruto as double)"))
-          .withColumn("x_ds", F.expr("try_cast(descuento as double)"))
+          .withColumn("x_vb", _pesos("valor_bruto"))
+          .withColumn("x_ds", _pesos("descuento"))
           .withColumn("x_dia", F.date_trunc("day", F.col("x_fp"))))
     df = _con_veces_id(df, "x_id")
 
@@ -221,7 +228,7 @@ def validar_pagos(raw: DataFrame, pedidos_dia: DataFrame, pedidos_en_cuarentena:
           .withColumn("x_pedido", _txt("id_pedido"))
           .withColumn("x_fpago", _fecha_pago())
           .withColumn("x_fcarga", F.expr("try_to_timestamp(fecha_carga, 'yyyy-MM-dd')"))
-          .withColumn("x_val", F.expr("try_cast(valor as double)"))
+          .withColumn("x_val", _pesos("valor"))
           .withColumn("x_medio", _txt("medio_pago"))
           .join(pd_, c("x_pedido") == c("x_ped"), "left")
           .join(pq, c("x_pedido") == c("x_q"), "left"))

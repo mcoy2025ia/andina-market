@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from datetime import date
 from pathlib import Path
 
@@ -9,6 +10,7 @@ import duckdb
 
 from .config import Config
 from .pipeline import ejecutar
+from .operations import PoliticaPublicacion
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -21,11 +23,17 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--lookback-dias", type=int, default=3, help="ventana de reproceso de pagos")
     p.add_argument("--recalcular-gold", action="store_true",
                    help="recalcula todos los días de venta (tras cambiar la definición de venta)")
+    p.add_argument("--reconciliar", action="store_true", help="relee todos los pagos; no aplica bajas por ausencia")
+    p.add_argument("--politica", type=Path, help="JSON con umbrales aprobados de publicación")
     a = p.parse_args(argv)
 
     cfg = Config(date.fromisoformat(a.fecha_min), date.fromisoformat(a.fecha_max), a.lookback_dias)
     Path(a.db).parent.mkdir(parents=True, exist_ok=True)
-    r = ejecutar(a.raw, a.db, cfg, a.bronze, recalcular_gold=a.recalcular_gold)
+    opciones = json.loads(a.politica.read_text(encoding="utf-8")) if a.politica else {}
+    if opciones.get("fecha_minima_datos"):
+        opciones["fecha_minima_datos"] = date.fromisoformat(opciones["fecha_minima_datos"])
+    r = ejecutar(a.raw, a.db, cfg, a.bronze, recalcular_gold=a.recalcular_gold,
+                 reconciliar=a.reconciliar, politica=PoliticaPublicacion(**opciones))
 
     print(f"\nRun {r['run_id']}")
     print(f"{'tabla':10} {'leídos':>8} {'insertados':>11} {'actualiz.':>10} {'sin cambio':>11} {'cuarent. nueva':>15}")
