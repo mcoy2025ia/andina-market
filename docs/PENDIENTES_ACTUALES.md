@@ -48,6 +48,8 @@ Lo que estas cinco tareas **no** cambian: ninguna ejecuta SQL Server, Power BI, 
 
 ## 4. Trabajo conjunto que depende de un entorno o de tus decisiones
 
+> El plan de ejecución paso a paso, con comandos y resultado esperado para cada tarea, está en [12_roadmap_ejecucion.md](12_roadmap_ejecucion.md).
+
 ### E01 · Modelo estrella en SQL Server — P1
 
 - Ya existe el modelo local y el cargador con modo de planificación.
