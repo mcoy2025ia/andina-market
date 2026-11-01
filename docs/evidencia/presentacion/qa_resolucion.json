@@ -1,0 +1,17 @@
+{
+  "tabs": 13,
+  "errors": [],
+  "overflow": [],
+  "missing": [],
+  "checks": [
+    "13 tabs desktop/mobile",
+    "one panel per tab",
+    "chart channel",
+    "four ETL scenarios",
+    "source expansion",
+    "10 incident points",
+    "10 conflict points",
+    "keyboard tabs",
+    "continuous reading"
+  ]
+}

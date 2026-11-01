@@ -1,0 +1,23 @@
+__pycache__/
+.pytest_cache/
+*.duckdb
+*.duckdb.wal
+.venv/
+finanzauto/
+data/original/*.csv
+data/raw/*.csv
+data/bronze/
+spark-warehouse/
+metastore_db/
+.env
+.env.*
+!.env.example
+resultados/ia/tickets_clasificados_*.csv
+
+# Artefactos locales y distribución
+dist/
+.local/
+*.lock
+*.parquet
+*.log
+.vscode/

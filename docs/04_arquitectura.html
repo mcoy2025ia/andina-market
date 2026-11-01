@@ -1,0 +1,81 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Arquitectura de datos - Andina Market</title>
+<style>
+@page { size: A4; margin: 12mm 13mm; }
+body { font-family: "Segoe UI", Arial, sans-serif; font-size: 8.6pt; line-height: 1.32; color: #1f2933; margin: 0; }
+h1 { font-size: 14pt; margin: 0 0 1mm; } .sub { color:#5b6770; margin-bottom: 2.5mm; }
+h2 { font-size: 10.2pt; margin: 3.2mm 0 1.2mm; color:#0b5d54; border-bottom: 1px solid #cfd8dc; padding-bottom: .6mm; }
+p { margin: 0 0 1.2mm; } ul { margin: 0 0 1.2mm 4mm; padding: 0; } li { margin-bottom: .5mm; }
+table { border-collapse: collapse; width: 100%; margin: 1mm 0 1.5mm; }
+th, td { border: 1px solid #cfd8dc; padding: 1mm 1.5mm; vertical-align: top; text-align: left; }
+th { background: #e8f3f1; } td.k { font-weight: 600; width: 17%; }
+.pg { page-break-before: always; }
+svg text { font-family: "Segoe UI", Arial, sans-serif; }
+</style></head><body>
+<h1>Arquitectura de datos de Andina Market: propuesta a 12 meses</h1>
+<div class="sub">Manuel Alberto Coy Benavides · Prueba técnica, Líder Técnico de Datos, BI y Automatización · Parte 2</div>
+
+<h2>1. Arquitectura propuesta</h2>
+<svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Arquitectura de datos a 12 meses">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="#5b6770" stroke-width="1.4"/></marker></defs>
+<g font-size="10" fill="#1f2933">
+<text x="10" y="16" font-weight="600">Fuentes</text><text x="160" y="16" font-weight="600">Ingesta</text>
+<text x="300" y="16" font-weight="600">OneLake (Lakehouse + Warehouse), notebooks PySpark</text><text x="630" y="16" font-weight="600">Consumo</text>
+<g fill="#f4f6f7" stroke="#90a4ae"><rect x="10" y="26" width="124" height="38" rx="4"/><rect x="10" y="72" width="124" height="38" rx="4"/><rect x="10" y="118" width="124" height="38" rx="4"/><rect x="10" y="164" width="124" height="38" rx="4"/></g>
+<text x="72" y="42" text-anchor="middle">SQL Server</text><text x="72" y="55" text-anchor="middle" font-size="9" fill="#5b6770">on-premise</text>
+<text x="72" y="88" text-anchor="middle">APIs: e-commerce,</text><text x="72" y="101" text-anchor="middle">app y punto de venta</text>
+<text x="72" y="134" text-anchor="middle">Plataforma</text><text x="72" y="147" text-anchor="middle" font-size="9" fill="#5b6770">de soporte</text>
+<text x="72" y="180" text-anchor="middle">Archivos Excel</text><text x="72" y="193" text-anchor="middle" font-size="9" fill="#5b6770">(se retiran)</text>
+<rect x="160" y="60" width="110" height="110" rx="4" fill="#e8f3f1" stroke="#0b5d54"/>
+<text x="215" y="98" text-anchor="middle">Data Factory</text><text x="215" y="112" text-anchor="middle" font-size="9" fill="#5b6770">gateway on-prem,</text><text x="215" y="124" text-anchor="middle" font-size="9" fill="#5b6770">carga incremental</text><text x="215" y="136" text-anchor="middle" font-size="9" fill="#5b6770">por watermark</text>
+<rect x="296" y="24" width="316" height="184" rx="6" fill="none" stroke="#0b5d54" stroke-dasharray="4 3"/>
+<g fill="#e8f3f1" stroke="#0b5d54"><rect x="306" y="52" width="92" height="120" rx="4"/><rect x="408" y="52" width="92" height="120" rx="4"/><rect x="510" y="52" width="92" height="120" rx="4"/></g>
+<text x="352" y="80" text-anchor="middle" font-weight="600">Bronze</text><text x="352" y="95" text-anchor="middle" font-size="9" fill="#5b6770">crudo, Parquet,</text><text x="352" y="107" text-anchor="middle" font-size="9" fill="#5b6770">inmutable,</text><text x="352" y="119" text-anchor="middle" font-size="9" fill="#5b6770">trazable</text>
+<text x="454" y="80" text-anchor="middle" font-weight="600">Silver</text><text x="454" y="95" text-anchor="middle" font-size="9" fill="#5b6770">tipos y reglas,</text><text x="454" y="107" text-anchor="middle" font-size="9" fill="#5b6770">duplicados,</text><text x="454" y="119" text-anchor="middle" font-size="9" fill="#5b6770">cuarentena</text>
+<text x="556" y="80" text-anchor="middle" font-weight="600">Gold</text><text x="556" y="95" text-anchor="middle" font-size="9" fill="#5b6770">modelo estrella,</text><text x="556" y="107" text-anchor="middle" font-size="9" fill="#5b6770">venta neta</text><text x="556" y="119" text-anchor="middle" font-size="9" fill="#5b6770">diaria, una sola</text><text x="556" y="131" text-anchor="middle" font-size="9" fill="#5b6770">definición</text>
+<rect x="630" y="30" width="80" height="70" rx="4" fill="#fff7e6" stroke="#c77700"/><text x="670" y="58" text-anchor="middle">Modelo</text><text x="670" y="71" text-anchor="middle">semántico</text><text x="670" y="84" text-anchor="middle" font-size="9" fill="#5b6770">certificado</text>
+<rect x="630" y="124" width="80" height="70" rx="4" fill="#f4f6f7" stroke="#90a4ae"/><text x="670" y="152" text-anchor="middle">Power BI</text><text x="670" y="165" text-anchor="middle" font-size="9" fill="#5b6770">30+ informes</text><text x="670" y="177" text-anchor="middle" font-size="9" fill="#5b6770">migrados</text>
+</g>
+<g stroke="#5b6770" stroke-width="1.3" fill="none" marker-end="url(#a)">
+<path d="M134 45 H152 V90 H158"/><path d="M134 91 H146 V105 H158"/><path d="M134 137 H146 V125 H158"/><path d="M134 183 H152 V150 H158"/>
+<path d="M270 115 H304"/><path d="M398 112 H406"/><path d="M500 112 H508"/><path d="M602 100 H618 V65 H628"/><path d="M670 100 V122"/>
+</g>
+<g font-size="9.5" fill="#1f2933"><rect x="10" y="214" width="700" height="24" rx="4" fill="#eceff1" stroke="#90a4ae"/>
+<text x="360" y="230" text-anchor="middle">Gobierno y operación: Git + CI/CD · ambientes Dev/Test/Prod · Purview (catálogo y linaje) · Key Vault · monitoreo y alertas</text>
+<g fill="#fff" stroke="#0b5d54"><rect x="10" y="246" width="169" height="42" rx="4"/><rect x="189" y="246" width="169" height="42" rx="4"/><rect x="368" y="246" width="169" height="42" rx="4"/><rect x="547" y="246" width="163" height="42" rx="4"/></g>
+<text x="94" y="261" text-anchor="middle" font-weight="600">Meses 1 a 3</text><text x="94" y="275" text-anchor="middle" font-size="9">ventas de Bronze a Gold, conciliada</text>
+<text x="273" y="261" text-anchor="middle" font-weight="600">Meses 4 a 6</text><text x="273" y="275" text-anchor="middle" font-size="9">resto de fuentes y dominios</text>
+<text x="452" y="261" text-anchor="middle" font-weight="600">Meses 7 a 9</text><text x="452" y="275" text-anchor="middle" font-size="9">migración de informes</text>
+<text x="628" y="261" text-anchor="middle" font-weight="600">Meses 10 a 12</text><text x="628" y="275" text-anchor="middle" font-size="9">gobierno, ML e IA</text></g>
+</svg>
+<p>Principio rector: la venta neta se calcula <b>una sola vez</b> (capa Gold) y todos los informes la consumen a través de un modelo semántico certificado. Bronze nunca se modifica; Silver aplica reglas de calidad y aparta lo inválido en cuarentena; ningún informe lee Excel ni consulta directo al transaccional.</p>
+
+<h2>2. Recomendación: Microsoft Fabric sobre Databricks</h2>
+<table><tr><th></th><th>Microsoft Fabric</th><th>Databricks</th></tr>
+<tr><td class="k">Costo</td><td>Una capacidad única cubre ingesta, Spark, almacén y Power BI; se puede pausar y escalar por fase, lo que encaja con un presupuesto aprobado por fases. Ojo: por debajo de F64, quien consume informes necesita licencia Power BI Pro, y pausar una capacidad apaga sus informes (solo se pausa la de desarrollo). Verificar las condiciones vigentes con Microsoft.</td><td>Se paga por DBU más la infraestructura cloud aparte y Power BI se licencia por su lado. Es muy eficiente con cargas grandes, pero más difícil de presupuestar. Hay que cotizar ambos con el proveedor; aquí no se inventan cifras.</td></tr>
+<tr><td class="k">Riesgo</td><td>Producto más joven y de evolución rápida; algunas funciones aún maduran y hay mayor dependencia del ecosistema Microsoft. Se mitiga con formatos abiertos (Delta/Parquet en OneLake) y código Spark portable.</td><td>Plataforma más madura para ingeniería y ML. El riesgo es de integración (Power BI, SQL Server on-prem) y de superficie operativa: redes, cuentas, clústeres y gobierno propio.</td></tr>
+<tr><td class="k">Capacidad del equipo</td><td>Supuesto (el enunciado no describe al equipo): perfil de T-SQL, Power BI y Excel, así que la curva es corta. Direct Lake evita copiar los datos al modelo.</td><td>Exige más perfil de ingeniería (Spark, Python, DevOps); la curva es mayor para un equipo de BI.</td></tr></table>
+<p><b>Decisión: Fabric.</b> La empresa tiene 30+ informes de Power BI, un equipo orientado a SQL y BI y un volumen moderado (decenas de millones de pedidos, no petabytes). <b>Cambiaría a Databricks</b> si el volumen crece a decenas de TB, si el ML o el streaming pasan a ser el centro de la estrategia, o si se exige multicloud. Las reglas de calidad de este repositorio están verificadas en Spark local con resultados idénticos a la versión DuckDB; las celdas específicas de Delta y las rutas de cada plataforma no se han probado en Fabric ni en Databricks.</p>
+
+<div class="pg"></div>
+<h2>3. Versionar, desplegar y monitorear</h2>
+<ul>
+<li><b>Git.</b> Un repositorio por dominio, ramas cortas y pull request obligatorio con revisión (las reglas del punto 3.1 de esta prueba son la lista de chequeo). Se versiona <i>todo</i>: notebooks, pipelines, DDL, modelos semánticos y los procedimientos almacenados de hoy, que se migran como código (hoy no tienen versión).</li>
+<li><b>Ambientes.</b> Dev, Test y Prod en espacios de trabajo separados, con datos de prueba enmascarados. La promoción usa pipelines de despliegue de Fabric o GitHub Actions; Prod exige aprobación humana.</li>
+<li><b>CI/CD.</b> En cada PR: lint, pruebas unitarias de las reglas de calidad (este repositorio tiene 90), validación de esquemas y de SQL. Un despliegue fallido se revierte con un <code>git revert</code>.</li>
+<li><b>Calidad de datos.</b> Reglas en Silver con cuarentena y conteo por regla. Compuertas: si la cuarentena pasa de un umbral o el volumen del día cae de forma anormal frente a su promedio, la corrida falla y <b>no se publica Gold</b>. Conciliación diaria de la venta neta contra la fuente.</li>
+<li><b>Alertas.</b> Monitoring hub y Activator envían a Teams y correo. Los informes ejecutivos salen solo si las verificaciones de las 6:00 pasaron; si no, llega un aviso de “datos en revisión” en lugar de una cifra errónea.</li>
+<li><b>Seguridad.</b> Secretos en Key Vault (nunca en código), permisos por rol y seguridad a nivel de fila en el modelo.</li></ul>
+
+<h2>4. Los primeros 90 días y la cifra única de ventas</h2>
+<table><tr><th>Días</th><th>Entregables</th></tr>
+<tr><td class="k">1 a 30</td><td>Inventario de los 30+ informes y de los procedimientos almacenados. Definición de «venta neta» firmada por finanzas y comercial (una página: estado entregado, valor bruto menos descuento, fecha del pedido, tratamiento de devoluciones). Repositorio, ambientes y CI en marcha. Ingesta de pedidos, pagos y clientes a Bronze.</td></tr>
+<tr><td class="k">31 a 60</td><td>Silver con reglas y cuarentena; catálogo de problemas de calidad; Gold de venta neta diaria. <b>Conciliación contra el SQL Server actual</b>: diferencia cero o explicada.</td></tr>
+<tr><td class="k">61 a 90</td><td>Modelo semántico certificado «Ventas» (venta neta, ticket promedio, variación anual). Migración de los informes más usados, empezando por los que dependen de Excel. Alertas y manual de incidentes. Retiro del procedimiento antiguo equivalente.</td></tr></table>
+<p><b>Cómo se garantiza que todas las áreas usen la misma cifra.</b></p>
+<ul>
+<li>Una definición escrita y versionada, con un dueño de negocio; cambiarla exige un PR con su aprobación.</li>
+<li>La cifra se calcula una vez: en Gold y en la medida certificada del modelo semántico. Los informes se conectan al modelo, no a Excel ni a consultas propias.</li>
+<li>Los informes que no usan el modelo certificado se marcan «no oficial» hasta migrarlos.</li>
+<li>Conciliación diaria automática (Gold contra fuente) y una alerta si difieren.</li></ul>
+<p><b>Cómo sabremos que funcionó a los 90 días:</b> una cifra conciliada con el sistema actual, al menos 8 informes sobre el modelo certificado, cero credenciales en código y CI en verde en cada cambio.</p>
+</body></html>

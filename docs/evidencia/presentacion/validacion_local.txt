@@ -1,0 +1,22 @@
+Revision: 2026-11-01 (America/Bogota)
+Comando: finanzauto/Scripts/python.exe -m pytest -q
+Resultado observado: 85 passed, 2 skipped in 10.52s
+No se ejecutaron Spark, SQL Server, DAX ni plataformas cloud en esta revision.
+
+Consulta de solo lectura a data/warehouse.duckdb:
+SELECT strftime(fecha, '%Y-%m') mes, canal, SUM(venta_neta)::BIGINT venta FROM gold_venta_neta_diaria GROUP BY 1,2 ORDER BY 1,2;
+Resultado: 63 filas, exportadas a ventas_mensuales.csv.
+
+APP 2026-06: 376510600; 2026-09: 448880300; variacion: +19.2212%.
+TIENDA 2026-06: 217573400; 2026-09: 105808200; variacion: -51.3690%.
+TIENDA 2025-06: 113766000; 2025-09: 181788300; variacion: +59.7914%.
+
+La consulta no modifica datos; no se ejecuto carga desde cero.
+
+Presentacion HTML: 17 secciones (16 capitulos + diagnostico), 33 asuntos.
+QA Microsoft Edge headless: 1440x1000 y 390x844; 0 errores JavaScript; 0 desbordamientos horizontales en todas las secciones.
+Verificados: navegacion, filtros de canal, 4 escenarios, busqueda, filtro por ambito, expansion, notas, lectura continua y generacion de impresion PDF.
+Inspeccion visual de capturas: portada, arquitectura, grafico y portada movil.
+Enlaces locales: todos resuelven; 0 ids duplicados; 0 dependencias externas.
+La impresion se probo tecnicamente; no se certifico cada pagina impresa.
+

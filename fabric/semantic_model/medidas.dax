@@ -1,0 +1,38 @@
+-- ============================================================================
+-- Parte 1, punto 4 - Medidas DAX (modelo semántico sobre la capa Gold)
+-- Modelo: gold.fact_pedido (un pedido por fila) -> gold.dim_fecha por fecha_key (muchos a uno).
+-- dim_fecha[fecha] marcada como tabla de fechas. La venta se atribuye a fecha_pedido.
+-- Estas medidas no se ejecutaron en Power BI: sus valores esperados salen del cálculo
+-- equivalente en SQL (ver docs/03_dax.md) y sirven para comprobarlas.
+-- ============================================================================
+
+Venta Neta =
+CALCULATE (
+    SUMX ( fact_pedido, fact_pedido[valor_bruto] - fact_pedido[descuento] ),
+    fact_pedido[estado] = "ENTREGADO"
+)
+
+Pedidos Entregados =
+CALCULATE ( COUNTROWS ( fact_pedido ), fact_pedido[estado] = "ENTREGADO" )
+
+Ticket Promedio =
+DIVIDE ( [Venta Neta], [Pedidos Entregados] )
+
+-- Columna calculada en dim_fecha: TRUE hasta el último día con pedidos (2026-09-30).
+tiene_datos =
+dim_fecha[fecha_key] <= MAX ( fact_pedido[fecha_key] )
+
+-- Solo se desplazan las fechas que tienen datos: con el año 2026 seleccionado compara
+-- enero-septiembre de 2026 contra enero-septiembre de 2025, no contra 2025 completo.
+Venta Neta Mismo Mes Año Anterior =
+CALCULATE (
+    [Venta Neta],
+    CALCULATETABLE ( DATEADD ( dim_fecha[fecha], -1, YEAR ), dim_fecha[tiene_datos] = TRUE () )
+)
+
+Variación vs Mismo Mes Año Anterior =
+VAR actual = [Venta Neta]
+VAR previo = [Venta Neta Mismo Mes Año Anterior]
+RETURN
+    IF ( NOT ISBLANK ( previo ), DIVIDE ( actual - previo, previo ) )
+-- Formato de la medida: porcentaje con un decimal (0.0%).

@@ -1,0 +1,151 @@
+descripcion,tipo
+Me llegó el televisor con la pantalla rota,producto_danado
+la caja venía aplastada y el producto quebrado,producto_danado
+Recibí el jarrón hecho pedazos,producto_danado
+El empaque estaba abierto y el artículo con rayones profundos,producto_danado
+"llego todo roto, no sirve",producto_danado
+Mi pedido llegó golpeado y con partes sueltas,producto_danado
+el celular vino con la pantalla estrellada,producto_danado
+Producto en mal estado al abrir la caja,producto_danado
+Ya pasaron dos semanas y mi pedido no aparece,pedido_no_llega
+"Todavía no recibo mi compra, la fecha de entrega ya venció",pedido_no_llega
+donde esta mi pedido?? debía llegar el lunes,pedido_no_llega
+Mi orden sigue en camino hace 10 días,pedido_no_llega
+no me ha llegado nada y ya se cumplió el plazo,pedido_no_llega
+"El envío está retrasado, necesito saber cuándo llega",pedido_no_llega
+pedí hace tres semanas y nada que llega,pedido_no_llega
+La entrega prometida para ayer no se cumplió,pedido_no_llega
+"Me equivoqué de dirección, ¿pueden enviarlo a otra?",cambio_direccion
+quiero que lo manden a mi oficina en vez de mi casa,cambio_direccion
+"Por favor modificar la dirección del envío, me mudé",cambio_direccion
+necesito cambiar el barrio donde recibo el paquete,cambio_direccion
+"la dirección de entrega quedó mal escrita, corrijanla",cambio_direccion
+Pueden despachar a la casa de mi mamá? cambié de planes,cambio_direccion
+Cambio de dirección para el pedido de hoy,cambio_direccion
+puse mal el número de apartamento,cambio_direccion
+Lo que llegó no es lo que se ve en la página,producto_distinto_descripcion
+El color es completamente diferente al de las fotos,producto_distinto_descripcion
+La descripción decía 128 GB y trae 64,producto_distinto_descripcion
+No es el modelo que anunciaban en la tienda en línea,producto_distinto_descripcion
+el material no es el que dice la publicación,producto_distinto_descripcion
+"Esperaba otra cosa, la ficha técnica no coincide",producto_distinto_descripcion
+el producto es más pequeño de lo que mostraba la web,producto_distinto_descripcion
+"Publicidad engañosa, no se parece a la foto",producto_distinto_descripcion
+El portátil no prende desde que lo saqué de la caja,equipo_no_enciende
+"la licuadora no funciona, la conecto y nada",equipo_no_enciende
+Mi nevera nueva no enfría ni enciende,equipo_no_enciende
+"No enciende el televisor, quiero que me lo cambien",equipo_no_enciende
+el parlante no da señal de vida,equipo_no_enciende
+"El aparato no prende, necesito garantía",equipo_no_enciende
+no arranca la lavadora que compré,equipo_no_enciende
+"el control y el equipo no encienden, cambio por favor",equipo_no_enciende
+Pedí talla M y me enviaron S,talla_incorrecta
+Los zapatos llegaron en un número que no es,talla_incorrecta
+me mandaron la camisa en otra talla,talla_incorrecta
+La talla no corresponde a la que seleccioné,talla_incorrecta
+el pantalón vino talla 34 y yo pedí 32,talla_incorrecta
+Recibí tallas equivocadas en dos prendas,talla_incorrecta
+Quiero cambiar porque me enviaron una talla grande,talla_incorrecta
+me llegó XL en vez de L,talla_incorrecta
+Dice entregado en el sistema pero yo no recibí nada,entrega_no_recibida
+La empresa de envíos asegura que me lo dejaron y no es cierto,entrega_no_recibida
+figura como recibido y nadie ha tocado mi puerta,entrega_no_recibida
+El courier marcó entrega exitosa y no tengo el paquete,entrega_no_recibida
+"Me aparece entregado hace días, pero no ha llegado",entrega_no_recibida
+la guía dice entregado y en mi casa no hay nada,entrega_no_recibida
+Reportan que firmaron el recibido y no fui yo,entrega_no_recibida
+"transportadora afirma entrega, yo no vi nada",entrega_no_recibida
+Faltó un artículo en mi caja,pedido_incompleto
+Pedí tres productos y llegaron dos,pedido_incompleto
+el paquete vino sin el cargador,pedido_incompleto
+No venían todos los ítems de la compra,pedido_incompleto
+Me falta una de las prendas del pedido,pedido_incompleto
+Llegó la mitad de lo que compré,pedido_incompleto
+Recibí el envío sin uno de los accesorios,pedido_incompleto
+"pedido parcial, falta lo demás",pedido_incompleto
+El cupón de 20% no se descontó al pagar,cupon_no_aplicado
+usé un código promocional y cobraron el precio completo,cupon_no_aplicado
+No me respetaron el descuento que ofrecía la campaña,cupon_no_aplicado
+el cupon no funcionó en el carrito,cupon_no_aplicado
+Apliqué el bono de bienvenida y no se reflejó,cupon_no_aplicado
+me prometieron descuento con el cupón y nada,cupon_no_aplicado
+El cupón dice válido pero no rebajó el total,cupon_no_aplicado
+no se aplicó mi código de descuento,cupon_no_aplicado
+Me descontaron dos veces la misma compra,cobro_duplicado
+Veo dos cargos iguales en mi tarjeta por un pedido,cobro_duplicado
+me cobraron doble,cobro_duplicado
+Salió el mismo valor repetido en el extracto,cobro_duplicado
+pagué una vez y el banco registra dos cobros,cobro_duplicado
+Cobro duplicado de mi orden de ayer,cobro_duplicado
+Me cobraron el pedido por segunda vez,cobro_duplicado
+hay dos débitos por la misma compra,cobro_duplicado
+Cancelé mi pedido y aún no me devuelven la plata,reembolso_cancelado
+quiero que me reembolsen la compra que anulé,reembolso_cancelado
+Pedí la cancelación y necesito el reintegro,reembolso_cancelado
+"ya cancelaron mi orden, ¿cuándo me devuelven el dinero?",reembolso_cancelado
+Solicito devolución del valor del pedido cancelado,reembolso_cancelado
+cancelación aprobada pero sin reembolso,reembolso_cancelado
+me deben el dinero de una compra cancelada,reembolso_cancelado
+reintegro pendiente de mi pedido anulado,reembolso_cancelado
+La página dijo pago fallido pero me debitaron,pago_rechazado_con_cargo
+Rechazaron mi pago y el dinero ya salió del banco,pago_rechazado_con_cargo
+me salió error al pagar y aun así me quitaron la plata,pago_rechazado_con_cargo
+Transacción rechazada con descuento en mi cuenta,pago_rechazado_con_cargo
+No pasó el pago pero mi saldo bajó,pago_rechazado_con_cargo
+el pse fue declinado y el valor quedó retenido,pago_rechazado_con_cargo
+me dijo que no se pudo y el dinero desapareció,pago_rechazado_con_cargo
+Pago no aprobado y sin embargo me cobraron,pago_rechazado_con_cargo
+Necesito cambiar mi número de celular en la cuenta,actualizar_datos
+quiero modificar mi correo registrado,actualizar_datos
+Actualizar mi nombre y documento por favor,actualizar_datos
+"mis datos están desactualizados, ¿cómo los cambio?",actualizar_datos
+cambio de teléfono de contacto,actualizar_datos
+Quiero corregir mi apellido en el perfil,actualizar_datos
+necesito editar mi información personal,actualizar_datos
+"cambié de ciudad, actualicen mis datos",actualizar_datos
+Quiero que borren mi cuenta definitivamente,eliminar_cuenta
+"Elimínenme de la base de datos, ya no quiero cuenta",eliminar_cuenta
+Solicito el retiro de mis datos personales de la plataforma,eliminar_cuenta
+Deseo cerrar mi cuenta y que no guarden mi información,eliminar_cuenta
+darme de baja y eliminar toda mi información,eliminar_cuenta
+Por favor suprimir mi usuario y mis datos,eliminar_cuenta
+"ya no quiero recibir nada, borren mi perfil",eliminar_cuenta
+solicito derecho al olvido,eliminar_cuenta
+La app no me deja entrar con mi clave,login_app
+No logro ingresar a mi cuenta desde el celular,login_app
+Se me bloqueó el acceso a la aplicación,login_app
+me sale error al iniciar sesión,login_app
+olvidé mi contraseña y no me llega el correo para recuperarla,login_app
+la aplicación se cierra cuando intento entrar,login_app
+usuario o contraseña incorrectos aunque son los correctos,login_app
+"No puedo acceder a la app, dice sesión inválida",login_app
+"Muchas gracias, el cambio salió rápido",felicitacion_cambio
+"Qué buen servicio, me cambiaron el producto en un día",felicitacion_cambio
+gracias por la agilidad con el cambio,felicitacion_cambio
+"Excelente, el cambio fue sencillo y veloz",felicitacion_cambio
+agradezco la rapidez para cambiar mi pedido,felicitacion_cambio
+"El proceso de cambio fue muy fácil, gracias",felicitacion_cambio
+"Todo bien con el cambio, muy ágiles",felicitacion_cambio
+Felicitaciones por la rapidez del cambio,felicitacion_cambio
+"Muy buena atención del asesor, gracias",felicitacion_atencion
+El agente fue amable y resolvió todo rápido,felicitacion_atencion
+Excelente servicio de la persona que me atendió,felicitacion_atencion
+"quiero felicitar al asesor, súper atento",felicitacion_atencion
+me atendieron muy bien y rápido,felicitacion_atencion
+Gracias al asesor por su paciencia y ayuda,felicitacion_atencion
+"Atención de primera, resolvieron mi duda al instante",felicitacion_atencion
+buen trato del equipo de soporte,felicitacion_atencion
+¿Tienen sucursal en Medellín?,otro
+Quiero hacer una cotización por volumen para mi empresa,otro
+"me gustaría trabajar con ustedes, ¿hay vacantes?",otro
+¿Cuál es el horario de atención de las tiendas?,otro
+Necesito factura electrónica de una compra de hace un año,otro
+El precio en la web es distinto al de la tienda física,otro
+¿Venden repuestos para esta marca?,otro
+quiero reclamar por el trato de un vigilante en la tienda,otro
+Pregunta por garantía extendida del televisor,otro
+asdfgh,otro
+Solicitud de certificado tributario,otro
+mi hijo hizo una compra sin permiso,otro
+Quiero patrocinar un evento,otro
+¿Cómo funciona el programa de puntos?,otro

@@ -1,0 +1,471 @@
+{
+  "metricas": {
+    "n": 150,
+    "exactitud": 0.6266666666666667,
+    "f1_macro": 0.6831558083590603,
+    "por_clase": {
+      "producto_danado": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4
+      },
+      "pedido_no_llega": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.125,
+        "f1": 0.2222222222222222
+      },
+      "cambio_direccion": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "producto_distinto_descripcion": {
+        "soporte": 8,
+        "precision": 0.5,
+        "recall": 0.125,
+        "f1": 0.2
+      },
+      "equipo_no_enciende": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.625,
+        "f1": 0.7692307692307693
+      },
+      "talla_incorrecta": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571
+      },
+      "entrega_no_recibida": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "pedido_incompleto": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4
+      },
+      "cupon_no_aplicado": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "cobro_duplicado": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571
+      },
+      "reembolso_cancelado": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571
+      },
+      "pago_rechazado_con_cargo": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "actualizar_datos": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.625,
+        "f1": 0.7692307692307693
+      },
+      "eliminar_cuenta": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "login_app": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571
+      },
+      "felicitacion_cambio": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571
+      },
+      "felicitacion_atencion": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 0.875,
+        "f1": 0.9333333333333333
+      },
+      "otro": {
+        "soporte": 14,
+        "precision": 0.19117647058823528,
+        "recall": 0.9285714285714286,
+        "f1": 0.3170731707317073
+      }
+    },
+    "matriz": {
+      "producto_danado": {
+        "producto_danado": 2,
+        "otro": 6
+      },
+      "pedido_no_llega": {
+        "otro": 7,
+        "pedido_no_llega": 1
+      },
+      "cambio_direccion": {
+        "cambio_direccion": 4,
+        "otro": 4
+      },
+      "producto_distinto_descripcion": {
+        "otro": 7,
+        "producto_distinto_descripcion": 1
+      },
+      "equipo_no_enciende": {
+        "equipo_no_enciende": 5,
+        "otro": 3
+      },
+      "talla_incorrecta": {
+        "talla_incorrecta": 6,
+        "otro": 2
+      },
+      "entrega_no_recibida": {
+        "entrega_no_recibida": 4,
+        "otro": 4
+      },
+      "pedido_incompleto": {
+        "otro": 6,
+        "pedido_incompleto": 2
+      },
+      "cupon_no_aplicado": {
+        "cupon_no_aplicado": 8
+      },
+      "cobro_duplicado": {
+        "cobro_duplicado": 6,
+        "otro": 2
+      },
+      "reembolso_cancelado": {
+        "reembolso_cancelado": 6,
+        "otro": 2
+      },
+      "pago_rechazado_con_cargo": {
+        "pago_rechazado_con_cargo": 4,
+        "otro": 4
+      },
+      "actualizar_datos": {
+        "otro": 3,
+        "actualizar_datos": 5
+      },
+      "eliminar_cuenta": {
+        "eliminar_cuenta": 8
+      },
+      "login_app": {
+        "login_app": 6,
+        "otro": 2
+      },
+      "felicitacion_cambio": {
+        "felicitacion_cambio": 6,
+        "otro": 2
+      },
+      "felicitacion_atencion": {
+        "felicitacion_atencion": 7,
+        "otro": 1
+      },
+      "otro": {
+        "otro": 13,
+        "producto_distinto_descripcion": 1
+      }
+    }
+  },
+  "errores": [
+    [
+      "la caja venía aplastada y el producto quebrado",
+      "producto_danado",
+      "otro"
+    ],
+    [
+      "Recibí el jarrón hecho pedazos",
+      "producto_danado",
+      "otro"
+    ],
+    [
+      "El empaque estaba abierto y el artículo con rayones profundos",
+      "producto_danado",
+      "otro"
+    ],
+    [
+      "Mi pedido llegó golpeado y con partes sueltas",
+      "producto_danado",
+      "otro"
+    ],
+    [
+      "el celular vino con la pantalla estrellada",
+      "producto_danado",
+      "otro"
+    ],
+    [
+      "Producto en mal estado al abrir la caja",
+      "producto_danado",
+      "otro"
+    ],
+    [
+      "Ya pasaron dos semanas y mi pedido no aparece",
+      "pedido_no_llega",
+      "otro"
+    ],
+    [
+      "Todavía no recibo mi compra, la fecha de entrega ya venció",
+      "pedido_no_llega",
+      "otro"
+    ],
+    [
+      "donde esta mi pedido?? debía llegar el lunes",
+      "pedido_no_llega",
+      "otro"
+    ],
+    [
+      "Mi orden sigue en camino hace 10 días",
+      "pedido_no_llega",
+      "otro"
+    ],
+    [
+      "no me ha llegado nada y ya se cumplió el plazo",
+      "pedido_no_llega",
+      "otro"
+    ],
+    [
+      "pedí hace tres semanas y nada que llega",
+      "pedido_no_llega",
+      "otro"
+    ],
+    [
+      "La entrega prometida para ayer no se cumplió",
+      "pedido_no_llega",
+      "otro"
+    ],
+    [
+      "quiero que lo manden a mi oficina en vez de mi casa",
+      "cambio_direccion",
+      "otro"
+    ],
+    [
+      "necesito cambiar el barrio donde recibo el paquete",
+      "cambio_direccion",
+      "otro"
+    ],
+    [
+      "Pueden despachar a la casa de mi mamá? cambié de planes",
+      "cambio_direccion",
+      "otro"
+    ],
+    [
+      "puse mal el número de apartamento",
+      "cambio_direccion",
+      "otro"
+    ],
+    [
+      "Lo que llegó no es lo que se ve en la página",
+      "producto_distinto_descripcion",
+      "otro"
+    ],
+    [
+      "El color es completamente diferente al de las fotos",
+      "producto_distinto_descripcion",
+      "otro"
+    ],
+    [
+      "No es el modelo que anunciaban en la tienda en línea",
+      "producto_distinto_descripcion",
+      "otro"
+    ],
+    [
+      "el material no es el que dice la publicación",
+      "producto_distinto_descripcion",
+      "otro"
+    ],
+    [
+      "Esperaba otra cosa, la ficha técnica no coincide",
+      "producto_distinto_descripcion",
+      "otro"
+    ],
+    [
+      "el producto es más pequeño de lo que mostraba la web",
+      "producto_distinto_descripcion",
+      "otro"
+    ],
+    [
+      "Publicidad engañosa, no se parece a la foto",
+      "producto_distinto_descripcion",
+      "otro"
+    ],
+    [
+      "Mi nevera nueva no enfría ni enciende",
+      "equipo_no_enciende",
+      "otro"
+    ],
+    [
+      "el parlante no da señal de vida",
+      "equipo_no_enciende",
+      "otro"
+    ],
+    [
+      "no arranca la lavadora que compré",
+      "equipo_no_enciende",
+      "otro"
+    ],
+    [
+      "Los zapatos llegaron en un número que no es",
+      "talla_incorrecta",
+      "otro"
+    ],
+    [
+      "me llegó XL en vez de L",
+      "talla_incorrecta",
+      "otro"
+    ],
+    [
+      "La empresa de envíos asegura que me lo dejaron y no es cierto",
+      "entrega_no_recibida",
+      "otro"
+    ],
+    [
+      "figura como recibido y nadie ha tocado mi puerta",
+      "entrega_no_recibida",
+      "otro"
+    ],
+    [
+      "El courier marcó entrega exitosa y no tengo el paquete",
+      "entrega_no_recibida",
+      "otro"
+    ],
+    [
+      "Reportan que firmaron el recibido y no fui yo",
+      "entrega_no_recibida",
+      "otro"
+    ],
+    [
+      "Faltó un artículo en mi caja",
+      "pedido_incompleto",
+      "otro"
+    ],
+    [
+      "Pedí tres productos y llegaron dos",
+      "pedido_incompleto",
+      "otro"
+    ],
+    [
+      "el paquete vino sin el cargador",
+      "pedido_incompleto",
+      "otro"
+    ],
+    [
+      "No venían todos los ítems de la compra",
+      "pedido_incompleto",
+      "otro"
+    ],
+    [
+      "Llegó la mitad de lo que compré",
+      "pedido_incompleto",
+      "otro"
+    ],
+    [
+      "Recibí el envío sin uno de los accesorios",
+      "pedido_incompleto",
+      "otro"
+    ],
+    [
+      "Salió el mismo valor repetido en el extracto",
+      "cobro_duplicado",
+      "otro"
+    ],
+    [
+      "pagué una vez y el banco registra dos cobros",
+      "cobro_duplicado",
+      "otro"
+    ],
+    [
+      "Solicito devolución del valor del pedido cancelado",
+      "reembolso_cancelado",
+      "otro"
+    ],
+    [
+      "me deben el dinero de una compra cancelada",
+      "reembolso_cancelado",
+      "otro"
+    ],
+    [
+      "me salió error al pagar y aun así me quitaron la plata",
+      "pago_rechazado_con_cargo",
+      "otro"
+    ],
+    [
+      "No pasó el pago pero mi saldo bajó",
+      "pago_rechazado_con_cargo",
+      "otro"
+    ],
+    [
+      "el pse fue declinado y el valor quedó retenido",
+      "pago_rechazado_con_cargo",
+      "otro"
+    ],
+    [
+      "me dijo que no se pudo y el dinero desapareció",
+      "pago_rechazado_con_cargo",
+      "otro"
+    ],
+    [
+      "Necesito cambiar mi número de celular en la cuenta",
+      "actualizar_datos",
+      "otro"
+    ],
+    [
+      "cambio de teléfono de contacto",
+      "actualizar_datos",
+      "otro"
+    ],
+    [
+      "cambié de ciudad, actualicen mis datos",
+      "actualizar_datos",
+      "otro"
+    ],
+    [
+      "Se me bloqueó el acceso a la aplicación",
+      "login_app",
+      "otro"
+    ],
+    [
+      "la aplicación se cierra cuando intento entrar",
+      "login_app",
+      "otro"
+    ],
+    [
+      "Qué buen servicio, me cambiaron el producto en un día",
+      "felicitacion_cambio",
+      "otro"
+    ],
+    [
+      "agradezco la rapidez para cambiar mi pedido",
+      "felicitacion_cambio",
+      "otro"
+    ],
+    [
+      "El agente fue amable y resolvió todo rápido",
+      "felicitacion_atencion",
+      "otro"
+    ],
+    [
+      "El precio en la web es distinto al de la tienda física",
+      "otro",
+      "producto_distinto_descripcion"
+    ]
+  ]
+}

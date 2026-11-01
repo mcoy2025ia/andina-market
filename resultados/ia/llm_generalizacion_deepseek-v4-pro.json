@@ -1,0 +1,174 @@
+{
+  "metricas": {
+    "n": 150,
+    "exactitud": 1.0,
+    "f1_macro": 1.0,
+    "por_clase": {
+      "producto_danado": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "pedido_no_llega": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "cambio_direccion": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "producto_distinto_descripcion": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "equipo_no_enciende": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "talla_incorrecta": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "entrega_no_recibida": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "pedido_incompleto": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "cupon_no_aplicado": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "cobro_duplicado": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "reembolso_cancelado": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "pago_rechazado_con_cargo": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "actualizar_datos": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "eliminar_cuenta": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "login_app": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "felicitacion_cambio": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "felicitacion_atencion": {
+        "soporte": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "otro": {
+        "soporte": 14,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "matriz": {
+      "producto_danado": {
+        "producto_danado": 8
+      },
+      "pedido_no_llega": {
+        "pedido_no_llega": 8
+      },
+      "cambio_direccion": {
+        "cambio_direccion": 8
+      },
+      "producto_distinto_descripcion": {
+        "producto_distinto_descripcion": 8
+      },
+      "equipo_no_enciende": {
+        "equipo_no_enciende": 8
+      },
+      "talla_incorrecta": {
+        "talla_incorrecta": 8
+      },
+      "entrega_no_recibida": {
+        "entrega_no_recibida": 8
+      },
+      "pedido_incompleto": {
+        "pedido_incompleto": 8
+      },
+      "cupon_no_aplicado": {
+        "cupon_no_aplicado": 8
+      },
+      "cobro_duplicado": {
+        "cobro_duplicado": 8
+      },
+      "reembolso_cancelado": {
+        "reembolso_cancelado": 8
+      },
+      "pago_rechazado_con_cargo": {
+        "pago_rechazado_con_cargo": 8
+      },
+      "actualizar_datos": {
+        "actualizar_datos": 8
+      },
+      "eliminar_cuenta": {
+        "eliminar_cuenta": 8
+      },
+      "login_app": {
+        "login_app": 8
+      },
+      "felicitacion_cambio": {
+        "felicitacion_cambio": 8
+      },
+      "felicitacion_atencion": {
+        "felicitacion_atencion": 8
+      },
+      "otro": {
+        "otro": 14
+      }
+    }
+  },
+  "errores": []
+}

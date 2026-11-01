@@ -1,0 +1,35 @@
+descripcion,tipo
+"El equipo no enciende, quiero cambio",equipo_no_enciende
+El pago fue rechazado pero el dinero salió de mi cuenta,pago_rechazado_con_cargo
+"El pedido llegó incompleto, falta un producto",pedido_incompleto
+El pedido no ha llegado y ya pasó la fecha prometida,pedido_no_llega
+El producto llegó dañado,producto_danado
+El producto no corresponde a la descripción de la página,producto_distinto_descripcion
+"Excelente atención del asesor, muy rápido",felicitacion_atencion
+"Gracias, el cambio fue muy ágil",felicitacion_cambio
+La transportadora dice que entregó pero no recibí nada,entrega_no_recibida
+Me cobraron dos veces el mismo pedido,cobro_duplicado
+Necesito cambiar la dirección de entrega,cambio_direccion
+No me aplicaron el descuento del cupón,cupon_no_aplicado
+No puedo iniciar sesión en la app,login_app
+Quiero actualizar mis datos personales,actualizar_datos
+Recibí una talla diferente a la que pedí,talla_incorrecta
+Solicito el reembolso de un pedido cancelado,reembolso_cancelado
+Solicito eliminar mi cuenta y mis datos,eliminar_cuenta
+"el equipo no enciende, quiero cambio",equipo_no_enciende
+el pago fue rechazado pero el dinero salió de mi cuenta,pago_rechazado_con_cargo
+"el pedido llegó incompleto, falta un producto",pedido_incompleto
+el pedido no ha llegado y ya pasó la fecha prometida,pedido_no_llega
+el producto llegó dañado,producto_danado
+el producto no corresponde a la descripción de la página,producto_distinto_descripcion
+"excelente atención del asesor, muy rápido",felicitacion_atencion
+"gracias, el cambio fue muy ágil",felicitacion_cambio
+la transportadora dice que entregó pero no recibí nada,entrega_no_recibida
+me cobraron dos veces el mismo pedido,cobro_duplicado
+necesito cambiar la dirección de entrega,cambio_direccion
+no me aplicaron el descuento del cupón,cupon_no_aplicado
+no puedo iniciar sesión en la app,login_app
+quiero actualizar mis datos personales,actualizar_datos
+recibí una talla diferente a la que pedí,talla_incorrecta
+solicito el reembolso de un pedido cancelado,reembolso_cancelado
+solicito eliminar mi cuenta y mis datos,eliminar_cuenta

@@ -1,0 +1,20 @@
+{
+  "browser": "Microsoft Edge headless",
+  "desktop": "1440x1000",
+  "mobile": "390x844",
+  "chapters": 17,
+  "gaps": 33,
+  "errors": [],
+  "overflow": [],
+  "checks": [
+    "navigation",
+    "channel filters",
+    "4 scenarios",
+    "search",
+    "scope filter",
+    "expand",
+    "notes",
+    "reading mode",
+    "print PDF"
+  ]
+}
