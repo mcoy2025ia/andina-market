@@ -67,6 +67,25 @@ Lo que estas cinco tareas **no** cambian: ninguna ejecuta SQL Server, Power BI, 
 - Referencias del caso: enero 2026 COP 948.592.900; septiembre COP 795.114.800; enero–septiembre 2026 COP 7.739.061.400; base comparable 2025 COP 3.891.305.400.
 - Cierre: resultados de motor con contexto de filtro registrado y artefacto del modelo. Tener DAX escrito no equivale a haberlo ejecutado.
 
+### E04b · Compatibilidad del notebook con Databricks serverless — P1
+
+Hallazgo de la revisión técnica del 1 de noviembre de 2026, **abierto y no corregido**.
+
+- El notebook usa `.cache()` en cuatro puntos (celdas de pedidos y pagos). **Databricks
+  serverless no admite `.cache()` ni `.persist()`**, así que hoy el notebook no corre en
+  el modo de cómputo que es el predeterminado para trabajos y pipelines.
+- El resto del código sí cumple: usa API de DataFrame y SQL, rutas `/Volumes/…` en vez
+  de montajes DBFS, nombres de tres partes y ningún `sparkContext`, RDD ni
+  `spark.conf.set` de memoria.
+- Quitar el `.cache()` no basta: en la celda de pedidos sirve de hecho para materializar
+  antes del `MERGE`, y el origen de ese `MERGE` lee la misma tabla que escribe
+  (`silver_pedidos`, vía `hash_negocio`). La corrección correcta es **materializar en una
+  tabla de staging** antes del `MERGE`, lo que además elimina esa autorreferencia.
+- No se corrigió en esta revisión porque es código Delta que no se puede probar sin la
+  plataforma; entra como parte de E04.
+- Cierre: notebook ejecutado en serverless sin bloqueadores, y `performance_target`
+  declarado (`STANDARD` para el lote nocturno).
+
 ### E04 · Delta en Fabric o Databricks — P1/P2
 
 - Spark de reglas y SQL ya está aprobado en CI; esa parte deja de ser pendiente.

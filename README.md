@@ -89,7 +89,7 @@ El reporte solo se guarda en disco: `despachar_reporte.py` usa por defecto un tr
 - [Presentación ejecutiva y diagnóstico](docs/presentacion_entrega.html).
 - [Guion de sustentación](docs/GUION_SUSTENTACION.md): estructura de los diez minutos.
 - [Simulacro con 70 preguntas y respuestas](docs/11_simulacro_sustentacion.md).
-- [Storyline del deck para Finanzauto](docs/10_storyline_finanzauto.md): 18 láminas y 14 de apéndice, con el comportamiento de cada una.
+- [Storyline del deck para Finanzauto](docs/10_storyline_finanzauto.md): panel de arquitectura, plataforma y FinOps; 24 láminas y 18 de apéndice, con el comportamiento de cada una.
 - [Contratos y decisiones](docs/CONTRATOS_Y_DECISIONES.md).
 - [Operación y recuperación](docs/OPERACION_Y_RECUPERACION.md).
 - [Detalle actualizado del ETL](README_ETL.md).
