@@ -27,8 +27,12 @@
 | Descuento máximo | Reglas pandas/Spark y pruebas; recalcular histórico afectado | Registros cargados que pasan a inválidos se retiran y corrigen Gold |
 | Fecha pedido → entrega | `store.py`, `star.py`, SQL y DAX; calendario | Es cambio de negocio, no una sustitución visual; nueva referencia esperada |
 | Ventana recompra | Cuatro SQL y plantilla, madurez y denominador | Meses calendario no equivalen a 30/90/180 días fijos |
+| Etiqueta de tipo de caso | `etiquetas.py`, `star.py`, espejo Spark y pruebas | Solo una decisión humana llega a `tipo_caso`; la propuesta vive aparte y no se mezcla |
+| Destinatario del reporte | `reporte_envio.py` y `despachar_reporte.py` | La identidad es el hash del contenido: cambiar el destinatario no reenvía lo ya entregado |
 
 ## Preguntas para practicar
+
+Sobre el ETL y las decisiones de negocio:
 
 1. ¿Qué se revierte si falla después de Silver? ¿Qué ocurre con Bronze?
 2. ¿Qué protege el lock y qué no?
@@ -39,4 +43,33 @@
 7. ¿Por qué un 100 % sintético no permite desplegar el clasificador sin otra evaluación?
 8. ¿Qué pruebas cambiarían al modificar la definición de venta?
 
-El ensayo técnico fue ejecutado por la herramienta. La práctica oral y la capacidad de modificar/explicar el código son responsabilidad del autor; no se declaran realizadas por él.
+Sobre el traslado a Delta (IA-R02):
+
+9. En DuckDB toda la corrida es una transacción. En Delta no existe esa garantía entre
+   tablas: ¿qué pasa si el proceso muere después de escribir `fact_pedido` y antes de
+   `fact_pago`, y cómo evita el diseño que alguien lea ese estado?
+10. ¿Qué parte del notebook está probada y cuál no, y por qué esa frontera está ahí?
+11. ¿Por qué las claves de dimensión no pueden renumerarse entre cargas?
+
+Sobre las etiquetas y la evaluación (IA-R03, IA-R04):
+
+12. Si alguien pide «publicar ya las etiquetas que sacó el modelo», ¿qué responde el
+    sistema y por qué está hecho así?
+13. La exactitud sobre la muestra reservada fue 0,560 con intervalo 0,423–0,688.
+    ¿Qué se puede afirmar con eso y qué no?
+14. ¿Qué es un «error crítico» aquí, quién debería definirlo y por qué no basta la
+    exactitud media?
+15. ¿Por qué la asociación de etiquetas va por hash del texto y no por `id_ticket`?
+
+Sobre el reporte (IA-R05):
+
+16. ¿Por qué la identidad del reporte es el hash del contenido y no la fecha?
+17. ¿Qué distingue un fallo que se reintenta de uno que no, y qué pasa si se agotan
+    los reintentos?
+
+## Qué sigue sin estar acreditado
+
+El ensayo técnico lo ejecutó la herramienta. La práctica oral y la capacidad de
+modificar y explicar el código son responsabilidad del autor: **no se declaran
+realizadas por él**. Un simulacro asistido tampoco sustituye esa práctica; sirve para
+encontrar los puntos donde la explicación todavía no se sostiene.

@@ -1,0 +1,514 @@
+{
+  "procedencia_de_la_muestra": "SINTÉTICA: partición del conjunto de generalización, escrito por una IA. No acredita desempeño sobre tickets reales (pendiente U06).",
+  "n": 50,
+  "exactitud": 0.56,
+  "intervalo_exactitud": [
+    0.4230578680014353,
+    0.6883801278976466
+  ],
+  "f1_macro": 0.5933862433862434,
+  "por_clase": {
+    "producto_danado": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 0.3333333333333333,
+      "f1": 0.5,
+      "intervalo_recall": [
+        0.0614903152761605,
+        0.7923450448735121
+      ],
+      "intervalo_precision": [
+        0.20654329147389294,
+        1.0
+      ]
+    },
+    "pedido_no_llega": {
+      "soporte": 3,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0,
+      "intervalo_recall": [
+        0.0,
+        0.5615060804490177
+      ],
+      "intervalo_precision": null
+    },
+    "cambio_direccion": {
+      "soporte": 2,
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "intervalo_recall": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "intervalo_precision": [
+        0.20654329147389294,
+        1.0
+      ]
+    },
+    "producto_distinto_descripcion": {
+      "soporte": 3,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "intervalo_recall": [
+        0.0,
+        0.5615060804490177
+      ],
+      "intervalo_precision": [
+        0.0,
+        0.7934567085261071
+      ]
+    },
+    "equipo_no_enciende": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8,
+      "intervalo_recall": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "intervalo_precision": [
+        0.34237195288961925,
+        1.0
+      ]
+    },
+    "talla_incorrecta": {
+      "soporte": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "intervalo_recall": [
+        0.34237195288961925,
+        1.0
+      ],
+      "intervalo_precision": [
+        0.34237195288961925,
+        1.0
+      ]
+    },
+    "entrega_no_recibida": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 0.3333333333333333,
+      "f1": 0.5,
+      "intervalo_recall": [
+        0.0614903152761605,
+        0.7923450448735121
+      ],
+      "intervalo_precision": [
+        0.20654329147389294,
+        1.0
+      ]
+    },
+    "pedido_incompleto": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8,
+      "intervalo_recall": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "intervalo_precision": [
+        0.34237195288961925,
+        1.0
+      ]
+    },
+    "cupon_no_aplicado": {
+      "soporte": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "intervalo_recall": [
+        0.34237195288961925,
+        1.0
+      ],
+      "intervalo_precision": [
+        0.34237195288961925,
+        1.0
+      ]
+    },
+    "cobro_duplicado": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8,
+      "intervalo_recall": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "intervalo_precision": [
+        0.34237195288961925,
+        1.0
+      ]
+    },
+    "reembolso_cancelado": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8,
+      "intervalo_recall": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "intervalo_precision": [
+        0.34237195288961925,
+        1.0
+      ]
+    },
+    "pago_rechazado_con_cargo": {
+      "soporte": 2,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0,
+      "intervalo_recall": [
+        0.0,
+        0.6576280471103807
+      ],
+      "intervalo_precision": null
+    },
+    "actualizar_datos": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8,
+      "intervalo_recall": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "intervalo_precision": [
+        0.34237195288961925,
+        1.0
+      ]
+    },
+    "eliminar_cuenta": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "intervalo_recall": [
+        0.43849391955098227,
+        1.0
+      ],
+      "intervalo_precision": [
+        0.43849391955098227,
+        1.0
+      ]
+    },
+    "login_app": {
+      "soporte": 2,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0,
+      "intervalo_recall": [
+        0.0,
+        0.6576280471103807
+      ],
+      "intervalo_precision": null
+    },
+    "felicitacion_cambio": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "intervalo_recall": [
+        0.43849391955098227,
+        1.0
+      ],
+      "intervalo_precision": [
+        0.43849391955098227,
+        1.0
+      ]
+    },
+    "felicitacion_atencion": {
+      "soporte": 3,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8,
+      "intervalo_recall": [
+        0.2076549551264879,
+        0.9385096847238394
+      ],
+      "intervalo_precision": [
+        0.34237195288961925,
+        1.0
+      ]
+    },
+    "otro": {
+      "soporte": 4,
+      "precision": 0.125,
+      "recall": 0.75,
+      "f1": 0.21428571428571427,
+      "intervalo_recall": [
+        0.3006360524426366,
+        0.9544139373553637
+      ],
+      "intervalo_precision": [
+        0.04344255039315584,
+        0.3100428814785757
+      ]
+    }
+  },
+  "matriz_confusion": {
+    "producto_danado": {
+      "producto_danado": 1,
+      "otro": 2
+    },
+    "pedido_no_llega": {
+      "otro": 3
+    },
+    "cambio_direccion": {
+      "cambio_direccion": 1,
+      "otro": 1
+    },
+    "producto_distinto_descripcion": {
+      "otro": 3
+    },
+    "equipo_no_enciende": {
+      "equipo_no_enciende": 2,
+      "otro": 1
+    },
+    "talla_incorrecta": {
+      "talla_incorrecta": 2
+    },
+    "entrega_no_recibida": {
+      "entrega_no_recibida": 1,
+      "otro": 2
+    },
+    "pedido_incompleto": {
+      "otro": 1,
+      "pedido_incompleto": 2
+    },
+    "cupon_no_aplicado": {
+      "cupon_no_aplicado": 2
+    },
+    "cobro_duplicado": {
+      "cobro_duplicado": 2,
+      "otro": 1
+    },
+    "reembolso_cancelado": {
+      "reembolso_cancelado": 2,
+      "otro": 1
+    },
+    "pago_rechazado_con_cargo": {
+      "otro": 2
+    },
+    "actualizar_datos": {
+      "otro": 1,
+      "actualizar_datos": 2
+    },
+    "eliminar_cuenta": {
+      "eliminar_cuenta": 3
+    },
+    "login_app": {
+      "otro": 2
+    },
+    "felicitacion_cambio": {
+      "felicitacion_cambio": 3
+    },
+    "felicitacion_atencion": {
+      "otro": 1,
+      "felicitacion_atencion": 2
+    },
+    "otro": {
+      "otro": 3,
+      "producto_distinto_descripcion": 1
+    }
+  },
+  "errores": [
+    {
+      "texto": "El empaque estaba abierto y el artículo con rayones profundos",
+      "real": "producto_danado",
+      "predicho": "otro"
+    },
+    {
+      "texto": "el celular vino con la pantalla estrellada",
+      "real": "producto_danado",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Todavía no recibo mi compra, la fecha de entrega ya venció",
+      "real": "pedido_no_llega",
+      "predicho": "otro"
+    },
+    {
+      "texto": "no me ha llegado nada y ya se cumplió el plazo",
+      "real": "pedido_no_llega",
+      "predicho": "otro"
+    },
+    {
+      "texto": "La entrega prometida para ayer no se cumplió",
+      "real": "pedido_no_llega",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Pueden despachar a la casa de mi mamá? cambié de planes",
+      "real": "cambio_direccion",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Lo que llegó no es lo que se ve en la página",
+      "real": "producto_distinto_descripcion",
+      "predicho": "otro"
+    },
+    {
+      "texto": "No es el modelo que anunciaban en la tienda en línea",
+      "real": "producto_distinto_descripcion",
+      "predicho": "otro"
+    },
+    {
+      "texto": "el producto es más pequeño de lo que mostraba la web",
+      "real": "producto_distinto_descripcion",
+      "predicho": "otro"
+    },
+    {
+      "texto": "el parlante no da señal de vida",
+      "real": "equipo_no_enciende",
+      "predicho": "otro"
+    },
+    {
+      "texto": "El courier marcó entrega exitosa y no tengo el paquete",
+      "real": "entrega_no_recibida",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Reportan que firmaron el recibido y no fui yo",
+      "real": "entrega_no_recibida",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Pedí tres productos y llegaron dos",
+      "real": "pedido_incompleto",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Salió el mismo valor repetido en el extracto",
+      "real": "cobro_duplicado",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Solicito devolución del valor del pedido cancelado",
+      "real": "reembolso_cancelado",
+      "predicho": "otro"
+    },
+    {
+      "texto": "me salió error al pagar y aun así me quitaron la plata",
+      "real": "pago_rechazado_con_cargo",
+      "predicho": "otro"
+    },
+    {
+      "texto": "el pse fue declinado y el valor quedó retenido",
+      "real": "pago_rechazado_con_cargo",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Necesito cambiar mi número de celular en la cuenta",
+      "real": "actualizar_datos",
+      "predicho": "otro"
+    },
+    {
+      "texto": "Se me bloqueó el acceso a la aplicación",
+      "real": "login_app",
+      "predicho": "otro"
+    },
+    {
+      "texto": "la aplicación se cierra cuando intento entrar",
+      "real": "login_app",
+      "predicho": "otro"
+    },
+    {
+      "texto": "El agente fue amable y resolvió todo rápido",
+      "real": "felicitacion_atencion",
+      "predicho": "otro"
+    },
+    {
+      "texto": "El precio en la web es distinto al de la tienda física",
+      "real": "otro",
+      "predicho": "producto_distinto_descripcion"
+    }
+  ],
+  "errores_criticos": {
+    "definicion": {
+      "dinero_mal_enrutado": "Un caso de dinero se clasifica como algo que no lo es: la persona queda sin su reclamo económico en la cola correcta.",
+      "derecho_de_datos_perdido": "Una solicitud de eliminación o corrección de datos personales se clasifica como otra cosa: es una obligación legal, no una preferencia de atención.",
+      "problema_como_felicitacion": "Un problema real se clasifica como felicitación: el caso se cierra como opinión positiva y nadie lo atiende."
+    },
+    "estado_de_la_definicion": "PROPUESTA: pendiente de acuerdo con negocio (U08/E06)",
+    "conteo": {
+      "dinero_mal_enrutado": 4,
+      "derecho_de_datos_perdido": 1,
+      "problema_como_felicitacion": 0
+    },
+    "tasa": {
+      "dinero_mal_enrutado": 0.08,
+      "derecho_de_datos_perdido": 0.02,
+      "problema_como_felicitacion": 0.0
+    },
+    "casos": [
+      {
+        "indice": 25,
+        "tipo_error": "dinero_mal_enrutado",
+        "real": "cobro_duplicado",
+        "predicho": "otro",
+        "texto": "Salió el mismo valor repetido en el extracto"
+      },
+      {
+        "indice": 28,
+        "tipo_error": "dinero_mal_enrutado",
+        "real": "reembolso_cancelado",
+        "predicho": "otro",
+        "texto": "Solicito devolución del valor del pedido cancelado"
+      },
+      {
+        "indice": 30,
+        "tipo_error": "dinero_mal_enrutado",
+        "real": "pago_rechazado_con_cargo",
+        "predicho": "otro",
+        "texto": "me salió error al pagar y aun así me quitaron la plata"
+      },
+      {
+        "indice": 31,
+        "tipo_error": "dinero_mal_enrutado",
+        "real": "pago_rechazado_con_cargo",
+        "predicho": "otro",
+        "texto": "el pse fue declinado y el valor quedó retenido"
+      },
+      {
+        "indice": 32,
+        "tipo_error": "derecho_de_datos_perdido",
+        "real": "actualizar_datos",
+        "predicho": "otro",
+        "texto": "Necesito cambiar mi número de celular en la cuenta"
+      }
+    ]
+  },
+  "clasificados_como_otro_siendo_un_tipo": 21,
+  "telemetria": {
+    "llamadas": 0,
+    "latencia_s": {
+      "total": null,
+      "mediana": null,
+      "p95": null,
+      "maxima": null
+    },
+    "tokens": {
+      "entrada": 0,
+      "salida": 0,
+      "total": 0
+    },
+    "costo": {
+      "calculado": false,
+      "motivo": "No se declararon tarifas; no se inventa un precio"
+    }
+  },
+  "fugas": {
+    "indices": [],
+    "cuantas": 0,
+    "alcance": "detecta copia literal y diferencias de mayúsculas, tildes o espacios; no detecta paráfrasis"
+  },
+  "muestra_reservada_valida": true,
+  "metodo": "reglas"
+}

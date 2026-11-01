@@ -30,7 +30,9 @@ La definición es ENTREGADO, bruto menos descuento, fecha_pedido. Los importes a
 
 La compuerta compara todas las filas agregadas de Silver con Gold, no solo el total. Umbrales opcionales controlan fracción de rechazos en lote, mínimo de pedidos, total esperado/tolerancia y fecha mínima. Sin política adicional se aplica conciliación básica, no un SLA implícito.
 
-Soporte conserva cierre anterior a creación o cerrado sin fecha con flags; su duración no participa como valor negativo. `ticket_clasificacion` prepara asociación por ticket, hash de texto y versión; no se ejecuta una API en la carga y `fact_ticket.tipo_caso` sigue sin clasificar automáticamente.
+Soporte conserva cierre anterior a creación o cerrado sin fecha con flags; su duración no participa como valor negativo.
+
+Las etiquetas de tipo de caso se importan por lote versionado (`ticket_clasificacion`), con su origen y, si son humanas, con los dos anotadores y el motivo. La asociación va por hash del texto normalizado, no por ticket: las mismas descripciones se repiten entre miles de tickets. `fact_ticket.tipo_caso` solo recibe etiquetas en estado `REVISADA`; la salida de un clasificador queda en `tipo_caso_propuesto`. No se llama a ninguna API durante la carga.
 
 ## Verificación y comandos
 
@@ -38,6 +40,9 @@ Soporte conserva cierre anterior a creación o cerrado sin fecha con flags; su d
 python scripts/verificar_entrega.py --raw data/original --caso
 python scripts/ci_local.py
 python scripts/ci_spark.py
+python scripts/importar_etiquetas.py propuestas --db data/warehouse.duckdb --version reglas-2026-11-01
+python scripts/despachar_reporte.py --db data/warehouse.duckdb --dia 2026-09-30
+python scripts/qa_impresion.py --pdf
 ```
 
 El tercer comando requiere PySpark y Java; usa una base sintética y falla si las pruebas se omiten. En Windows las restricciones de Spark se explican en `tests/conftest.py`. No instalar Spark es una omisión declarada de la suite local, no un éxito de paridad.
@@ -46,9 +51,13 @@ Referencia del caso: 6.040 clientes, 19.270 pedidos, 20.124 pagos, 7.925 filas d
 
 ## Estado Spark/Delta
 
-Las reglas de clientes/pedidos/pagos y el SQL tienen versiones Spark. El notebook se genera de forma determinista con `python src/shared/spark/build_notebook.py`. Las nuevas funciones de soporte, estrella, incidencias operativas, lock y compuertas de este bloque se implementaron en el flujo local: **no se declara paridad integral del notebook**.
+Las reglas de clientes/pedidos/pagos, el SQL y ahora también soporte, contratos, modelo estrella, incidencias y compuertas de publicación tienen versión Spark (`src/shared/spark/extensiones_spark.py`). El notebook se genera de forma determinista con `python src/shared/spark/build_notebook.py`.
 
-La ejecución de reglas/SQL en Spark es distinta de ejecutar MERGE/DELETE/recuperación en Fabric o Databricks. Esa última validación sigue pendiente. El hashing del notebook lee el archivo completo mediante binaryFile y requiere rediseño para archivos grandes.
+Lo que sí está verificado: 19 pruebas ejecutan la construcción completa de la estrella sobre PySpark y comparan dimensiones y hechos **fila a fila contra DuckDB**, además de la cuarentena de soporte, el hash de texto, la conciliación y las compuertas.
+
+La diferencia de fondo con el flujo local es que Delta no tiene transacción entre tablas. En vez de simularla, los hechos se escriben marcados con `run_id` y los consumidores leen vistas que filtran por el run publicado; el puntero solo se mueve si la conciliación y las compuertas pasan. El detalle está en [docs/08_traslado_delta.md](docs/08_traslado_delta.md).
+
+Sigue pendiente ejecutar MERGE/DELETE/recuperación en Fabric o Databricks (E04), con los doce escenarios listados en ese documento. El hashing del notebook lee el archivo completo mediante binaryFile y requiere rediseño para archivos grandes.
 
 ## Límites que permanecen
 
@@ -60,3 +69,5 @@ La ejecución de reglas/SQL en Spark es distinta de ejecutar MERGE/DELETE/recupe
 - El lock no coordina otros programas que escriban directamente ni varios nodos.
 - Los umbrales, retención, permisos, RPO/RTO y alertas productivas requieren acuerdos y validación.
 - El modelo estrella local no certifica DAX, SQL Server o compatibilidad completa del DDL con Fabric Warehouse.
+- La normalización del texto de los tickets pliega la `ñ` como las tildes: tolera cómo se escribió, no distingue «año» de «ano». Cambiarlo obliga a reimportar los lotes de etiquetas.
+- El transporte SMTP del reporte está escrito pero no ejecutado contra un servidor real.

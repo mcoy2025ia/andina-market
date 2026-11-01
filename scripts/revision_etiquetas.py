@@ -4,17 +4,14 @@ import csv
 import json
 from pathlib import Path
 import sys
-import unicodedata
 from collections import Counter
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src/shared'))
 from tickets_ia.taxonomia import ETIQUETAS
+# Misma normalización que usa la importación: si divergieran, una fuga detectada aquí
+# podría no serlo al asociar las etiquetas, y al revés.
+from andina_etl.etiquetas import normalizar_texto as normalizar
 
 ROOT=Path(__file__).resolve().parents[1]
-
-
-def normalizar(texto):
-    return ' '.join(''.join(c for c in unicodedata.normalize('NFD',texto.casefold())
-                           if unicodedata.category(c)!='Mn').split())
 
 
 def plantilla(destino):

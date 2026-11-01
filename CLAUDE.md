@@ -1,6 +1,6 @@
 # Guía actualizada de trabajo
 
-Consultar primero docs/ESTADO_IMPLEMENTACION.md, README.md y README_ETL.md. El texto siguiente conserva orientación previa; las funciones nuevas de orquestación se implementan localmente y no implican paridad integral con Delta.
+Consultar primero docs/ESTADO_IMPLEMENTACION.md, docs/PENDIENTES_ACTUALES.md, README.md y README_ETL.md.
 
 # CLAUDE.md
 
@@ -29,6 +29,20 @@ python scripts/catalogo_calidad.py            # regenera docs/02_catalogo_calida
 python src/shared/spark/build_notebook.py     # regenera fabric/notebooks/andina_etl_spark.ipynb
 python src/shared/spark/verificar_paridad_real.py   # paridad DuckDB vs Spark con datos reales
 python scripts/clasificar_tickets.py evaluar --metodo reglas   # --metodo llm requiere DEEPSEEK_API_KEY en .env.local o en el entorno; cuesta dinero
+python scripts/clasificar_tickets.py reservada --metodo reglas --sintetica   # arnés de muestra reservada (IC, errores críticos, telemetría)
+python scripts/ci_local.py                    # chequeos reproducibles sin datos originales; también valida que el notebook esté regenerado
+python scripts/ci_spark.py                    # pruebas Spark; falla si alguna se omite
+python scripts/verificar_entrega.py --raw data/original --caso   # evidencia aislada; no toca data/warehouse.duckdb
+python scripts/qa_impresion.py --pdf          # auditoría de impresión de los HTML + PDF (necesita Chrome)
+python scripts/importar_etiquetas.py propuestas --db data/warehouse.duckdb --version reglas-AAAA-MM-DD
+python scripts/despachar_reporte.py --db data/warehouse.duckdb --dia 2026-09-30   # transporte de carpeta; no envía correo
+python scripts/empaquetar.py                  # dist/andina-market.zip con manifiesto SHA-256
+```
+
+Ejecutar Spark localmente en Windows: el venv `.venv/` es Python 3.11 y tiene PySpark; `finanzauto/` es 3.12 y no sirve para Spark. Las pruebas que escriben tablas (`test_sql_spark.py`) siguen omitiéndose sin `HADOOP_HOME`.
+
+```bash
+PYSPARK_PYTHON=... PYSPARK_DRIVER_PYTHON=... SPARK_LOCAL_IP=127.0.0.1   ./.venv/Scripts/python.exe -m pytest tests/test_spark_paridad.py tests/test_spark_extensiones.py -q
 ```
 
 Los CSV de entrada deben estar en `data/original/` (no se versionan). `cargar_datos.py` termina con `CARGA CORRECTA` si coinciden las cifras de referencia (6.040 clientes, 19.270 pedidos, 20.124 pagos, 7.925 filas Gold, venta neta 14.177.333.600); si cambias reglas o datos, esas constantes (`ESPERADO`, `VENTA_NETA_ESPERADA` en el script) y los números en los docs deben actualizarse.
@@ -38,19 +52,25 @@ Los CSV de entrada deben estar en `data/original/` (no se versionan). `cargar_da
 Pipeline medallion con **dos implementaciones del mismo diseño** que deben mantenerse en paridad:
 
 - **Local (DuckDB)**, `src/shared/andina_etl/`: `config.py` (parámetros de negocio: rango de fechas, estados que cuentan como venta, mapa de canales), `rules.py` (reglas de calidad), `bronze.py` (CSV → Parquet crudo, todo como texto, versionado por sha256 en `data/bronze/<tabla>/ingest_date=.../`), `store.py` (esquema DuckDB Silver/Gold, upserts por `row_hash`, vistas como `v_cliente_maestro`, `refrescar_venta_neta`), `pipeline.py` (orquestación), `cli.py` (`python -m andina_etl`).
-- **Spark/Delta (Fabric o Databricks)**, `src/shared/spark/rules_spark.py` + notebook generado en `fabric/notebooks/`. El notebook es **generado** por `build_notebook.py`; edita el generador, no el `.ipynb`. Cualquier cambio en `rules.py` debe replicarse en `rules_spark.py`; `tests/test_spark_paridad.py` lo verifica.
+- **Spark/Delta (Fabric o Databricks)**, `src/shared/spark/rules_spark.py` (reglas de fila) + `extensiones_spark.py` (soporte, contratos, estrella, incidencias, publicación) + notebook generado en `fabric/notebooks/`. El notebook es **generado** por `build_notebook.py`; edita el generador, no el `.ipynb` (`ci_local.py` falla si están desincronizados). Cualquier cambio en `rules.py` debe replicarse en `rules_spark.py` (`tests/test_spark_paridad.py`) y cualquier cambio en `tickets.py`, `star.py`, `contracts.py` u `operations.py` en `extensiones_spark.py` (`tests/test_spark_extensiones.py`, que compara la estrella fila a fila contra DuckDB).
 
-Flujo: CSV → Bronze (Parquet inmutable) → Silver (siempre leído desde Bronze, nunca del CSV) → `cuarentena` (una fila por registro y regla violada, con la fila original en JSON) → Gold `gold_venta_neta_diaria` (recalculado desde Silver solo para los días tocados). Idempotencia vía `row_hash`; pagos incrementales con watermark sobre `fecha_carga` más `lookback_dias`, pero los pagos en cuarentena por `PAGO_HUERFANO`/`PEDIDO_EN_CUARENTENA` se releen siempre (`store.pagos_pendientes`). Cada corrida de `pipeline.ejecutar` es una transacción DuckDB; los registros ya cargados que pasan a inválidos se retiran de Silver (`store.retirar`) y se recalcula su día. El notebook Delta replica esto salvo la transacción (usa `RECALCULAR_GOLD`).
+En Delta no hay transacción entre tablas: la consistencia se logra escribiendo los hechos con `run_id` y moviendo el puntero `publicacion_actual` solo si concilian; los consumidores leen las vistas `v_fact_*`. Las funciones con prefijo `delta_` usan `MERGE`/`UPDATE` y **no se han ejecutado** (ver docs/08_traslado_delta.md).
+
+Flujo: CSV → Bronze (Parquet inmutable) → Silver (siempre leído desde Bronze, nunca del CSV) → `cuarentena` (una fila por registro y regla violada, con la fila original en JSON) → Gold `gold_venta_neta_diaria` (recalculado desde Silver solo para los días tocados). Idempotencia vía `row_hash`; pagos incrementales con watermark sobre `fecha_carga` más `lookback_dias`, pero los pagos en cuarentena por `PAGO_HUERFANO`/`PEDIDO_EN_CUARENTENA` se releen siempre (`store.pagos_pendientes`). Cada corrida de `pipeline.ejecutar` es una transacción DuckDB; los registros ya cargados que pasan a inválidos se retiran de Silver (`store.retirar`) y se recalcula su día. El notebook Delta replica esto; en lugar de la transacción usa el puntero de publicación descrito arriba, y `RECALCULAR_GOLD` para rehacer todos los días tras una caída.
 
 Decisiones de negocio que atraviesan varios archivos (SQL, DAX, ETL, docs): venta neta = `valor_bruto − descuento` de pedidos `ENTREGADO`, atribuida a `fecha_pedido`; rango válido 2025-01-01 a 2026-09-30; clientes con el mismo documento son una persona. Cambiar una de ellas implica tocar `config.py`/`rules.py`, `store.py`, las cuatro variantes de SQL y `fabric/semantic_model/medidas.dax`.
 
 El mismo SQL de venta neta/recompra existe en cuatro dialectos que deben mantenerse alineados: `sqlserver/` (T-SQL), `duckdb/`, `fabric/sql/`, `databricks/sql/`; la plantilla de Spark está en `src/shared/spark/sql/`.
 
-Otras piezas independientes: `src/shared/reporte_ventas.py` (versión corregida del PR de la parte 3.1), `src/shared/tickets_ia/` (clasificación de tickets: reglas como línea base y `ClasificadorLLM` contra DeepSeek), `sqlserver/optimizacion/` (experimento con SQLite), `docs/` (entregables escritos; `04_arquitectura.pdf` se genera desde el HTML de la misma carpeta).
+Etiquetas de tipo de caso (`andina_etl/etiquetas.py`): se importan por lote versionado con su origen. `gold.fact_ticket.tipo_caso` **solo** admite etiquetas en estado `REVISADA` (origen humano, dos anotadores y motivo); la salida de un clasificador va a `tipo_caso_propuesto`. La asociación es por hash del texto normalizado, que `tickets.py` guarda en `silver_tickets.texto_hash`. No romper esa separación: es la garantía de que una propuesta no se publique como validada.
+
+Otras piezas independientes: `src/shared/reporte_ventas.py` (versión corregida del PR de la parte 3.1), `src/shared/tickets_ia/` (clasificación de tickets: reglas como línea base y `ClasificadorLLM` contra DeepSeek), `src/shared/tickets_ia/evaluacion.py` (arnés de muestra reservada: intervalos de Wilson, errores críticos, fugas, telemetría), `src/shared/reporte_envio.py` (transporte del reporte: duplicados por hash de contenido, reintento solo ante fallo transitorio; nunca envía sin autorización explícita), `sqlserver/optimizacion/` (experimento con SQLite), `docs/` (entregables escritos; los PDF se generan desde el HTML con `scripts/qa_impresion.py --pdf`).
+
+Al tocar el CSS de impresión de los HTML de `docs/`, volver a correr `python scripts/qa_impresion.py --pdf`: regenera los PDF y la evidencia, y `tests/test_impresion.py` comprueba que ninguna página quede vacía o con una línea suelta.
 
 ## Qué no está verificado
 
-T-SQL, DDL, DAX y celdas Delta del notebook (MERGE, rutas) **no se han ejecutado** en sus plataformas. La API de DeepSeek sí se ejecutó (Flash y V4 Pro, clave en `.env.local`); las pruebas automáticas no la llaman, usan una función falsa. No afirmes lo contrario en docs ni en respuestas; la tabla "Qué se probó y qué no" del `README.md` es la fuente de verdad y debe actualizarse si eso cambia.
+T-SQL, DDL, DAX y celdas Delta del notebook (MERGE, DELETE, DESCRIBE HISTORY, rutas de Lakehouse/Volumes) **no se han ejecutado** en sus plataformas. El transporte SMTP del reporte tampoco. La API de DeepSeek sí se ejecutó (Flash y V4 Pro, clave en `.env.local`); las pruebas automáticas no la llaman, usan una función falsa. No afirmes lo contrario en docs ni en respuestas; `docs/ESTADO_IMPLEMENTACION.md` es la fuente de verdad del estado y debe actualizarse si eso cambia, junto con `docs/PENDIENTES_ACTUALES.md`.
 
 ## Notas
 

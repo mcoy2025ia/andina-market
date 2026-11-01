@@ -49,7 +49,15 @@ def crear_llamada_deepseek(modelo: str = MODELO_POR_DEFECTO):
             model=modelo, messages=mensajes, temperature=0, max_tokens=200,
             response_format={"type": "json_object"},
             extra_body={"thinking": {"type": "disabled"}})
+        # El consumo se deja en el propio callable para no cambiar su firma: la
+        # inyección de `llamar` es lo que permite probar sin red.
+        uso = getattr(r, "usage", None)
+        llamar.ultimo_uso = {
+            "tokens_entrada": getattr(uso, "prompt_tokens", None),
+            "tokens_salida": getattr(uso, "completion_tokens", None),
+        } if uso else None
         return r.choices[0].message.content or ""
+    llamar.ultimo_uso = None
     return llamar
 
 
@@ -81,6 +89,9 @@ class ClasificadorLLM:
         self.max_llamadas, self.dormir, self.modelo = max_llamadas, dormir, modelo
         self.cache: dict[str, dict] = {}
         self.llamadas = 0
+        # Una medición por llamada a la API (no por texto): los textos repetidos salen
+        # de la caché y no cuestan nada, y mezclarlos falsearía la latencia media.
+        self.telemetria: list[dict] = []
         self.prompt_version = hashlib.sha256(SISTEMA.encode()).hexdigest()[:16]
 
     def clasificar_uno(self, texto: str) -> dict:
@@ -97,9 +108,11 @@ class ClasificadorLLM:
                 break
             self.llamadas += 1
             resultado['intentos'] = intento
+            inicio = time.perf_counter()
             try:
-                tipo, conf, ok = interpretar(self.llamar(mensajes))
+                respuesta = self.llamar(mensajes)
             except Exception as exc:
+                self._medir(inicio, False)
                 status = getattr(exc, 'status_code', None)
                 temporal = isinstance(exc, (TimeoutError, ConnectionError)) or status in (408, 429, 500, 502, 503, 504)
                 temporal = temporal or type(exc).__name__ in ('APITimeoutError', 'APIConnectionError')
@@ -108,6 +121,8 @@ class ClasificadorLLM:
                 if not temporal:
                     break
             else:
+                self._medir(inicio, True)
+                tipo, conf, ok = interpretar(respuesta)
                 resultado.update(tipo=tipo, confianza=conf, valido=ok,
                                  error=None if ok else 'RESPUESTA_INVALIDA')
                 if ok:
@@ -116,6 +131,17 @@ class ClasificadorLLM:
             if intento <= self.reintentos and self.llamadas < self.max_llamadas:
                 self.dormir(min(0.25 * 2 ** (intento - 1), 2))
         return resultado
+
+    def _medir(self, inicio: float, exito: bool) -> None:
+        """Registra la llamada aunque haya fallado: una corrida con muchos reintentos
+        cuesta tiempo y tokens igual, y ocultarlo subestimaría el costo real."""
+        uso = getattr(self.llamar, 'ultimo_uso', None) or {}
+        self.telemetria.append({
+            'latencia_s': time.perf_counter() - inicio,
+            'exito': exito,
+            'tokens_entrada': uso.get('tokens_entrada'),
+            'tokens_salida': uso.get('tokens_salida'),
+        })
 
     def clasificar(self, textos):
         return [self.clasificar_uno(t) for t in textos]

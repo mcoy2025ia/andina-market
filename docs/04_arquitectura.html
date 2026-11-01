@@ -10,6 +10,12 @@ th, td { border: 1px solid #cfd8dc; padding: 1mm 1.5mm; vertical-align: top; tex
 th { background: #e8f3f1; } td.k { font-weight: 600; width: 17%; }
 .pg { page-break-before: always; }
 svg text { font-family: "Segoe UI", Arial, sans-serif; }
+/* Impresión: ninguna fila ni viñeta partida, encabezado de tabla repetido y
+   ningún título suelto al pie de página. */
+tr, th, td, li, svg { break-inside: avoid; }
+thead { display: table-header-group; }
+h1, h2 { break-after: avoid; }
+p, ul { orphans: 3; widows: 3; }
 </style></head><body>
 <h1>Arquitectura de datos de Andina Market: propuesta a 12 meses</h1>
 <div class="sub">Manuel Alberto Coy Benavides · Líder Técnico de Datos, BI y Automatización · Parte 2 · Revisión 01 nov 2026 · Propuesta cloud; implementación local ampliada</div>

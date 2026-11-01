@@ -14,6 +14,9 @@ metastore_db/
 !.env.example
 resultados/ia/tickets_clasificados_*.csv
 
+# Copias temporales que qa_impresion.py deja junto al HTML mientras mide
+docs/.qa_impresion_*.html
+
 # Artefactos locales y distribución
 dist/
 .local/
