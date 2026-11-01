@@ -56,3 +56,12 @@ La verificación usa un directorio temporal; el recálculo lee originales pero s
 ## Decisiones todavía tuyas
 
 Fecha/forma de entrega; revisión de las 34 etiquetas; contrato de borrados y precisión monetaria; categorías gobernadas; objetivos y umbrales; destinatarios; acceso al destino y presupuesto; revocación de credenciales reales cuando aplique. La contraseña redactada del enunciado no se presume operativa.
+
+## Verificación final del bloque
+
+- Suite local con fuentes del caso: **116 pruebas aprobadas, 2 módulos Spark omitidos** por no tener PySpark local.
+- Spark ejecutado por separado en GitHub Actions: **6 pruebas aprobadas, sin omisiones**, incluyendo precisión monetaria y paridad SQL/reglas con datos sintéticos. Esto no acredita ejecución Delta en Fabric/Databricks.
+- [CI aprobada para el código 28c8338](https://github.com/mcoy2025ia/andina-market/actions/runs/41323664358): jobs local y Spark. [Salida Spark](evidencia/spark_ci/pytest.txt).
+- Recálculo independiente: COP 14.177.333.600; segunda carga sin cambios en hechos.
+- Navegador: 13 pestañas y 17 capítulos revisados en escritorio/móvil, sin errores JavaScript ni desbordamientos. PDF de arquitectura: dos páginas inspeccionadas visualmente.
+- Cambios posteriores a esa CI: documentación, evidencias y texto de presentación; no modifican el código ejecutable.
