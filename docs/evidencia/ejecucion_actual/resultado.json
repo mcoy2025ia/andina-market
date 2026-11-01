@@ -1,0 +1,39 @@
+{
+  "fecha_utc": "2026-11-01T14:53:34.598381+00:00",
+  "python": "3.12.7",
+  "sistema": "Windows",
+  "versiones": {
+    "pandas": "3.1.0",
+    "duckdb": "2.0.0",
+    "pytest": "9.2.0"
+  },
+  "datos": "caso",
+  "pytest_exit_code": 0,
+  "conteos": {
+    "silver_clientes": 6040,
+    "silver_pedidos": 19270,
+    "silver_pagos": 20124,
+    "gold_venta_neta_diaria": 7925
+  },
+  "venta_neta": 14177333600,
+  "segunda_carga_sin_cambios": true,
+  "hash_hechos": {
+    "gold.fact_pedido": "bc9692c455a91b31ee10bc786deec07ce780db21b4c810f756fb0f5495c178e7",
+    "gold.fact_pago": "b2fb6b282e4cc6c5bb896b51eea923c778d8272d9303483982a8d17badb95963",
+    "gold.fact_venta_neta_diaria": "58ad69090801e1960dd8242fcb40216291e2a35f6b9c84fd99a42d38d338cf2c"
+  },
+  "estrella": {
+    "fact_pedido": 19270,
+    "fact_pago": 20124,
+    "fact_ticket": 2125,
+    "fact_venta_neta_diaria": 7925
+  },
+  "publicacion": {
+    "estado": "VALIDADO",
+    "pedidos": 19270,
+    "venta_neta": 14177333600,
+    "fecha_maxima": "2026-09-30",
+    "politica": "conciliacion_basica"
+  },
+  "recalculo_independiente": "venta y pedidos conciliados con pandas independiente"
+}

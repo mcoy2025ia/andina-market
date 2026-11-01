@@ -1,5 +1,7 @@
 # Prompt para que una IA te guíe en la ejecución de los pendientes
 
+> **Actualización 01 nov 2026:** este archivo conserva el diagnóstico/plan anterior a la implementación. Para estado vigente, avances A01–A18 y evidencias, consultar [ESTADO_IMPLEMENTACION.md](ESTADO_IMPLEMENTACION.md). Los estados históricos de abajo no sustituyen ese registro.
+
 Este prompt funciona en un chat nuevo, sin ningún contexto previo. La IA no ve tu equipo ni los datos: tú ejecutas los comandos y le pegas las salidas.
 
 ## Qué adjuntar en el chat nuevo

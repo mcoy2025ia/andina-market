@@ -73,3 +73,6 @@ Si ambas fuentes tienen la clave, prevalece la variable de entorno. La suite de 
 6. **Consistencia:** el mismo texto, clasificado dos veces, debe dar la misma etiqueta.
 7. **Impacto en el negocio:** que la clasificación mueva decisiones (enrutar tickets, medir causas de devolución); si nadie la usa, la precisión da igual.
 8. **Seguridad de los datos:** solo se envía el texto, sin identificadores; en producción habría que revisar si el texto libre puede traer datos personales antes de enviarlo a una API externa.
+
+## Implementación posterior a estas mediciones
+El cliente ahora valida forma JSON y confianza finita en [0,1], configura timeout y reintentos limitados y registra versión del prompt/modelo. Pruebas nuevas sin red. Estas mejoras no reejecutan las evaluaciones históricas ni convierten sus etiquetas en referencias humanas. Plantilla pendiente: revision_etiquetas_34.csv; guía: REVISION_HUMANA_IA.md.

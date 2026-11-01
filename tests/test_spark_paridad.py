@@ -120,3 +120,11 @@ def test_clientes_documento_y_cohorte(spark):
     assert (a["documento_limpio"] == b["documento_limpio"]).all()
     assert (pd.to_datetime(a["cohorte_registro"]) == pd.to_datetime(b["cohorte_registro"])).all()
     assert (a["row_hash"] == b["row_hash"]).all()
+
+
+def test_pesos_exactos_y_fracciones_paridad(spark):
+    valores = ['9007199254740993', '100.00', '100.5', 'NaN', 'Infinity', str(2**63), '-1']
+    df = spark.createDataFrame([(i,v) for i,v in enumerate(valores)], 'i int, valor string')
+    real = [r[0] for r in df.select('i', rs._pesos('valor').alias('n')).orderBy('i').select('n').collect()]
+    esperado = [None if pd.isna(v) else int(v) for v in rules.parsear_pesos(pd.Series(valores))]
+    assert real == esperado

@@ -1,0 +1,51 @@
+{
+  "run_id": "87ada57f-343c-4c28-af49-ec27cf4eca45",
+  "clientes": {
+    "insertados": 0,
+    "actualizados": 0,
+    "sin_cambios": 6040,
+    "leidos": 6040,
+    "cuarentena_nueva": 0,
+    "rechazados_lote": 0
+  },
+  "pedidos": {
+    "insertados": 0,
+    "actualizados": 0,
+    "sin_cambios": 19270,
+    "leidos": 19734,
+    "cuarentena_nueva": 0,
+    "retirados": 0,
+    "rechazados_lote": 464
+  },
+  "pagos": {
+    "insertados": 0,
+    "actualizados": 0,
+    "sin_cambios": 7,
+    "leidos": 422,
+    "cuarentena_nueva": 0,
+    "retirados": 0,
+    "rechazados_lote": 415
+  },
+  "tickets_soporte": {
+    "insertados": 0,
+    "actualizados": 0,
+    "sin_cambios": 2125,
+    "leidos": 2125,
+    "rechazados_lote": 0,
+    "cuarentena_nueva": 0
+  },
+  "dias_recalculados": 0,
+  "publicacion": {
+    "estado": "VALIDADO",
+    "pedidos": 19270,
+    "venta_neta": 14177333600,
+    "fecha_maxima": "2026-09-30",
+    "politica": "conciliacion_basica"
+  },
+  "estrella": {
+    "fact_pedido": 19270,
+    "fact_pago": 20124,
+    "fact_ticket": 2125,
+    "fact_venta_neta_diaria": 7925
+  }
+}

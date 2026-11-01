@@ -1,0 +1,6 @@
+........................................................................ [ 62%]
+............................................                             [100%]
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_spark_paridad.py:15: could not import 'pyspark': No module named 'pyspark'
+SKIPPED [1] tests\test_sql_spark.py:12: could not import 'pyspark': No module named 'pyspark'
+116 passed, 2 skipped in 3638.29s (1:00:38)

@@ -76,8 +76,8 @@ def main():
         ("13", "Pagos de un pedido que fue rechazado", "pagos", n("pagos", "PEDIDO_EN_CUARENTENA"),
          "Cuarentena (`PEDIDO_EN_CUARENTENA`); si el pedido se corrige o llega después, el pago se relee y se carga en la siguiente corrida."),
         ("14", "Ticket con fecha de cierre anterior a la de creación", "tickets", cierre_antes,
-         "Tratamiento propuesto (el ETL actual no carga tickets; el DDL lo prevé): se conserva el ticket y `horas_resolucion` queda nula para no promediar tiempos negativos."),
-        ("15", "Ticket cerrado sin fecha de cierre", "tickets", cerrado_sin_cierre, "Tratamiento propuesto, igual que el anterior; tampoco está implementado en el ETL."),
+         "Implementado en la carga local opcional de soporte: se conserva el ticket y `horas_resolucion` queda nula para no promediar tiempos negativos."),
+        ("15", "Ticket cerrado sin fecha de cierre", "tickets", cerrado_sin_cierre, "Implementado: se conserva marcado y horas_resolucion queda nula."),
     ]
     out = ["# Catálogo de problemas de calidad de datos", "",
            "Generado por `scripts/catalogo_calidad.py` con los conteos reales de los CSV y del almacén local. "
@@ -90,7 +90,7 @@ def main():
             "", "## Alcance", "",
             "Cada regla vive en `src/shared/andina_etl/rules.py` y tiene su prueba en `tests/test_rules.py`. Los problemas 1 a 5 se **corrigen o se marcan**; "
             "del 6 al 13 se **rechazan a cuarentena**, con la fila original completa en JSON para poder revisarla y reprocesarla; "
-            "el 14 y el 15 (tickets) son tratamientos propuestos que el ETL todavía no implementa. "
+            "el 14 y el 15 (tickets) están implementados en la carga local opcional. "
             "Hay además reglas de defensa que con estos datos no encuentran casos: ids nulos, ids repetidos en el mismo archivo y fechas ilegibles."]
     Path(a.salida).write_text("\n".join(out) + "\n", encoding="utf-8")
     print("\n".join(out[6:6 + len(filas)]))

@@ -1,5 +1,7 @@
 # Pendientes de ejecución y evidencia
 
+> **Actualización 01 nov 2026:** este archivo conserva el diagnóstico/plan anterior a la implementación. Para estado vigente, avances A01–A18 y evidencias, consultar [ESTADO_IMPLEMENTACION.md](ESTADO_IMPLEMENTACION.md). Los estados históricos de abajo no sustituyen ese registro.
+
 ## 0. Contexto (léelo primero si no conoces el proyecto)
 
 **Qué es.** Solución a una prueba técnica de selección para el cargo de Líder Técnico de Datos, BI y Automatización, de la empresa ficticia Andina Market. La empresa vende tecnología, hogar, moda y mercado por página web, app y tiendas físicas. Cada área calcula las ventas a su manera y la gerencia recibe cifras distintas. La prueba pide resolverlo.

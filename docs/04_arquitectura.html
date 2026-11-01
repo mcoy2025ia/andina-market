@@ -12,7 +12,7 @@ th { background: #e8f3f1; } td.k { font-weight: 600; width: 17%; }
 svg text { font-family: "Segoe UI", Arial, sans-serif; }
 </style></head><body>
 <h1>Arquitectura de datos de Andina Market: propuesta a 12 meses</h1>
-<div class="sub">Manuel Alberto Coy Benavides · Prueba técnica, Líder Técnico de Datos, BI y Automatización · Parte 2</div>
+<div class="sub">Manuel Alberto Coy Benavides · Líder Técnico de Datos, BI y Automatización · Parte 2 · Revisión 01 nov 2026 · Propuesta cloud; implementación local ampliada</div>
 
 <h2>1. Arquitectura propuesta</h2>
 <svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Arquitectura de datos a 12 meses">
@@ -51,19 +51,19 @@ svg text { font-family: "Segoe UI", Arial, sans-serif; }
 
 <h2>2. Recomendación: Microsoft Fabric sobre Databricks</h2>
 <table><tr><th></th><th>Microsoft Fabric</th><th>Databricks</th></tr>
-<tr><td class="k">Costo</td><td>Una capacidad única cubre ingesta, Spark, almacén y Power BI; se puede pausar y escalar por fase, lo que encaja con un presupuesto aprobado por fases. Ojo: por debajo de F64, quien consume informes necesita licencia Power BI Pro, y pausar una capacidad apaga sus informes (solo se pausa la de desarrollo). Verificar las condiciones vigentes con Microsoft.</td><td>Se paga por DBU más la infraestructura cloud aparte y Power BI se licencia por su lado. Es muy eficiente con cargas grandes, pero más difícil de presupuestar. Hay que cotizar ambos con el proveedor; aquí no se inventan cifras.</td></tr>
+<tr><td class="k">Costo</td><td>Una capacidad única cubre ingesta, Spark, almacén y Power BI; se puede pausar y escalar por fase, lo que encaja con un presupuesto aprobado por fases. Cotizar capacidad, licencias de consumo y horarios. Confirmar condiciones vigentes con Microsoft antes de presupuestar o pausar servicios.</td><td>Evaluar cómputo, almacenamiento, integración y licencias de BI según la configuración cotizada. Es muy eficiente con cargas grandes, pero más difícil de presupuestar. Hay que cotizar ambos con el proveedor; aquí no se inventan cifras.</td></tr>
 <tr><td class="k">Riesgo</td><td>Producto más joven y de evolución rápida; algunas funciones aún maduran y hay mayor dependencia del ecosistema Microsoft. Se mitiga con formatos abiertos (Delta/Parquet en OneLake) y código Spark portable.</td><td>Plataforma más madura para ingeniería y ML. El riesgo es de integración (Power BI, SQL Server on-prem) y de superficie operativa: redes, cuentas, clústeres y gobierno propio.</td></tr>
 <tr><td class="k">Capacidad del equipo</td><td>Supuesto (el enunciado no describe al equipo): perfil de T-SQL, Power BI y Excel, así que la curva es corta. Direct Lake evita copiar los datos al modelo.</td><td>Exige más perfil de ingeniería (Spark, Python, DevOps); la curva es mayor para un equipo de BI.</td></tr></table>
-<p><b>Decisión: Fabric.</b> La empresa tiene 30+ informes de Power BI, un equipo orientado a SQL y BI y un volumen moderado (decenas de millones de pedidos, no petabytes). <b>Cambiaría a Databricks</b> si el volumen crece a decenas de TB, si el ML o el streaming pasan a ser el centro de la estrategia, o si se exige multicloud. Las reglas de calidad de este repositorio están verificadas en Spark local con resultados idénticos a la versión DuckDB; las celdas específicas de Delta y las rutas de cada plataforma no se han probado en Fabric ni en Databricks.</p>
+<p><b>Decisión: Fabric.</b> La empresa tiene 30+ informes de Power BI; bajo el supuesto de un equipo orientado a SQL y BI y un volumen moderado (decenas de millones de pedidos, no petabytes). <b>Cambiaría a Databricks</b> si el volumen crece a decenas de TB, si el ML o el streaming pasan a ser el centro de la estrategia, o si se exige multicloud. Las reglas de calidad de este repositorio están verificadas en Spark local con resultados idénticos a la versión DuckDB; las celdas específicas de Delta y las rutas de cada plataforma no se han probado en Fabric ni en Databricks.</p>
 
 <div class="pg"></div>
 <h2>3. Versionar, desplegar y monitorear</h2>
 <ul>
 <li><b>Git.</b> Un repositorio por dominio, ramas cortas y pull request obligatorio con revisión (las reglas del punto 3.1 de esta prueba son la lista de chequeo). Se versiona <i>todo</i>: notebooks, pipelines, DDL, modelos semánticos y los procedimientos almacenados de hoy, que se migran como código (hoy no tienen versión).</li>
 <li><b>Ambientes.</b> Dev, Test y Prod en espacios de trabajo separados, con datos de prueba enmascarados. La promoción usa pipelines de despliegue de Fabric o GitHub Actions; Prod exige aprobación humana.</li>
-<li><b>CI/CD.</b> En cada PR: lint, pruebas unitarias de las reglas de calidad (este repositorio tiene 90), validación de esquemas y de SQL. Un despliegue fallido se revierte con un <code>git revert</code>.</li>
+<li><b>CI/CD.</b> En cada PR: lint, pruebas unitarias de las reglas de calidad (el conteo vigente está en docs/evidencia/ejecucion_actual), validación de esquemas y de SQL. El código se puede revertir; datos y modelos requieren su propio procedimiento de recuperación probado.</li>
 <li><b>Calidad de datos.</b> Reglas en Silver con cuarentena y conteo por regla. Compuertas: si la cuarentena pasa de un umbral o el volumen del día cae de forma anormal frente a su promedio, la corrida falla y <b>no se publica Gold</b>. Conciliación diaria de la venta neta contra la fuente.</li>
-<li><b>Alertas.</b> Monitoring hub y Activator envían a Teams y correo. Los informes ejecutivos salen solo si las verificaciones de las 6:00 pasaron; si no, llega un aviso de “datos en revisión” en lugar de una cifra errónea.</li>
+<li><b>Alertas.</b> Monitoring hub y Activator envían a Teams y correo. En la operación propuesta, los informes salen solo si las verificaciones previas pasaron; si no, llega un aviso de “datos en revisión” en lugar de una cifra errónea.</li>
 <li><b>Seguridad.</b> Secretos en Key Vault (nunca en código), permisos por rol y seguridad a nivel de fila en el modelo.</li></ul>
 
 <h2>4. Los primeros 90 días y la cifra única de ventas</h2>

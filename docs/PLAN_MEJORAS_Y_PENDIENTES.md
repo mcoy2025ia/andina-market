@@ -1,5 +1,7 @@
 # Andina Market — Plan de mejoras y pendientes
 
+> **Actualización 01 nov 2026:** este archivo conserva el diagnóstico/plan anterior a la implementación. Para estado vigente, avances A01–A18 y evidencias, consultar [ESTADO_IMPLEMENTACION.md](ESTADO_IMPLEMENTACION.md). Los estados históricos de abajo no sustituyen ese registro.
+
 **Fecha de corte:** 1 de noviembre de 2026, hora de Colombia.  
 **Objetivo:** completar la entrega técnica y preparar, por etapas, su evolución a un servicio de datos confiable.  
 **Alcance de este archivo:** diagnóstico y plan de trabajo. Crear este documento no significa que sus tareas ya se hayan implementado.

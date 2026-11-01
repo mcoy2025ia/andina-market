@@ -38,3 +38,6 @@ Total de venta neta de todo el período: 14.177.333.600 (16.855 pedidos entregad
 
 ## Qué no se probó
 No se ejecutó Power BI ni Fabric: las medidas están revisadas contra el modelo de Gold, no probadas en un motor DAX.
+
+## Actualización de integración
+El ETL local ahora construye gold.fact_pedido y dimensiones; existe un cargador preparado para SQL Server. Esto no cambia el estado de DAX: requiere validación de motor E03. Ver ESTADO_IMPLEMENTACION.md.

@@ -17,8 +17,8 @@ Generado por `scripts/catalogo_calidad.py` con los conteos reales de los CSV y d
 | 11 | Pagos duplicados (mismo pedido, valor y medio; incluso con la fecha en otro formato) | pagos | 344 | Se conserva uno y el resto va a cuarentena. El conteo es sobre los pagos que pasaron las demás reglas; sobre el archivo completo, sin filtrar, son más (350 con los datos del caso). |
 | 12 | Pagos de un pedido que no existe | pagos | 70 | Cuarentena (`PAGO_HUERFANO`). |
 | 13 | Pagos de un pedido que fue rechazado | pagos | 345 | Cuarentena (`PEDIDO_EN_CUARENTENA`); si el pedido se corrige o llega después, el pago se relee y se carga en la siguiente corrida. |
-| 14 | Ticket con fecha de cierre anterior a la de creación | tickets | 99 | Tratamiento propuesto (el ETL actual no carga tickets; el DDL lo prevé): se conserva el ticket y `horas_resolucion` queda nula para no promediar tiempos negativos. |
-| 15 | Ticket cerrado sin fecha de cierre | tickets | 59 | Tratamiento propuesto, igual que el anterior; tampoco está implementado en el ETL. |
+| 14 | Ticket con fecha de cierre anterior a la de creación | tickets | 99 | Implementado en la carga local opcional de soporte: se conserva el ticket y `horas_resolucion` queda nula para no promediar tiempos negativos. |
+| 15 | Ticket cerrado sin fecha de cierre | tickets | 59 | Implementado en la carga local opcional: se marca y la duración queda nula. |
 
 ## Hallazgos de negocio (no son errores de formato, se reportan)
 
@@ -27,4 +27,4 @@ Generado por `scripts/catalogo_calidad.py` con los conteos reales de los CSV y d
 
 ## Alcance
 
-Cada regla vive en `src/shared/andina_etl/rules.py` y tiene su prueba en `tests/test_rules.py`. Los problemas 1 a 5 se **corrigen o se marcan**; del 6 al 13 se **rechazan a cuarentena**, con la fila original completa en JSON para poder revisarla y reprocesarla; el 14 y el 15 (tickets) son tratamientos propuestos que el ETL todavía no implementa. Hay además reglas de defensa que con estos datos no encuentran casos: ids nulos, ids repetidos en el mismo archivo y fechas ilegibles.
+Cada regla vive en `src/shared/andina_etl/rules.py` y tiene su prueba en `tests/test_rules.py`. Los problemas 1 a 5 se **corrigen o se marcan**; del 6 al 13 se **rechazan a cuarentena**, con la fila original completa en JSON para poder revisarla y reprocesarla; el 14 y el 15 (tickets) se implementaron en el flujo local opcional. Hay además reglas de defensa que con estos datos no encuentran casos: ids nulos, ids repetidos en el mismo archivo y fechas ilegibles.

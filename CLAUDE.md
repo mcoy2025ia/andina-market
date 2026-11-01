@@ -1,3 +1,7 @@
+# Guía actualizada de trabajo
+
+Consultar primero docs/ESTADO_IMPLEMENTACION.md, README.md y README_ETL.md. El texto siguiente conserva orientación previa; las funciones nuevas de orquestación se implementan localmente y no implican paridad integral con Delta.
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
@@ -51,4 +55,4 @@ T-SQL, DDL, DAX y celdas Delta del notebook (MERGE, rutas) **no se han ejecutado
 ## Notas
 
 - `python -m andina_etl` requiere `PYTHONPATH=src/shared`; el comando soportado es `scripts/cargar_datos.py`.
-- El directorio no es un repositorio git.
+- El directorio es el repositorio Git privado mcoy2025ia/andina-market.

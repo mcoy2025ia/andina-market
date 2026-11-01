@@ -1,0 +1,325 @@
+{
+ "pedidos": {
+  "canal_variante_sucia": "810",
+  "canal_desconocido": "0",
+  "fuera_rango": "20",
+  "fuera_rango_detalle": {
+   "2027": 20
+  },
+  "vb_no_positivo": "35",
+  "desc_invalido": "74",
+  "desc_negativo": "0",
+  "desc_mayor_vb": "74",
+  "entregado_sin_fecha": "0",
+  "entrega_antes_pedido": "87",
+  "cancelado_con_entrega": "0",
+  "devuelto_sin_entrega": "0",
+  "cliente_inexistente": "60",
+  "individual_malo": 169,
+  "filas_en_grupo_dup_todo_archivo": 594,
+  "dup_sobrantes_todo_archivo": 297,
+  "dup_logicos_entre_validos": 295,
+  "grupos_dup_con_estado_distinto": 0,
+  "grupos_dup_con_canal_distinto": 0,
+  "grupos_dup_con_desc_distinto": 0,
+  "grupos_dup_con_entrega_distinta": 0,
+  "pedidos_validos": 19270,
+  "registros_rechazados": 464
+ },
+ "venta_neta_total": 14177333600,
+ "pedidos_entregados": 16855,
+ "filas_gold_dia_canal_cat": 7925,
+ "sensibilidad": {
+  "venta_sin_ninguna_regla": 14426600535,
+  "venta_validos_sin_dedup": 14383837000,
+  "venta_si_gana_max_id": 14177333600
+ },
+ "meses_por_canal": {
+  "APP": 21,
+  "TIENDA": 21,
+  "WEB": 21
+ },
+ "share_canal": {
+  "APP": 42.8,
+  "TIENDA": 24.7,
+  "WEB": 32.5
+ },
+ "mensual_total": {
+  "2025-01": [
+   113198600,
+   139
+  ],
+  "2025-02": [
+   213279700,
+   234
+  ],
+  "2025-03": [
+   320529800,
+   363
+  ],
+  "2025-04": [
+   371952700,
+   413
+  ],
+  "2025-05": [
+   496320700,
+   602
+  ],
+  "2025-06": [
+   455631200,
+   595
+  ],
+  "2025-07": [
+   596305400,
+   714
+  ],
+  "2025-08": [
+   675719800,
+   844
+  ],
+  "2025-09": [
+   648367500,
+   823
+  ],
+  "2025-10": [
+   788303200,
+   956
+  ],
+  "2025-11": [
+   834306500,
+   972
+  ],
+  "2025-12": [
+   924357100,
+   1073
+  ],
+  "2026-01": [
+   948592900,
+   1085
+  ],
+  "2026-02": [
+   822651100,
+   982
+  ],
+  "2026-03": [
+   926711300,
+   1048
+  ],
+  "2026-04": [
+   864695900,
+   1032
+  ],
+  "2026-05": [
+   872112100,
+   1030
+  ],
+  "2026-06": [
+   864946200,
+   1013
+  ],
+  "2026-07": [
+   862531800,
+   1045
+  ],
+  "2026-08": [
+   781705300,
+   991
+  ],
+  "2026-09": [
+   795114800,
+   901
+  ]
+ },
+ "tienda_jun_sep_2026": [
+  217573400,
+  105808200
+ ],
+ "var_mes_anterior_2026_08": -9.4,
+ "var_canal_2026": {
+  "2026-01": {
+   "APP": 4.9,
+   "TIENDA": -17.4,
+   "WEB": 18.7
+  },
+  "2026-02": {
+   "APP": -12.8,
+   "TIENDA": -7.3,
+   "WEB": -17.8
+  },
+  "2026-03": {
+   "APP": 31.9,
+   "TIENDA": -0.7,
+   "WEB": 0.1
+  },
+  "2026-04": {
+   "APP": -5.5,
+   "TIENDA": -3.7,
+   "WEB": -10.7
+  },
+  "2026-05": {
+   "APP": -3.2,
+   "TIENDA": 5.1,
+   "WEB": 4.1
+  },
+  "2026-06": {
+   "APP": -5.4,
+   "TIENDA": 3.3,
+   "WEB": 2.8
+  },
+  "2026-07": {
+   "APP": 14.0,
+   "TIENDA": -20.7,
+   "WEB": -3.7
+  },
+  "2026-08": {
+   "APP": -13.3,
+   "TIENDA": -14.1,
+   "WEB": 0.3
+  },
+  "2026-09": {
+   "APP": 20.7,
+   "TIENDA": -28.6,
+   "WEB": -8.1
+  }
+ },
+ "dax": {
+  "2026-01": {
+   "venta": 948592900,
+   "pedidos": 1085,
+   "ticket": 874279,
+   "previo": 113198600,
+   "var_pct": 737.99
+  },
+  "2026-02": {
+   "venta": 822651100,
+   "pedidos": 982,
+   "ticket": 837730,
+   "previo": 213279700,
+   "var_pct": 285.71
+  },
+  "2026-03": {
+   "venta": 926711300,
+   "pedidos": 1048,
+   "ticket": 884267,
+   "previo": 320529800,
+   "var_pct": 189.12
+  },
+  "2026-06": {
+   "venta": 864946200,
+   "pedidos": 1013,
+   "ticket": 853846,
+   "previo": 455631200,
+   "var_pct": 89.83
+  },
+  "2026-09": {
+   "venta": 795114800,
+   "pedidos": 901,
+   "ticket": 882480,
+   "previo": 648367500,
+   "var_pct": 22.63
+  }
+ },
+ "dax_anual": {
+  "2025_completo": 6438272200,
+  "2026_ene_sep": 7739061400,
+  "2025_ene_sep": 3891305400,
+  "var_anual_si_compara_12_vs_9": 20.2,
+  "var_anual_comparable_9_vs_9": 98.9
+ },
+ "clientes": {
+  "total": 6040,
+  "personas": 6000,
+  "doc_con_formato_sucio": 40,
+  "ids_extra_por_doc": 40
+ },
+ "recompra_por_anio_cohorte": {
+  "2025": {
+   "1m": [
+    32.1,
+    3073
+   ],
+   "3m": [
+    63.2,
+    3071
+   ],
+   "6m": [
+    74.7,
+    3065
+   ]
+  },
+  "2026": {
+   "1m": [
+    26.1,
+    2384
+   ],
+   "3m": [
+    49.2,
+    1763
+   ],
+   "6m": [
+    57.1,
+    856
+   ]
+  }
+ },
+ "recompra_denominador_todos_registrados": {
+  "2025": {
+   "1m": 30.9,
+   "3m": 60.9,
+   "6m": 72.0
+  },
+  "2026": {
+   "1m": 24.3,
+   "3m": 46.4,
+   "6m": 53.9
+  }
+ },
+ "base_6m_2026": {
+  "personas": 856,
+  "cohortes": [
+   "2026-01",
+   "2026-02",
+   "2026-03"
+  ]
+ },
+ "pagos": {
+  "fecha_dmy": 1200,
+  "fecha_invalida": 0,
+  "valor_cero": 0,
+  "reembolsos": 1740,
+  "huerfanos": 70,
+  "de_pedido_rechazado": 345,
+  "anterior_a_pedido": 0,
+  "dup_logicos_fecha_normalizada": 344,
+  "dup_logicos_fecha_texto_sin_filtrar": 303,
+  "dup_logicos_fecha_norm_todo_archivo": 350,
+  "dup_logicos_fecha_texto_todo_archivo": 309,
+  "pagos_validos": 20124,
+  "pagos_rechazados": 759,
+  "entregados_sin_pago_valido": 122,
+  "entregados_sin_ningun_pago_crudo": 122,
+  "entregados_pagado_distinto_a_neto": 0,
+  "reembolso_en_pedido_entregado": 0,
+  "lag_carga_dias": {
+   "count": 20883.0,
+   "mean": 1.3,
+   "std": 0.5,
+   "min": 1.0,
+   "25%": 1.0,
+   "50%": 1.0,
+   "75%": 2.0,
+   "max": 2.0
+  },
+  "lag_carga_mayor_3": 0
+ },
+ "tickets": {
+  "cierre_antes_creacion": 99,
+  "cerrado_sin_fecha": 59,
+  "abierto_con_cierre": 0,
+  "cliente_inexistente": 0,
+  "pedido_inexistente": 0,
+  "id_pedido_vacio": 0,
+  "ticket_dup_id": 0,
+  "descripcion_distintas": 34
+ }
+}
