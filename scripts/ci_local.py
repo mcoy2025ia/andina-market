@@ -16,9 +16,9 @@ def main():
         for p in (ROOT/base).rglob('*.py'):
             ast.parse(p.read_text(encoding='utf-8'),filename=str(p))
     notebook=ROOT/'fabric/notebooks/andina_etl_spark.ipynb'
-    antes=notebook.read_bytes()
+    antes=notebook.read_text(encoding="utf-8")
     subprocess.run([sys.executable,str(ROOT/'src/shared/spark/build_notebook.py')],check=True,cwd=ROOT)
-    if notebook.read_bytes()!=antes:raise RuntimeError('Notebook desactualizado respecto al generador')
+    if notebook.read_text(encoding="utf-8")!=antes:raise RuntimeError('Notebook desactualizado respecto al generador')
     nb=json.loads(antes)
     for cell in nb['cells']:
         if cell['cell_type']=='code':ast.parse(''.join(cell['source']))
