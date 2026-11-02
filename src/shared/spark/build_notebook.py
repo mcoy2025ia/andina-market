@@ -4,12 +4,18 @@ Uso: python spark/build_notebook.py
 El notebook lleva las reglas pegadas en una celda para que no dependa de subir archivos .py.
 """
 import json
+import re
 import uuid
 import hashlib
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[3]
-REGLAS = (Path(__file__).resolve().parent / "rules_spark.py").read_text(encoding="utf-8")
+AQUI = Path(__file__).resolve().parent
+REGLAS = (AQUI / "rules_spark.py").read_text(encoding="utf-8")
+# En el notebook las reglas ya están en el espacio de nombres de la celda anterior,
+# así que el import entre módulos sobra (y fallaría: no hay archivos .py que subir).
+EXTENSIONES = re.sub(r"^from rules_spark import .*$", "",
+                     (AQUI / "extensiones_spark.py").read_text(encoding="utf-8"), flags=re.M)
 
 INTRO = """# Andina Market · ETL en PySpark + Delta (Fabric o Databricks)
 
@@ -53,7 +59,24 @@ else:
         return f"andina.datos.{nombre}"
 '''
 
-DDL = '''# === 3. Tablas Delta (se crean una sola vez) ===
+CONTRATOS_CELDA = '''# === 5. Contrato de archivo: un CSV inválido detiene la corrida, no sus filas ===
+# Si la cabecera cambió, lo que viene debajo no significa lo que el proceso cree.
+# Por eso esto corre antes de aterrizar nada en Bronze.
+contratos = {}
+for _tabla in ("clientes", "pedidos", "pagos", "tickets_soporte"):
+    try:
+        contratos[_tabla] = verificar_contrato(spark, f"{RAW}/{_tabla}.csv", _tabla)
+    except AnalysisException:
+        if _tabla == "tickets_soporte":      # soporte es opcional
+            contratos[_tabla] = None
+            continue
+        raise
+for _tabla, _info in contratos.items():
+    print(f"{_tabla:16}", "ausente (opcional)" if _info is None else
+          f"{_info['filas']:>7} filas, columnas extra: {_info['extras'] or 'ninguna'}")
+'''
+
+DDL = '''# === 4. Tablas Delta (se crean una sola vez) ===
 ddl = {
     "silver_clientes": """id_cliente STRING, nombre STRING, documento_original STRING, documento_limpio STRING,
         ciudad STRING, canal_registro STRING, fecha_registro DATE, cohorte_registro DATE,
@@ -71,11 +94,14 @@ ddl = {
     "gold_venta_neta_diaria": """fecha DATE, canal STRING, categoria STRING, num_pedidos BIGINT,
         venta_bruta BIGINT, descuento BIGINT, venta_neta BIGINT""",
 }
+ddl.update(DDL_EXTENSIONES)          # soporte, estrella, incidencias y publicación
 for tabla, columnas in ddl.items():
     spark.sql(f"CREATE TABLE IF NOT EXISTS {T(tabla)} ({columnas}) USING DELTA")
+spark.sql(f"CREATE OR REPLACE VIEW {T('v_cliente_maestro')} AS " + sql_cliente_maestro(T))
+spark.sql(f"CREATE OR REPLACE VIEW {T('v_etiqueta_vigente')} AS " + sql_etiqueta_vigente(T))
 '''
 
-BRONZE_CELDA = '''# === 4. Bronze: copia cruda en Parquet, inmutable e idempotente ===
+BRONZE_CELDA = '''# === 6. Bronze: copia cruda en Parquet, inmutable e idempotente ===
 from pyspark.sql.types import LongType, StringType, StructField, StructType, TimestampType
 
 SCHEMA_MANIFEST = StructType([
@@ -109,7 +135,7 @@ def aterrizar(tabla, run_id):
     return leido, nuevo
 '''
 
-PIPELINE = '''# === 5. Clientes -> pedidos -> pagos (cada paso es idempotente por sí mismo) ===
+PIPELINE = '''# === 7. Clientes -> pedidos -> pagos (cada paso es idempotente por sí mismo) ===
 run_id, inicio = str(uuid.uuid4()), datetime.now()
 resumen = {}
 
@@ -228,7 +254,80 @@ if maximo:
         WHEN NOT MATCHED THEN INSERT *""")
 '''
 
-GOLD = '''# === 6. Venta neta diaria: se recalcula solo para los días tocados (depende solo de Silver) ===
+SOPORTE = '''# === 8. Soporte: opcional, y nunca altera el cálculo de venta ===
+# Las fechas incoherentes se conservan marcadas y sin horas de resolución: inventar un
+# SLA que la fuente no respalda sería peor que no tenerlo.
+if contratos.get("tickets_soporte"):
+    tic_raw, nuevo_b = aterrizar("tickets_soporte", run_id)
+    tic_ok, tic_q = validar_tickets(tic_raw)
+    tic_rechazados = rechazados(tic_q, tic_ok, "id_ticket")
+    ins, upd = merge_silver(tic_ok, "silver_tickets", "id_ticket")
+    resumen["tickets_soporte"] = dict(insertados=ins, actualizados=upd,
+                                      cuarentena_nueva=merge_cuarentena(tic_q), bronze_nuevo=nuevo_b)
+    resumen["tickets_soporte"]["retirados"] = retirar("silver_tickets", "id_ticket", tic_rechazados)
+
+
+# ---- incidencias de calidad: se abren y se resuelven, nunca se borra el historial
+def actualizar_incidencias(tabla, raw, q, col_id):
+    """Solo se resuelven los ids efectivamente reevaluados en esta corrida. Que una fila
+    no venga en el lote no prueba que su problema se haya corregido."""
+    raw.select(F.trim(F.col(col_id)).alias("id_registro")).createOrReplaceTempView("ids_revisados")
+    q.select("id_registro", "regla_violada").createOrReplaceTempView("q_nueva")
+    for sentencia_sql in delta_sentencias_incidencias(T, tabla, run_id):
+        spark.sql(sentencia_sql)
+
+
+for _tabla, _raw, _q, _col in [("clientes", cli_raw, cli_q, "id_cliente"),
+                               ("pedidos", ped_raw, ped_q, "id_pedido"),
+                               ("pagos", pag_raw, pag_q, "id_pago")]:
+    actualizar_incidencias(_tabla, _raw, _q, _col)
+if contratos.get("tickets_soporte"):
+    actualizar_incidencias("tickets_soporte", tic_raw, tic_q, "id_ticket")
+'''
+
+ESTRELLA = '''# === 10. Modelo estrella: dimensiones estables y hechos marcados con el run ===
+# Las claves ya emitidas no se mueven entre cargas: si se renumeraran, cualquier informe
+# guardado contra ellas quedaría apuntando a otra cosa.
+from datetime import date as _date
+
+_rango = spark.sql(f"""
+    SELECT least(coalesce(min(f), DATE'{FECHA_MIN}'), DATE'{FECHA_MIN}'),
+           greatest(coalesce(max(f), DATE'{FECHA_MAX}'), DATE'{FECHA_MAX}')
+    FROM (SELECT fecha_pedido_dia AS f FROM {T('silver_pedidos')}
+          UNION SELECT fecha_pago FROM {T('silver_pagos')}
+          UNION SELECT cast(fecha_creacion AS DATE) FROM {T('silver_tickets')})""").first()
+
+for paso in pasos_dimensiones(T, _rango[0], _rango[1]):
+    spark.sql(sentencia(paso, T))
+spark.sql(delta_refrescar_atributos_cliente(T))      # atributos al día, misma clave
+for paso in pasos_hechos(T, run_id):
+    spark.sql(sentencia(paso, T))
+resumen["estrella"] = comprobar_estrella(spark, T)
+print("estrella:", resumen["estrella"])
+'''
+
+PUBLICACION = '''# === 11. Publicación consistente sin transacción entre tablas ===
+# DuckDB envuelve toda la corrida en una transacción; Delta solo garantiza atomicidad por
+# tabla. Aquí la consistencia se consigue al revés: los hechos ya están escritos con su
+# run_id, pero el consumidor lee las vistas v_fact_*, que filtran por el run publicado.
+# Mientras el puntero no se mueva, Power BI y el reporte siguen viendo la carga anterior
+# completa, nunca una a medias.
+POLITICA = PoliticaPublicacion()      # sin umbrales inventados; configurar tras acordar U08
+
+for sentencia_sql in sentencias_vistas_publicadas(T):
+    spark.sql(sentencia_sql)
+
+try:
+    resumen["publicacion"] = validar_publicacion(spark, T, resumen, POLITICA)
+except PublicacionBloqueada as e:
+    # La carga queda escrita pero NO publicada: el puntero sigue en el run anterior.
+    print("PUBLICACIÓN BLOQUEADA:", e)
+    raise
+spark.sql(delta_publicar(T, run_id, resumen["publicacion"]["venta_neta"]))
+print("publicado:", resumen["publicacion"])
+'''
+
+GOLD = '''# === 9. Venta neta diaria: se recalcula solo para los días tocados (depende solo de Silver) ===
 if RECALCULAR_GOLD:
     dias = sorted({r[0] for r in spark.table(T("silver_pedidos")).select("fecha_pedido_dia")
                    .union(spark.table(T("gold_venta_neta_diaria")).select("fecha")).distinct().collect()})
@@ -250,7 +349,7 @@ for tabla in ("clientes", "pedidos", "pagos"):
 print("dias de venta recalculados:", resumen["dias_recalculados"])
 '''
 
-VERIFICACION = '''# === 7. Verificación contra el ETL local (solo aplica con el conjunto de datos completo del caso) ===
+VERIFICACION = '''# === 12. Verificación contra el ETL local (solo aplica con el conjunto de datos completo del caso) ===
 ESPERADO = {"pedidos_validos": 19270, "pagos_validos": 20124, "clientes_validos": 6040,
             "filas_gold": 7925, "venta_neta": 14_177_333_600}
 real = {
@@ -277,9 +376,16 @@ def celda(tipo, texto):
 
 
 cuerpo_reglas = "# === 2. Reglas de calidad (espejo de la versión pandas; ver spark/rules_spark.py) ===\n" + REGLAS
+cuerpo_extensiones = ("# === 3. Extensiones: soporte, estrella, contratos, incidencias y publicación\n"
+                      "# (espejo de andina_etl/{tickets,star,contracts,operations}.py; "
+                      "ver spark/extensiones_spark.py) ===\n"
+                      "from pyspark.sql.utils import AnalysisException\n" + EXTENSIONES)
 nb = {
-    "cells": [celda("markdown", INTRO), celda("code", CONFIG), celda("code", cuerpo_reglas), celda("code", DDL),
-              celda("code", BRONZE_CELDA), celda("code", PIPELINE), celda("code", GOLD), celda("code", VERIFICACION)],
+    "cells": [celda("markdown", INTRO), celda("code", CONFIG), celda("code", cuerpo_reglas),
+              celda("code", cuerpo_extensiones), celda("code", DDL), celda("code", CONTRATOS_CELDA),
+              celda("code", BRONZE_CELDA), celda("code", PIPELINE), celda("code", SOPORTE),
+              celda("code", GOLD), celda("code", ESTRELLA), celda("code", PUBLICACION),
+              celda("code", VERIFICACION)],
     "metadata": {
         "kernelspec": {"display_name": "PySpark", "language": "python", "name": "synapse_pyspark"},
         "language_info": {"name": "python"},

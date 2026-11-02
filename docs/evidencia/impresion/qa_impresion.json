@@ -1,0 +1,792 @@
+{
+  "navegador": "Chrome headless local",
+  "metodo": "reglas @media print aplicadas en pantalla; capítulos alineados al borde de página",
+  "alcance": "comprueba altura de bloque contra página, declaración de break-inside, encabezado repetido en tablas largas y desbordes horizontales",
+  "fuera_de_alcance": "en qué punto exacto cae cada salto lo decide el paginador del navegador; eso se certifica con la revisión por imagen (--paginas)",
+  "documentos": [
+    {
+      "area_px": [
+        1032,
+        703
+      ],
+      "capitulos": 17,
+      "paginas_estimadas": 47,
+      "problemas": [],
+      "capitulo_detalle": [
+        {
+          "orden": 1,
+          "id": "inicio",
+          "alto_px": 721,
+          "paginas": 2,
+          "pagina_inicial": 2
+        },
+        {
+          "orden": 2,
+          "id": "problema",
+          "alto_px": 703,
+          "paginas": 1,
+          "pagina_inicial": 3
+        },
+        {
+          "orden": 3,
+          "id": "senales",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 4
+        },
+        {
+          "orden": 4,
+          "id": "retencion",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 6
+        },
+        {
+          "orden": 5,
+          "id": "calidad",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 8
+        },
+        {
+          "orden": 6,
+          "id": "motor",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 10
+        },
+        {
+          "orden": 7,
+          "id": "resiliencia",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 12
+        },
+        {
+          "orden": 8,
+          "id": "semantica",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 14
+        },
+        {
+          "orden": 9,
+          "id": "rendimiento",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 16
+        },
+        {
+          "orden": 10,
+          "id": "plataforma",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 18
+        },
+        {
+          "orden": 11,
+          "id": "operacion",
+          "alto_px": 703,
+          "paginas": 1,
+          "pagina_inicial": 20
+        },
+        {
+          "orden": 12,
+          "id": "ia",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 21
+        },
+        {
+          "orden": 13,
+          "id": "liderazgo",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 23
+        },
+        {
+          "orden": 14,
+          "id": "ruta",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 25
+        },
+        {
+          "orden": 15,
+          "id": "evidencia",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 27
+        },
+        {
+          "orden": 16,
+          "id": "decision",
+          "alto_px": 703,
+          "paginas": 1,
+          "pagina_inicial": 29
+        },
+        {
+          "orden": 17,
+          "id": "diagnostico",
+          "alto_px": 12511,
+          "paginas": 18,
+          "pagina_inicial": 30
+        }
+      ],
+      "documento": "docs/presentacion_entrega.html",
+      "pdf": "docs\\evidencia\\impresion\\presentacion_entrega.pdf",
+      "paginas_pdf": 52,
+      "inventario_paginas": [
+        {
+          "pagina": 1,
+          "caracteres": 302,
+          "inicio": "Actualización A01–A18 · 01 nov 2026. Modelo estrella, soporte, contratos, compuertas, CI y"
+        },
+        {
+          "pagina": 2,
+          "caracteres": 473,
+          "inicio": "A N D I N A M A R K E T / D A T A & D E C I S I O N S Manuel Alberto Coy Benavides Revisió"
+        },
+        {
+          "pagina": 3,
+          "caracteres": 1081,
+          "inicio": "0 1 / E L P U N T O D E P A R T I D A C u a n d o c a d a á r e a t i e n e s u c i f r a "
+        },
+        {
+          "pagina": 4,
+          "caracteres": 443,
+          "inicio": "0 2 / L O Q U E D I C E N L O S D A T O S L a v e n t a s e e s t a b i l i z ó . L a m e "
+        },
+        {
+          "pagina": 5,
+          "caracteres": 581,
+          "inicio": "A P P · J U N → S E P 2 0 2 6 + 1 9 , 2 % De $376,5 M a $448,9 M. El crecimiento correspon"
+        },
+        {
+          "pagina": 6,
+          "caracteres": 715,
+          "inicio": "0 3 / L A S E G U N D A S E Ñ A L V e n d e r h o y n o g a r a n t i z a q u e v u e l v "
+        },
+        {
+          "pagina": 7,
+          "caracteres": 471,
+          "inicio": "L E C T U R A C L A V E TIEND A creció 59,8 % de junio a septiembre de 2025 y cayó 51,4 % "
+        },
+        {
+          "pagina": 8,
+          "caracteres": 897,
+          "inicio": "0 4 / C O N S T R U I R C O N F I A N Z A L o s e r r o r e s n o d e s a p a r e c e n . "
+        },
+        {
+          "pagina": 9,
+          "caracteres": 292,
+          "inicio": "345 pagos asociados a pedidos rechazados L E C T U R A C L A V E Estos hallazgos se escala"
+        },
+        {
+          "pagina": 10,
+          "caracteres": 694,
+          "inicio": "0 5 / D E L A R C H I V O A L I N D I C A D O R U n a c a d e n a d e e v i d e n c i a . "
+        },
+        {
+          "pagina": 11,
+          "caracteres": 629,
+          "inicio": "T R A Z A B I L I D A D U n a r c h i v o , u n a h u e l l a El manifiesto evita aterriza"
+        },
+        {
+          "pagina": 12,
+          "caracteres": 556,
+          "inicio": "0 6 / L O Q U E P A S A C U A N D O A L G O C A M B I A V o l v e r a e j e c u t a r d e "
+        },
+        {
+          "pagina": 13,
+          "caracteres": 364,
+          "inicio": "Histórico ← 3 días de reproceso → Watermark Datos nuevos → L E C T U R A C L A V E P edido"
+        },
+        {
+          "pagina": 14,
+          "caracteres": 588,
+          "inicio": "0 7 / U N A D E F I N I C I Ó N Q U E V I A J A E l m i s m o c o n t r a t o e n c a d a "
+        },
+        {
+          "pagina": 15,
+          "caracteres": 632,
+          "inicio": "C O M P A R A C I Ó N C O R R E C T A E n e – s e p v s e n e – s e p P ara 2026: $7.739,1"
+        },
+        {
+          "pagina": 16,
+          "caracteres": 702,
+          "inicio": "0 8 / M E D I R A N T E S D E P R O M E T E R E l í n d i c e n o a r r e g l a u n a b ú "
+        },
+        {
+          "pagina": 17,
+          "caracteres": 558,
+          "inicio": "L E C T U R A C L A V E P endiente: benchmark representativo en SQL Server, incluidos cost"
+        },
+        {
+          "pagina": 18,
+          "caracteres": 615,
+          "inicio": "0 9 / A R Q U I T E C T U R A O B J E T I V O E s c a l a r l a c o n f i a n z a , n o l "
+        },
+        {
+          "pagina": 19,
+          "caracteres": 701,
+          "inicio": "H I P Ó T E S I S P R E F E R I D A M i c r o s o f t F a b r i c Probar el recorrido comp"
+        },
+        {
+          "pagina": 20,
+          "caracteres": 416,
+          "inicio": "1 0 / P U B L I C A R S O L O C O N C O N F I A N Z A U n a c a r g a p u e d e t e r m i "
+        },
+        {
+          "pagina": 21,
+          "caracteres": 789,
+          "inicio": "A N T E S D E L C A M B I O P R → p r u e b a s → T e s t V ersionar DDL, notebooks, regla"
+        },
+        {
+          "pagina": 22,
+          "caracteres": 265,
+          "inicio": "1 1 / A U T O M A T I Z A C I Ó N C O N C R I T E R I O C l a s i f i c a r e s f á c i l "
+        },
+        {
+          "pagina": 23,
+          "caracteres": 984,
+          "inicio": "E X A C T I T U D · 1 5 0 F R A S E S S I N T É T I C A S R eglas 62,7 % LLM 100 % R esult"
+        },
+        {
+          "pagina": 24,
+          "caracteres": 592,
+          "inicio": "1 2 / L I D E R A R L A R E S P U E S T A L a c o n f i a n z a t a m b i é n s e o p e r "
+        },
+        {
+          "pagina": 25,
+          "caracteres": 657,
+          "inicio": "R E V I S I Ó N D E L P R C o r r e g i r y e n s e ñ a r Ocho bloqueantes documentados: s"
+        },
+        {
+          "pagina": 26,
+          "caracteres": 780,
+          "inicio": "1 3 / D E L P R O T O T I P O A L S E R V I C I O 9 0 d í a s p a r a g a n a r c o n f i "
+        },
+        {
+          "pagina": 27,
+          "caracteres": 376,
+          "inicio": "Meses 4—6 Más fuentes y dominios Meses 7—9 Migración del resto de informes Meses 10—12 Gob"
+        },
+        {
+          "pagina": 28,
+          "caracteres": 941,
+          "inicio": "1 4 / H O N E S T I D A D T É C N I C A U n a d e m o s t r a c i ó n s ó l i d a t i e n "
+        },
+        {
+          "pagina": 29,
+          "caracteres": 590,
+          "inicio": "La documentación también necesita r econciliación. README y lectura SQL declaran Spark SQL"
+        },
+        {
+          "pagina": 30,
+          "caracteres": 844,
+          "inicio": "1 5 / E L S I G U I E N T E N I V E L L a b a s e e s t á c o n s t r u i d a . A h o r a "
+        },
+        {
+          "pagina": 31,
+          "caracteres": 1524,
+          "inicio": "A N E X O / D I A G N Ó S T I C O A C C I O N A B L E D i a g n ó s t i c o i n i c i a l "
+        },
+        {
+          "pagina": 32,
+          "caracteres": 827,
+          "inicio": "P02 Sp ark SQL igual a DuckDB en las consultas de v enta − R evisión 01 nov 2026 Hay contr"
+        },
+        {
+          "pagina": 33,
+          "caracteres": 1794,
+          "inicio": "P03 T-SQL de v enta neta y r ecompra en SQL Ser v er − I N V E N T A R I O O R I G I N A L"
+        },
+        {
+          "pagina": 34,
+          "caracteres": 1420,
+          "inicio": "P05 Medidas D AX en P ow er BI Desk t op − I N V E N T A R I O O R I G I N A L · E S T A D"
+        },
+        {
+          "pagina": 35,
+          "caracteres": 1559,
+          "inicio": "P06 Not ebook Delta en F abric − I N V E N T A R I O O R I G I N A L · E S T A D O N O A C"
+        },
+        {
+          "pagina": 36,
+          "caracteres": 1757,
+          "inicio": "P08 Optimización de la consulta en SQL Ser v er − I N V E N T A R I O O R I G I N A L · E "
+        },
+        {
+          "pagina": 37,
+          "caracteres": 1923,
+          "inicio": "P10 R evisión de las 34 etiquetas de r efer encia − I N V E N T A R I O O R I G I N A L · "
+        },
+        {
+          "pagina": 38,
+          "caracteres": 1712,
+          "inicio": "P12 Definición de v enta neta firmada y dueños por dominio − R evisión 01 nov 2026 La defi"
+        },
+        {
+          "pagina": 39,
+          "caracteres": 780,
+          "inicio": "P14 Licencias de P ow er BI Pr o b ajo F64 y cost os de F abric y Databricks − I N V E N T"
+        },
+        {
+          "pagina": 40,
+          "caracteres": 1133,
+          "inicio": "P15 R evisión visual de la pr esentación en un nav egador − R evisión 01 nov 2026 Esta ver"
+        },
+        {
+          "pagina": 41,
+          "caracteres": 923,
+          "inicio": "P16 R epor t e de v entas contra SQL Ser v er r eal − I N V E N T A R I O O R I G I N A L "
+        },
+        {
+          "pagina": 42,
+          "caracteres": 1250,
+          "inicio": "P17 R otación de cr edenciales expuestas − R evisión 01 nov 2026 La exposición de la clave"
+        },
+        {
+          "pagina": 43,
+          "caracteres": 777,
+          "inicio": "P18 Umbrales de cuar ent ena y de v olumen − I N V E N T A R I O O R I G I N A L · E S T A"
+        },
+        {
+          "pagina": 44,
+          "caracteres": 916,
+          "inicio": "P19 Salidas guar dadas de las ejecuciones declaradas − R evisión 01 nov 2026 Esta revisión"
+        },
+        {
+          "pagina": 45,
+          "caracteres": 818,
+          "inicio": "P20 Cifra mensual de APP − R evisión 01 nov 2026 Calculado en Gold en esta revisión: APP j"
+        },
+        {
+          "pagina": 46,
+          "caracteres": 1502,
+          "inicio": "P21 Prueb a de la caída de TIEND A con dat os de 2025 (r ecomendada) − R evisión 01 nov 20"
+        },
+        {
+          "pagina": 47,
+          "caracteres": 1134,
+          "inicio": "D02 Borrados y corr ecciones fuera de v entana − O B S E R V A C I Ó N O R I G I N A L · A"
+        },
+        {
+          "pagina": 48,
+          "caracteres": 1190,
+          "inicio": "D04 Contrat os de esquema y cap acidad de ingesta − O B S E R V A C I Ó N O R I G I N A L "
+        },
+        {
+          "pagina": 49,
+          "caracteres": 1215,
+          "inicio": "D06 Aut omatizar calidad, entr ega y obser v abilidad − O B S E R V A C I Ó N O R I G I N "
+        },
+        {
+          "pagina": 50,
+          "caracteres": 1290,
+          "inicio": "D08 Meses sin v entas y contrat o entr e dialect os − O B S E R V A C I Ó N O R I G I N A "
+        },
+        {
+          "pagina": 51,
+          "caracteres": 1211,
+          "inicio": "D10 Endur ecer el client e LLM − O B S E R V A C I Ó N O R I G I N A L · A N T E R I O R A"
+        },
+        {
+          "pagina": 52,
+          "caracteres": 1327,
+          "inicio": "D12 Emp aquetar una entr ega r epr oducible − O B S E R V A C I Ó N O R I G I N A L · A N "
+        }
+      ]
+    },
+    {
+      "area_px": [
+        1032,
+        703
+      ],
+      "capitulos": 13,
+      "paginas_estimadas": 43,
+      "problemas": [],
+      "capitulo_detalle": [
+        {
+          "orden": 1,
+          "id": "p11",
+          "alto_px": 3533,
+          "paginas": 6,
+          "pagina_inicial": 2
+        },
+        {
+          "orden": 2,
+          "id": "p12",
+          "alto_px": 2109,
+          "paginas": 3,
+          "pagina_inicial": 7
+        },
+        {
+          "orden": 3,
+          "id": "p13",
+          "alto_px": 5624,
+          "paginas": 8,
+          "pagina_inicial": 10
+        },
+        {
+          "orden": 4,
+          "id": "p14",
+          "alto_px": 2109,
+          "paginas": 3,
+          "pagina_inicial": 18
+        },
+        {
+          "orden": 5,
+          "id": "p15",
+          "alto_px": 3515,
+          "paginas": 5,
+          "pagina_inicial": 21
+        },
+        {
+          "orden": 6,
+          "id": "p21",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 26
+        },
+        {
+          "orden": 7,
+          "id": "p22",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 28
+        },
+        {
+          "orden": 8,
+          "id": "p23",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 30
+        },
+        {
+          "orden": 9,
+          "id": "p24",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 32
+        },
+        {
+          "orden": 10,
+          "id": "p31",
+          "alto_px": 2812,
+          "paginas": 4,
+          "pagina_inicial": 34
+        },
+        {
+          "orden": 11,
+          "id": "p321",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 38
+        },
+        {
+          "orden": 12,
+          "id": "p322",
+          "alto_px": 1406,
+          "paginas": 2,
+          "pagina_inicial": 40
+        },
+        {
+          "orden": 13,
+          "id": "opcional",
+          "alto_px": 1231,
+          "paginas": 2,
+          "pagina_inicial": 42
+        }
+      ],
+      "documento": "docs/presentacion_resolucion_prueba.html",
+      "pdf": "docs\\evidencia\\impresion\\presentacion_resolucion_prueba.pdf",
+      "paginas_pdf": 48,
+      "inventario_paginas": [
+        {
+          "pagina": 1,
+          "caracteres": 302,
+          "inicio": "Actualización A01–A18 · 01 nov 2026. Modelo estrella, soporte, contratos, compuertas, CI y"
+        },
+        {
+          "pagina": 2,
+          "caracteres": 594,
+          "inicio": "P A R T E 1 · R E S O L U C I Ó N T É C N I C A · 5 0 % / 1 . 1 · S Q L V e n t a m e n s "
+        },
+        {
+          "pagina": 3,
+          "caracteres": 581,
+          "inicio": "A P P · J U N → S E P 2 0 2 6 + 1 9 , 2 % De $376,5 M a $448,9 M. El crecimiento correspon"
+        },
+        {
+          "pagina": 4,
+          "caracteres": 550,
+          "inicio": "R e c o m p r a p o r c o h o r t e d e r e g i s t r o Cohortes 2025 Cohortes 2026 A 1 ME"
+        },
+        {
+          "pagina": 5,
+          "caracteres": 1547,
+          "inicio": "L E C T U R A C L A V E TIEND A creció 59,8 % de junio a septiembre de 2025 y cayó 51,4 % "
+        },
+        {
+          "pagina": 6,
+          "caracteres": 2197,
+          "inicio": "-- madurez = solo cuenta a la persona si primer_pedido + N meses <= última fecha de datos "
+        },
+        {
+          "pagina": 7,
+          "caracteres": 1623,
+          "inicio": "SUM(CASE WHEN DATEADD(MONTH, 1, v.fecha_primero) <= l.ultima THEN 1 ELSE 0 END) AS base_1m"
+        },
+        {
+          "pagina": 8,
+          "caracteres": 910,
+          "inicio": "P A R T E 1 · R E S O L U C I Ó N T É C N I C A · 5 0 % / 1 . 2 · C a l i d a d Q u i n c "
+        },
+        {
+          "pagina": 9,
+          "caracteres": 1370,
+          "inicio": "122 pedidos entregados sin pago registrado 345 pagos asociados a pedidos rechazados L E C "
+        },
+        {
+          "pagina": 10,
+          "caracteres": 1792,
+          "inicio": "# Pr oblema Entidad R egistr os T ratamient o 6 P edidos duplicados con otro id_pedido (mi"
+        },
+        {
+          "pagina": 11,
+          "caracteres": 801,
+          "inicio": "P A R T E 1 · R E S O L U C I Ó N T É C N I C A · 5 0 % / 1 . 3 · P y t h o n / E T L U n "
+        },
+        {
+          "pagina": 12,
+          "caracteres": 1005,
+          "inicio": "T R A Z A B I L I D A D U n a r c h i v o , u n a h u e l l a El manifiesto evita aterriza"
+        },
+        {
+          "pagina": 13,
+          "caracteres": 801,
+          "inicio": "Histórico ← 3 días de reproceso → Watermark Datos nuevos → L E C T U R A C L A V E P edido"
+        },
+        {
+          "pagina": 14,
+          "caracteres": 1407,
+          "inicio": "Ejecución desde cer o pip install -r requirements.txt python scripts/cargar_datos.py --des"
+        },
+        {
+          "pagina": 15,
+          "caracteres": 2608,
+          "inicio": "def _ejecutar(raw_dir: str | Path, db_path: str | Path, cfg: Config | None = None, bronze_"
+        },
+        {
+          "pagina": 16,
+          "caracteres": 2787,
+          "inicio": "con.execute(\"UPDATE silver_pedidos SET flag_cliente_desconocido = NOT EXISTS \" \"(SELECT 1 "
+        },
+        {
+          "pagina": 17,
+          "caracteres": 1943,
+          "inicio": "fechas_afectadas = store.dias_con_venta(con) resumen[\"dias_recalculados\"] = store.refresca"
+        },
+        {
+          "pagina": 18,
+          "caracteres": 378,
+          "inicio": "Abrir archivo fuente ↗ Estado actual · A01–A18 ETL local ampliado con soporte, modelo estr"
+        },
+        {
+          "pagina": 19,
+          "caracteres": 617,
+          "inicio": "P A R T E 1 · R E S O L U C I Ó N T É C N I C A · 5 0 % / 1 . 4 · D A X V e n t a , t i c "
+        },
+        {
+          "pagina": 20,
+          "caracteres": 1655,
+          "inicio": "C O M P A R A C I Ó N C O R R E C T A E n e – s e p v s e n e – s e p P ara 2026: $7.739,1"
+        },
+        {
+          "pagina": 21,
+          "caracteres": 1351,
+          "inicio": "dim_fecha[fecha_key] <= MAX ( fact_pedido[fecha_key] ) -- Solo se desplazan las fechas que"
+        },
+        {
+          "pagina": 22,
+          "caracteres": 762,
+          "inicio": "P A R T E 1 · R E S O L U C I Ó N T É C N I C A · 5 0 % / 1 . 5 · O p t i m i z a c i ó n "
+        },
+        {
+          "pagina": 23,
+          "caracteres": 1456,
+          "inicio": "L E C T U R A C L A V E P endiente: benchmark representativo en SQL Server, incluidos cost"
+        },
+        {
+          "pagina": 24,
+          "caracteres": 2598,
+          "inicio": "-- ============================================================================ -- Parte 1"
+        },
+        {
+          "pagina": 25,
+          "caracteres": 1614,
+          "inicio": ") AS u WHERE EXISTS ( SELECT 1 FROM dbo.pedidos AS d WHERE d.id_cliente = c.id_cliente AND"
+        },
+        {
+          "pagina": 26,
+          "caracteres": 399,
+          "inicio": "Estado en la entr ega inicial · av ances A01–A18 en el enlace super ior Experimento docume"
+        },
+        {
+          "pagina": 27,
+          "caracteres": 620,
+          "inicio": "P A R T E 2 · A R Q U I T E C T U R A Y D E C I S I O N E S · 3 0 % / 2 . 1 · A r q u i t "
+        },
+        {
+          "pagina": 28,
+          "caracteres": 974,
+          "inicio": "H I P Ó T E S I S P R E F E R I D A M i c r o s o f t F a b r i c Probar el recorrido comp"
+        },
+        {
+          "pagina": 29,
+          "caracteres": 362,
+          "inicio": "Estado en la entr ega inicial · av ances A01–A18 en el enlace super ior Arquitectura objet"
+        },
+        {
+          "pagina": 30,
+          "caracteres": 1172,
+          "inicio": "P A R T E 2 · A R Q U I T E C T U R A Y D E C I S I O N E S · 3 0 % / 2 . 2 · T e c n o l "
+        },
+        {
+          "pagina": 31,
+          "caracteres": 1181,
+          "inicio": "Crit erio F abric: hipót esis inicial Databricks: alt ernativ a Qué v alidar Estrategia Pr"
+        },
+        {
+          "pagina": 32,
+          "caracteres": 388,
+          "inicio": "P A R T E 2 · A R Q U I T E C T U R A Y D E C I S I O N E S · 3 0 % / 2 . 3 · O p e r a c "
+        },
+        {
+          "pagina": 33,
+          "caracteres": 1482,
+          "inicio": "NO → R etener + alertar + investigar A N T E S D E L C A M B I O P R → p r u e b a s → T e"
+        },
+        {
+          "pagina": 34,
+          "caracteres": 336,
+          "inicio": "Estado en la entr ega inicial · av ances A01–A18 en el enlace super ior Existen pruebas y "
+        },
+        {
+          "pagina": 35,
+          "caracteres": 834,
+          "inicio": "P A R T E 2 · A R Q U I T E C T U R A Y D E C I S I O N E S · 3 0 % / 2 . 4 · P r i m e r "
+        },
+        {
+          "pagina": 36,
+          "caracteres": 663,
+          "inicio": "Meses 4—6 Más fuentes y dominios Meses 7—9 Migración del resto de informes Meses 10—12 Gob"
+        },
+        {
+          "pagina": 37,
+          "caracteres": 523,
+          "inicio": "Los informes que aún calculen su propia venta se identifican como no oficiales hasta migra"
+        },
+        {
+          "pagina": 38,
+          "caracteres": 1349,
+          "inicio": "P A R T E 3 · L I D E R A Z G O T É C N I C O · 2 0 % / 3 . 1 · R e v i s i ó n d e l P R "
+        },
+        {
+          "pagina": 39,
+          "caracteres": 1589,
+          "inicio": "Prioridad Hallazgo Cambio y motiv o Bloqueante División por cero Sin pedidos, devolver tic"
+        },
+        {
+          "pagina": 40,
+          "caracteres": 1899,
+          "inicio": "JOIN gold.dim_canal c ON c.canal_key = v.canal_key WHERE v.fecha_key = ? GROUP BY c.canal "
+        },
+        {
+          "pagina": 41,
+          "caracteres": 769,
+          "inicio": "if __name__ == \"__main__\": logging.basicConfig(level=logging.INFO, format=\"%(asctime)s %(l"
+        },
+        {
+          "pagina": 42,
+          "caracteres": 1277,
+          "inicio": "P A R T E 3 · L I D E R A Z G O T É C N I C O · 2 0 % / 3 . 2 . 1 · I n c i d e n t e P r "
+        },
+        {
+          "pagina": 43,
+          "caracteres": 331,
+          "inicio": "Estado en la entr ega inicial · av ances A01–A18 en el enlace super ior R espuesta propues"
+        },
+        {
+          "pagina": 44,
+          "caracteres": 1186,
+          "inicio": "P A R T E 3 · L I D E R A Z G O T É C N I C O · 2 0 % / 3 . 2 . 2 · C o n f l i c t o E s "
+        },
+        {
+          "pagina": 45,
+          "caracteres": 331,
+          "inicio": "Estado en la entr ega inicial · av ances A01–A18 en el enlace super ior R espuesta propues"
+        },
+        {
+          "pagina": 46,
+          "caracteres": 476,
+          "inicio": "B O N U S · C L A S I F I C A C I Ó N D E S O P O R T E / O p c i o n a l · I A C l a s i "
+        },
+        {
+          "pagina": 47,
+          "caracteres": 1307,
+          "inicio": "E X A C T I T U D · 1 5 0 F R A S E S S I N T É T I C A S R eglas 62,7 % LLM 100 % R esult"
+        },
+        {
+          "pagina": 48,
+          "caracteres": 380,
+          "inicio": "Estado en la entr ega inicial · av ances A01–A18 en el enlace super ior R esultados de API"
+        }
+      ]
+    },
+    {
+      "area_px": [
+        695,
+        1032
+      ],
+      "capitulos": 2,
+      "paginas_estimadas": 2,
+      "problemas": [],
+      "capitulo_detalle": [
+        {
+          "orden": 1,
+          "id": null,
+          "alto_px": 1027,
+          "paginas": 1,
+          "pagina_inicial": 1
+        },
+        {
+          "orden": 2,
+          "id": null,
+          "alto_px": 617,
+          "paginas": 1,
+          "pagina_inicial": 2
+        }
+      ],
+      "documento": "docs/04_arquitectura.html",
+      "pdf": "docs\\evidencia\\impresion\\04_arquitectura.pdf",
+      "paginas_pdf": 2,
+      "inventario_paginas": [
+        {
+          "pagina": 1,
+          "caracteres": 5074,
+          "inicio": "A r q u i t e c t u r a d e d a t o s d e A n d i n a M a r k e t : p r o p u e s t a a 1 "
+        },
+        {
+          "pagina": 2,
+          "caracteres": 4709,
+          "inicio": "3 . V e r s i o n a r , d e s pl e g a r y m o n i t o r e a r G i t . U n r e p os i t or"
+        }
+      ]
+    }
+  ],
+  "problemas_totales": 0,
+  "estado": "SIN_HALLAZGOS"
+}

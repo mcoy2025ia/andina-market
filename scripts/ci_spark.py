@@ -20,6 +20,7 @@ if __name__=='__main__':
         env=dict(os.environ,ANDINA_TEST_DB=str(db),PYSPARK_PYTHON=sys.executable,
                  PYSPARK_DRIVER_PYTHON=sys.executable,SPARK_LOCAL_IP='127.0.0.1')
         p=subprocess.run([sys.executable,'-m','pytest','tests/test_spark_paridad.py','tests/test_sql_spark.py',
+                          'tests/test_spark_extensiones.py',
                           '-q','-ra',f'--junitxml={out/"pytest.xml"}'],cwd=ROOT,env=env,
                          capture_output=True,text=True,encoding='utf-8')
         (out/'pytest.txt').write_text(p.stdout+p.stderr,encoding='utf-8')

@@ -5,6 +5,8 @@ La recarga de hechos prioriza auditabilidad para el tamaño del caso; no se pres
 como carga de hechos incremental a escala.
 """
 
+from . import etiquetas
+
 SCHEMA = '''CREATE SCHEMA IF NOT EXISTS gold;
 CREATE TABLE IF NOT EXISTS gold.dim_fecha (
 fecha_key INTEGER PRIMARY KEY, fecha DATE UNIQUE, anio SMALLINT, trimestre SMALLINT,
@@ -22,9 +24,12 @@ fecha_key INTEGER, medio_pago VARCHAR, valor BIGINT, es_reembolso BOOLEAN);
 CREATE TABLE IF NOT EXISTS gold.fact_venta_neta_diaria (fecha_key INTEGER, canal_key INTEGER,
 categoria_key INTEGER, num_pedidos INTEGER, venta_bruta BIGINT, descuento BIGINT, venta_neta BIGINT,
 PRIMARY KEY(fecha_key,canal_key,categoria_key));
+-- tipo_caso solo lleva decisiones humanas; la salida de un clasificador vive en
+-- tipo_caso_propuesto. Separarlas evita que una propuesta se lea como validada.
 CREATE TABLE IF NOT EXISTS gold.fact_ticket (id_ticket VARCHAR PRIMARY KEY, cliente_key INTEGER,
 id_pedido VARCHAR, fecha_creacion_key INTEGER, canal_soporte VARCHAR, estado VARCHAR,
-tipo_caso VARCHAR, horas_resolucion DOUBLE);'''
+tipo_caso VARCHAR, tipo_caso_propuesto VARCHAR, clasificacion_estado VARCHAR,
+clasificacion_version VARCHAR, horas_resolucion DOUBLE);'''
 
 
 def refrescar_estrella(con, cfg):
@@ -83,11 +88,20 @@ def refrescar_estrella(con, cfg):
         SELECT f.fecha_key,c.canal_key,k.categoria_key,g.num_pedidos,g.venta_bruta,g.descuento,g.venta_neta
         FROM gold_venta_neta_diaria g JOIN gold.dim_fecha f ON f.fecha=g.fecha
         JOIN gold.dim_canal c ON c.canal=g.canal JOIN gold.dim_categoria k ON k.categoria=g.categoria''')
+    # tipo_caso sale de v_etiqueta_vigente.tipo_revisado, que por construcción solo
+    # contiene decisiones humanas: no hay forma de publicar una propuesta como validada.
+    con.execute(etiquetas.ESQUEMA)
     con.execute('''INSERT INTO gold.fact_ticket
         SELECT t.id_ticket,CASE WHEN s.id_cliente IS NULL THEN 0 ELSE c.cliente_key END,
-        t.id_pedido,f.fecha_key,t.canal_soporte,t.estado,NULL,t.horas_resolucion
+        t.id_pedido,f.fecha_key,t.canal_soporte,t.estado,
+        e.tipo_revisado, e.tipo_propuesto,
+        CASE WHEN e.tipo_revisado IS NOT NULL THEN 'REVISADA'
+             WHEN e.tipo_propuesto IS NOT NULL THEN 'PROPUESTA' END,
+        coalesce(e.version_revisada, e.version_propuesta),
+        t.horas_resolucion
         FROM silver_tickets t LEFT JOIN silver_clientes s ON s.id_cliente=t.id_cliente
         LEFT JOIN gold.dim_cliente c ON c.id_cliente=s.id_cliente
+        LEFT JOIN v_etiqueta_vigente e ON e.texto_hash=t.texto_hash
         JOIN gold.dim_fecha f ON f.fecha=cast(t.fecha_creacion AS DATE)''')
     counts = {}
     for fact, silver in [('fact_pedido','silver_pedidos'),('fact_pago','silver_pagos'),

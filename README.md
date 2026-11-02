@@ -16,8 +16,12 @@ El [estado de implementación](docs/ESTADO_IMPLEMENTACION.md) separa lo implemen
 - Calendario mensual completo, parseo monetario exacto, cliente tardío revalidado y modo de reconciliación de pagos.
 - Cliente LLM con respuestas/reintentos/presupuesto controlados; las pruebas no usan API real.
 - CI local, workflow GitHub separado para núcleo/Spark, empaquetado, vista previa de reporte y ensayo de restauración.
+- Notebook Spark/Delta con las mismas extensiones que el flujo local (soporte, contratos, estrella, incidencias y publicación por puntero de run), con 19 pruebas que lo comparan contra DuckDB fila a fila.
+- Etiquetas de tipo de caso versionadas y con procedencia: solo una decisión humana llega a `fact_ticket.tipo_caso`.
+- Arnés de evaluación con intervalos de confianza, errores críticos y telemetría; transporte del reporte con reintentos y sin duplicados.
+- Impresión de los entregables HTML auditada página a página.
 
-**La ejecución en SQL Server, DAX y Delta cloud permanece pendiente.** El notebook Spark no contiene todavía todas las extensiones de orquestación local. El cargador de SQL Server está preparado, no ejecutado en un servidor.
+**La ejecución en SQL Server, DAX y Delta cloud permanece pendiente.** El notebook ya incluye las extensiones, pero no se ha ejecutado en Fabric ni en Databricks: `MERGE`, `DELETE` y las rutas de plataforma siguen sin correr. El cargador de SQL Server está preparado, no ejecutado en un servidor.
 
 ## Ejecutar sin datos originales
 
@@ -52,11 +56,15 @@ $env:PYTHONPATH = "src/shared"
 python -m andina_etl --raw data/original --db .local/modelo.duckdb --bronze .local/bronze
 python -m andina_etl --raw data/original --db .local/modelo.duckdb --bronze .local/bronze --reconciliar
 python scripts/previsualizar_reporte.py --db .local/modelo.duckdb --dia 2026-09-30
+python scripts/despachar_reporte.py --db .local/modelo.duckdb --dia 2026-09-30
+python scripts/importar_etiquetas.py propuestas --db .local/modelo.duckdb --version reglas-2026-11-01
+python scripts/clasificar_tickets.py reservada --metodo reglas --sintetica
+python scripts/qa_impresion.py --pdf
 python scripts/cargar_modelo_sqlserver.py --db .local/modelo.duckdb
 python scripts/empaquetar.py
 ```
 
-El reporte solo se guarda en disco. El último comando crea `dist/andina-market.zip` usando archivos versionados y un manifiesto. El cargador SQL Server solo muestra el plan salvo que se solicite explícitamente aplicar a un entorno de pruebas.
+El reporte solo se guarda en disco: `despachar_reporte.py` usa por defecto un transporte de carpeta y se niega a enviar correo sin autorización explícita (U07). `importar_etiquetas.py revision` se niega a importar mientras la revisión humana (U05) siga vacía. El último comando crea `dist/andina-market.zip` usando archivos versionados y un manifiesto. El cargador SQL Server solo muestra el plan salvo que se solicite explícitamente aplicar a un entorno de pruebas.
 
 `python scripts/cargar_datos.py --desde-cero` es un comando legado **destructivo sobre las rutas indicadas**; no hace falta para las verificaciones anteriores.
 
@@ -71,16 +79,24 @@ El reporte solo se guarda en disco. El último comando crea `dist/andina-market.
 | 1.5 Optimización | `sqlserver/optimizacion/`, `docs/05_optimizacion.md` |
 | 2 Arquitectura | `docs/04_arquitectura.html` y su PDF; operación en `docs/OPERACION_Y_RECUPERACION.md` |
 | 3 Liderazgo | `docs/06_liderazgo.md`, `src/shared/reporte_ventas.py`, pruebas |
-| Opcional IA | `docs/07_clasificacion_ia.md`, `src/shared/tickets_ia/`, revisión humana preparada |
+| Opcional IA | `docs/07_clasificacion_ia.md`, `src/shared/tickets_ia/`, revisión humana preparada, arnés de muestra reservada |
+| Traslado a Delta | `docs/08_traslado_delta.md`, `src/shared/spark/extensiones_spark.py`, `tests/test_spark_extensiones.py` |
+| Envío del reporte | `docs/09_reporte_envio.md`, `src/shared/reporte_envio.py`, `tests/test_reporte_envio.py` |
 
 ## Presentaciones y guía
 
 - [Resolución punto por pestaña](docs/presentacion_resolucion_prueba.html).
 - [Presentación ejecutiva y diagnóstico](docs/presentacion_entrega.html).
-- [Guion de sustentación](docs/GUION_SUSTENTACION.md).
+- [Guion de sustentación](docs/GUION_SUSTENTACION.md): estructura de los diez minutos.
+- [Simulacro con 70 preguntas y respuestas](docs/11_simulacro_sustentacion.md).
+- [Roadmap de ejecución](docs/12_roadmap_ejecucion.md): qué falta, en qué orden y qué cierra cada cosa. Paso a paso por herramienta en [Databricks](docs/plataforma/databricks.md), [Fabric](docs/plataforma/fabric.md), [Power BI](docs/plataforma/powerbi.md) y [SQL Server](docs/plataforma/sqlserver.md). Versión ampliada, con el porqué de cada mecanismo y glosario: [roadmap](docs/roadmap_detallada.md), [Databricks](docs/plataforma/databricks_detallada.md), [Fabric](docs/plataforma/fabric_detallada.md), [Power BI](docs/plataforma/powerbi_detallada.md), [SQL Server](docs/plataforma/sqlserver_detallada.md).
+- [Storyline del deck para Finanzauto](docs/10_storyline_finanzauto.md): panel de arquitectura, plataforma y FinOps; 24 láminas y 18 de apéndice, con el comportamiento de cada una.
 - [Contratos y decisiones](docs/CONTRATOS_Y_DECISIONES.md).
 - [Operación y recuperación](docs/OPERACION_Y_RECUPERACION.md).
 - [Detalle actualizado del ETL](README_ETL.md).
+- [Traslado de las extensiones a Delta y escenarios para la nube](docs/08_traslado_delta.md).
+- [Configuración del envío del reporte, sin secretos](docs/09_reporte_envio.md).
+- PDF de las presentaciones y auditoría de impresión en `docs/evidencia/impresion/`.
 
 ## Uso de IA generativa
 

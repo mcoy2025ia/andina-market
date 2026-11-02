@@ -1,6 +1,6 @@
 # Pendientes actuales de Andina Market
 
-Actualizado: 1 de noviembre de 2026. Este archivo recoge lo que falta después del bloque A01–A18; sustituye al diagnóstico inicial para planificar el trabajo restante.
+Actualizado: 1 de noviembre de 2026 (segunda revisión del día, tras cerrar IA-R01 a IA-R05). Este archivo recoge lo que falta después del bloque A01–A18; sustituye al diagnóstico inicial para planificar el trabajo restante.
 
 - **Repositorio privado:** https://github.com/mcoy2025ia/andina-market
 - **Estado de las 18 tareas y evidencias:** [ESTADO_IMPLEMENTACION.md](ESTADO_IMPLEMENTACION.md).
@@ -16,18 +16,20 @@ Esto acredita la implementación local y las pruebas indicadas. No acredita desp
 
 ## 2. Lo que podemos avanzar ya con IA
 
-Estas tareas no requieren credenciales de producción. Son trabajo restante o ampliaciones de preparación, no fallos de la CI existente.
+Estas tareas no requieren credenciales de producción. **IA-R01 a IA-R05 están cerradas**; queda IA-R06, que necesita tu participación.
 
-| ID | Pendiente | Entregable / criterio de cierre | Prioridad |
+| ID | Pendiente | Estado | Evidencia / qué queda |
 |---|---|---|---|
-| IA-R01 | Completar la revisión de impresión de las presentaciones HTML | Exportar y revisar todas las páginas; corregir cortes, tablas y bloques largos. El PDF de arquitectura ya fue revisado; las presentaciones completas aún no tienen certificación página a página. | P1 si se entrega PDF |
-| IA-R02 | Preparar el traslado de las extensiones locales al flujo Delta | Diseñar y adaptar soporte, estrella, contratos, incidencias y publicación consistente; pruebas de código y lista de escenarios cloud. La ejecución real se cierra en E04. | P1 si se elige cloud |
-| IA-R03 | Preparar el flujo de incorporación de etiquetas revisadas | Importación versionada, validación de taxonomía/procedencia y asociación a tickets; conservar estados propuesta/revisada. `fact_ticket.tipo_caso` no debe poblarse como validado usando etiquetas no revisadas. | P2 |
-| IA-R04 | Completar el arnés para evaluar una muestra reservada | Métricas por clase, matriz de confusión, intervalos, errores críticos y registro de costo/latencia. Probar con datos sintéticos; el resultado real depende de una muestra nueva y anotación humana. | P2 |
-| IA-R05 | Preparar pruebas de integración del transporte del reporte | Simular éxito, fallo, reintento y duplicado; documentar configuración sin secretos. No realizar envíos reales sin destinatarios y autorización explícita. | P2 |
-| IA-R06 | Ensayar la sustentación contigo | Simulacro de diez minutos, preguntas sobre decisiones y cambio controlado. El guion y el ensayo técnico ya existen; falta practicar contigo y corregir vacíos de comprensión. | P0 entrega |
+| IA-R01 | Revisión de impresión de las presentaciones HTML | **Cerrado** | `scripts/qa_impresion.py` audita las tres páginas y da 0 hallazgos; se corrigieron los cortes de bloque, el encabezado repetido de tablas y una página que quedaba con una sola línea. PDF exportados en `docs/evidencia/impresion/`; inventario de las 102 páginas en `qa_impresion.json`. Pruebas: `tests/test_impresion.py`. |
+| IA-R02 | Traslado de las extensiones locales al flujo Delta | **Cerrado como diseño y código** | `src/shared/spark/extensiones_spark.py` + notebook regenerado (13 celdas). 19 pruebas comparan la estrella completa contra DuckDB fila a fila. Diseño y escenarios en [08_traslado_delta.md](08_traslado_delta.md). **La ejecución real sigue siendo E04.** |
+| IA-R03 | Incorporación de etiquetas revisadas | **Cerrado** | `src/shared/andina_etl/etiquetas.py` y `scripts/importar_etiquetas.py`: importación versionada, validación de taxonomía y procedencia, asociación por hash de texto. `fact_ticket.tipo_caso` solo admite decisiones humanas; la propuesta vive en `tipo_caso_propuesto`. Pruebas: `tests/test_etiquetas.py`. Falta **U05** para que haya algo que importar. |
+| IA-R04 | Arnés para evaluar una muestra reservada | **Cerrado** | `src/shared/tickets_ia/evaluacion.py` y `clasificar_tickets.py reservada`: intervalos de Wilson, matriz de confusión, errores críticos, detección de fugas y telemetría de costo/latencia. Probado con la partición sintética. Falta **U06** para que el resultado signifique algo. |
+| IA-R05 | Transporte del reporte | **Cerrado** | `src/shared/reporte_envio.py` y `scripts/despachar_reporte.py`: éxito, fallo permanente, reintento con espera creciente y omisión de duplicados por hash de contenido. Configuración sin secretos en [09_reporte_envio.md](09_reporte_envio.md). Pruebas: `tests/test_reporte_envio.py`. No envía nada sin **U07**. |
+| IA-R06 | Ensayar la sustentación contigo | **Abierto · P0** | El guion y el ensayo técnico existen. Falta practicarlo contigo y corregir vacíos de comprensión; no puede hacerse sin ti. |
 
-P0: necesario para cerrar la entrega o una afirmación que se haga en ella. P1: integración prioritaria. P2: ampliación operativa/productiva. No es necesario convertir toda la propuesta cloud en producción para presentar honestamente la prueba técnica.
+P0: necesario para cerrar la entrega o una afirmación que se haga en ella. No es necesario convertir toda la propuesta cloud en producción para presentar honestamente la prueba técnica.
+
+Lo que estas cinco tareas **no** cambian: ninguna ejecuta SQL Server, Power BI, Fabric ni Databricks, y ninguna sustituye una decisión tuya. IA-R03, IA-R04 y IA-R05 dejan el mecanismo listo y bloqueado a la espera de U05, U06 y U07 respectivamente: por diseño, se niegan a funcionar sin esas decisiones en lugar de inventarlas.
 
 ## 3. Lo que debes decidir o aportar tú
 
@@ -45,6 +47,8 @@ P0: necesario para cerrar la entrega o una afirmación que se haga en ella. P1: 
 | U10 | Resolver credenciales señaladas, si aplica | Confirmar revocación de cualquier clave real previamente expuesta. La contraseña del enunciado fue redactada; no se presume operativa. No compartir secretos en el chat. | Mantener configuración y evidencias sin secretos. |
 
 ## 4. Trabajo conjunto que depende de un entorno o de tus decisiones
+
+> El plan de ejecución paso a paso, con comandos y resultado esperado para cada tarea, está en [12_roadmap_ejecucion.md](12_roadmap_ejecucion.md).
 
 ### E01 · Modelo estrella en SQL Server — P1
 
@@ -65,10 +69,30 @@ P0: necesario para cerrar la entrega o una afirmación que se haga en ella. P1: 
 - Referencias del caso: enero 2026 COP 948.592.900; septiembre COP 795.114.800; enero–septiembre 2026 COP 7.739.061.400; base comparable 2025 COP 3.891.305.400.
 - Cierre: resultados de motor con contexto de filtro registrado y artefacto del modelo. Tener DAX escrito no equivale a haberlo ejecutado.
 
+### E04b · Compatibilidad del notebook con Databricks serverless — P1
+
+Hallazgo de la revisión técnica del 1 de noviembre de 2026, **abierto y no corregido**.
+
+- El notebook usa `.cache()` en cuatro puntos (celdas de pedidos y pagos). **Databricks
+  serverless no admite `.cache()` ni `.persist()`**, así que hoy el notebook no corre en
+  el modo de cómputo que es el predeterminado para trabajos y pipelines.
+- El resto del código sí cumple: usa API de DataFrame y SQL, rutas `/Volumes/…` en vez
+  de montajes DBFS, nombres de tres partes y ningún `sparkContext`, RDD ni
+  `spark.conf.set` de memoria.
+- Quitar el `.cache()` no basta: en la celda de pedidos sirve de hecho para materializar
+  antes del `MERGE`, y el origen de ese `MERGE` lee la misma tabla que escribe
+  (`silver_pedidos`, vía `hash_negocio`). La corrección correcta es **materializar en una
+  tabla de staging** antes del `MERGE`, lo que además elimina esa autorreferencia.
+- No se corrigió en esta revisión porque es código Delta que no se puede probar sin la
+  plataforma; entra como parte de E04.
+- Cierre: notebook ejecutado en serverless sin bloqueadores, y `performance_target`
+  declarado (`STANDARD` para el lote nocturno).
+
 ### E04 · Delta en Fabric o Databricks — P1/P2
 
 - Spark de reglas y SQL ya está aprobado en CI; esa parte deja de ser pendiente.
-- Falta adaptar/verificar las extensiones de orquestación y ejecutar primera/segunda carga, modificaciones, pagos tardíos, retiradas, MERGE/DELETE, fallos entre tablas y recuperación.
+- **Las extensiones ya están adaptadas y probadas contra Spark real (IA-R02)**: soporte, estrella, contratos, incidencias y publicación consistente. Lo que queda es ejecutarlas en una plataforma.
+- Falta ejecutar primera/segunda carga, modificaciones, pagos tardíos, retiradas, MERGE/DELETE, fallos entre tablas y recuperación. Los doce escenarios, con su resultado esperado y la evidencia a capturar, están en [08_traslado_delta.md](08_traslado_delta.md#4-escenarios-para-e04).
 - Cierre: no duplicación, conciliación y ausencia de publicaciones parciales; evidencia del destino concreto. Validar Fabric no acredita Databricks ni viceversa.
 
 ### E05 · Operación productiva — P2
@@ -87,11 +111,11 @@ P0: necesario para cerrar la entrega o una afirmación que se haga en ella. P1: 
 
 ## 5. Orden recomendado para continuar
 
-1. **Cerrar entrega:** U01/U02, revisar las 34 etiquetas y practicar sustentación. IA-R01 solo si se exige entregar las presentaciones en PDF.
+1. **Cerrar entrega:** U01/U02, revisar las 34 etiquetas (U05) y practicar la sustentación (IA-R06). Los PDF de las presentaciones ya están exportados y revisados página a página.
 2. **Validar extremo a extremo:** habilitar SQL Server/Power BI de prueba; ejecutar E01, E02 y E03.
 3. **Acordar operación:** cerrar contratos U03/U04 y objetivos U07/U08.
-4. **Elegir piloto cloud:** preparar IA-R02 y ejecutar E04 en un solo destino inicialmente.
-5. **Ampliar IA y producción:** muestra independiente, E06 y E05 según prioridad y presupuesto.
+4. **Elegir piloto cloud:** ejecutar E04 en un solo destino, siguiendo la tabla de escenarios de [08_traslado_delta.md](08_traslado_delta.md). El código ya está preparado (IA-R02).
+5. **Ampliar IA y producción:** muestra independiente (U06), E06 y E05 según prioridad y presupuesto.
 
 ## 6. Cuándo podemos declarar cerrado el proyecto
 

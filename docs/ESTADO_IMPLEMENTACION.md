@@ -44,9 +44,23 @@ python scripts/empaquetar.py
 
 La verificación usa un directorio temporal; el recálculo lee originales pero solo guarda resultados agregados. Las evidencias históricas de las presentaciones conservan sus conteos originales. El conteo vigente está en [resultado](evidencia/ejecucion_actual/resultado.json) y [salida pytest](evidencia/ejecucion_actual/pytest.txt).
 
+## Bloque IA-R01 a IA-R05 (segunda revisión del 1 de noviembre de 2026)
+
+Cinco pendientes que no dependían de credenciales de producción. Ninguno ejecuta SQL Server, Power BI, Fabric ni Databricks.
+
+| Tarea | Resultado material | Validación / límite restante |
+|---|---|---|
+| IA-R01 · Impresión | `scripts/qa_impresion.py`: aplica las reglas `@media print` sobre pantalla, mide contra el área de `@page` y lee el texto de cada página del PDF ya impreso. Corregidos los bloques sin `break-inside`, el encabezado repetido de tablas y una página con una sola línea | 0 hallazgos sobre 102 páginas (52 + 48 + 2). El punto exacto de cada salto lo decide el paginador; se revisó por imagen. PDF en `evidencia/impresion/` |
+| IA-R02 · Delta | `src/shared/spark/extensiones_spark.py` y notebook regenerado con soporte, contratos, estrella, incidencias y publicación por puntero de run | 19 pruebas contra PySpark real comparan la estrella completa con DuckDB fila a fila. `MERGE`, `DELETE` y `DESCRIBE HISTORY` **no ejecutados**: es E04 |
+| IA-R03 · Etiquetas | `andina_etl/etiquetas.py` y `scripts/importar_etiquetas.py`: lote versionado, taxonomía, procedencia y asociación por hash de texto | `fact_ticket.tipo_caso` solo admite `REVISADA`; la propuesta va en `tipo_caso_propuesto`. Sin U05 no hay nada que importar y el script lo dice |
+| IA-R04 · Evaluación | `tickets_ia/evaluacion.py` y `clasificar_tickets.py reservada`: intervalos de Wilson, errores críticos, fugas y telemetría de costo/latencia | Probado con partición sintética (reglas: exactitud 0,560; IC 95 % 0,423–0,688 sobre n = 50). No acredita desempeño real: falta U06 |
+| IA-R05 · Reporte | `src/shared/reporte_envio.py` y `scripts/despachar_reporte.py`: duplicados por hash de contenido, reintento solo ante fallo transitorio, registro sin secretos | 14 pruebas con transportes falsos. `TransporteSMTP` **no ejecutado** contra un servidor real: falta U07 |
+
+Queda abierto **IA-R06** (ensayo de la sustentación), que requiere al autor.
+
 ## Estado de los pendientes anteriores que cambió
 
-- **P15:** QA de las nuevas presentaciones realizado en escritorio y móvil; impresión completa no certificada página a página.
+- **P15:** QA de las nuevas presentaciones realizado en escritorio y móvil. **La impresión ya está certificada página a página** (IA-R01): auditoría reproducible con 0 hallazgos e inventario de las 102 páginas de los tres PDF.
 - **P19:** nuevas salidas de pruebas, primera y segunda carga, modelo estrella y recálculo independiente disponibles. Spark se acredita por su job separado, no por la suite local que lo omite.
 - **P20:** APP creció 19,22 % entre junio y septiembre de 2026; CSV agregado disponible.
 - **P21:** TIENDA creció 59,79 % en ese intervalo de 2025 y cayó 51,37 % en 2026; no prueba causalidad ni ausencia de estacionalidad.
@@ -59,9 +73,10 @@ Fecha/forma de entrega; revisión de las 34 etiquetas; contrato de borrados y pr
 
 ## Verificación final del bloque
 
-- Suite local con fuentes del caso: **116 pruebas aprobadas, 2 módulos Spark omitidos** por no tener PySpark local.
-- Spark ejecutado por separado en GitHub Actions: **6 pruebas aprobadas, sin omisiones**, incluyendo precisión monetaria y paridad SQL/reglas con datos sintéticos. Esto no acredita ejecución Delta en Fabric/Databricks.
-- [CI aprobada para el código 28c8338](https://github.com/mcoy2025ia/andina-market/actions/runs/41323664358): jobs local y Spark. [Salida Spark](evidencia/spark_ci/pytest.txt).
+- Suite local con fuentes del caso: **175 pruebas aprobadas, 3 módulos Spark omitidos** por las restricciones de Spark en Windows con Python 3.12.
+- Spark ejecutado aparte con Python 3.11 y Java 17: **24 pruebas aprobadas** (5 de paridad de reglas y 19 de las extensiones Delta, que comparan dimensiones y hechos contra DuckDB fila a fila). `test_sql_spark.py` sigue omitido en Windows por requerir `HADOOP_HOME`; se ejecuta en el job de CI. Nada de esto acredita ejecución Delta en Fabric/Databricks.
+- Carga completa con los datos del caso tras los cambios de esquema: **6.040 / 19.270 / 20.124 / 7.925 y COP 14.177.333.600**, sin variación.
+- [CI aprobada para el código 28c8338](https://github.com/mcoy2025ia/andina-market/actions/runs/41323664358): jobs local y Spark. [Salida Spark](evidencia/spark_ci/pytest.txt). Los cambios de IA-R01 a IA-R05 son posteriores y necesitan una CI nueva.
 - Recálculo independiente: COP 14.177.333.600; segunda carga sin cambios en hechos.
-- Navegador: 13 pestañas y 17 capítulos revisados en escritorio/móvil, sin errores JavaScript ni desbordamientos. PDF de arquitectura: dos páginas inspeccionadas visualmente.
-- Cambios posteriores a esa CI: documentación, evidencias y texto de presentación; no modifican el código ejecutable.
+- Navegador: 13 pestañas y 17 capítulos revisados en escritorio/móvil, sin errores JavaScript ni desbordamientos.
+- Impresión: 102 páginas auditadas sin hallazgos; PDF de arquitectura regenerado tras ajustar su CSS de impresión.

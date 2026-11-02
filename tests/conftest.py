@@ -69,6 +69,27 @@ def datos_base() -> dict[str, list[dict]]:
     }
 
 
+COLS_TICKETS_PRUEBA = ["id_ticket", "id_cliente", "id_pedido", "fecha_creacion", "canal",
+                       "estado", "fecha_cierre", "descripcion"]
+
+
+def tickets_base() -> list[dict]:
+    """Soporte con cada caso sembrado: cierre coherente, cierre anterior a la creación,
+    cerrado sin fecha, abierto, id nulo, id repetido y fecha de creación ilegible."""
+    t = lambda *v: _fila(COLS_TICKETS_PRUEBA, *v)  # noqa: E731
+    return [
+        t("T1", "CL0000001", "P001", "2025-01-10", "CHAT", "CERRADO", "2025-01-11", "Llegó roto"),
+        t("T2", "CL0000001", "P001", "2025-01-10", "CHAT", "CERRADO", "2025-01-09", "Cierre invertido"),
+        t("T3", "CL0000002", "P003", "2025-02-01", "TELEFONO", "CERRADO", None, "Cerrado sin fecha"),
+        t("T4", "CL0000002", "P003", "2025-02-02 09:30:00", "CORREO", "ABIERTO", None, "Sigue abierto"),
+        t("T5", OTRO, None, "2025-03-01", "CHAT", "ABIERTO", None, "Cliente desconocido"),
+        t(None, "CL0000001", "P001", "2025-01-12", "CHAT", "ABIERTO", None, "Sin id"),
+        t("T7", "CL0000001", "P001", "2025-01-13", "CHAT", "ABIERTO", None, "Id repetido"),
+        t("T7", "CL0000001", "P001", "2025-01-14", "CHAT", "ABIERTO", None, "Id repetido otra vez"),
+        t("T9", "CL0000001", "P001", "31/02/2025", "CHAT", "ABIERTO", None, "Fecha imposible"),
+    ]
+
+
 def escribir_csvs(carpeta, datos: dict[str, list[dict]]) -> None:
     carpeta.mkdir(parents=True, exist_ok=True)
     columnas = {"clientes": COLS_CLIENTES, "pedidos": COLS_PEDIDOS, "pagos": COLS_PAGOS}
