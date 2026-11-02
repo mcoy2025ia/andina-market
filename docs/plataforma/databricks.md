@@ -1,5 +1,8 @@
 # Databricks · paso a paso
 
+> Versión con más profundidad conceptual (por qué funciona así cada mecanismo, más
+> casos de error, glosario y preguntas frecuentes): [databricks_detallada.md](databricks_detallada.md).
+
 **Qué vas a lograr aquí:** ejecutar el ETL completo en Databricks con Delta, correr los
 doce escenarios de validación y dejarlo desplegado como job. Eso cierra **E04**, el
 bloqueador **E04b** y parte de **E05**.

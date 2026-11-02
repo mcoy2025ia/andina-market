@@ -1,5 +1,9 @@
 # Microsoft Fabric · paso a paso
 
+> Versión con más profundidad conceptual (OneLake, Direct Lake, por qué la prueba de
+> transacción de FAB-08 importa, glosario y preguntas frecuentes):
+> [fabric_detallada.md](fabric_detallada.md).
+
 **Qué vas a lograr aquí:** ejecutar el mismo ETL en un Lakehouse de Fabric, correr los
 doce escenarios, **verificar si Warehouse soporta transacción multi-tabla** —la prueba
 que cambia un argumento de arquitectura— y dejar listo el modelo semántico para

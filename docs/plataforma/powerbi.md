@@ -1,5 +1,9 @@
 # Power BI y DAX · paso a paso
 
+> Versión con más profundidad conceptual (contexto de fila/filtro en DAX, por qué
+> `tiene_datos` es obligatorio, más pruebas de borde, glosario y preguntas frecuentes):
+> [powerbi_detallada.md](powerbi_detallada.md).
+
 **Qué vas a lograr aquí:** instalar las cinco medidas DAX en un motor real y
 verificarlas contra siete valores calculados en SQL. Cierra **E03**.
 

@@ -1,5 +1,9 @@
 # SQL Server · paso a paso
 
+> Versión con más profundidad conceptual (qué es un plan de ejecución, por qué el
+> `CAST` fuerza un *scan*, `IDENTITY_INSERT`, glosario y preguntas frecuentes):
+> [sqlserver_detallada.md](sqlserver_detallada.md).
+
 **Qué vas a lograr aquí:** ejecutar por primera vez el DDL y el T-SQL del proyecto en un
 motor SQL Server real, cargar el modelo estrella y **medir la optimización con planes de
 ejecución**. Cierra **E01** y **E02**.

@@ -89,7 +89,7 @@ El reporte solo se guarda en disco: `despachar_reporte.py` usa por defecto un tr
 - [Presentación ejecutiva y diagnóstico](docs/presentacion_entrega.html).
 - [Guion de sustentación](docs/GUION_SUSTENTACION.md): estructura de los diez minutos.
 - [Simulacro con 70 preguntas y respuestas](docs/11_simulacro_sustentacion.md).
-- [Roadmap de ejecución](docs/12_roadmap_ejecucion.md): qué falta, en qué orden y qué cierra cada cosa. Paso a paso por herramienta en [Databricks](docs/plataforma/databricks.md), [Fabric](docs/plataforma/fabric.md), [Power BI](docs/plataforma/powerbi.md) y [SQL Server](docs/plataforma/sqlserver.md).
+- [Roadmap de ejecución](docs/12_roadmap_ejecucion.md): qué falta, en qué orden y qué cierra cada cosa. Paso a paso por herramienta en [Databricks](docs/plataforma/databricks.md), [Fabric](docs/plataforma/fabric.md), [Power BI](docs/plataforma/powerbi.md) y [SQL Server](docs/plataforma/sqlserver.md). Versión ampliada, con el porqué de cada mecanismo y glosario: [roadmap](docs/roadmap_detallada.md), [Databricks](docs/plataforma/databricks_detallada.md), [Fabric](docs/plataforma/fabric_detallada.md), [Power BI](docs/plataforma/powerbi_detallada.md), [SQL Server](docs/plataforma/sqlserver_detallada.md).
 - [Storyline del deck para Finanzauto](docs/10_storyline_finanzauto.md): panel de arquitectura, plataforma y FinOps; 24 láminas y 18 de apéndice, con el comportamiento de cada una.
 - [Contratos y decisiones](docs/CONTRATOS_Y_DECISIONES.md).
 - [Operación y recuperación](docs/OPERACION_Y_RECUPERACION.md).

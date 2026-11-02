@@ -1,5 +1,10 @@
 # Roadmap de ejecución
 
+> Versión con más profundidad conceptual (por qué el orden recomendado es ese, el
+> razonamiento de costo detrás de cada palanca, dependencias explicadas y qué hacer si
+> el tiempo disponible no encaja en los tres escenarios de abajo):
+> [roadmap_detallada.md](roadmap_detallada.md).
+
 **Corte:** 1 de noviembre de 2026. Este es el documento maestro: **qué falta, en qué
 orden y qué cierra cada cosa**. El detalle paso a paso vive en un documento por
 herramienta.

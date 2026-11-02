@@ -37,6 +37,15 @@ python scripts/qa_impresion.py --pdf          # auditoría de impresión de los 
 python scripts/importar_etiquetas.py propuestas --db data/warehouse.duckdb --version reglas-AAAA-MM-DD
 python scripts/despachar_reporte.py --db data/warehouse.duckdb --dia 2026-09-30   # transporte de carpeta; no envía correo
 python scripts/empaquetar.py                  # dist/andina-market.zip con manifiesto SHA-256
+
+# Otros scripts de la carpeta, menos frecuentes pero parte del flujo documentado:
+python scripts/previsualizar_reporte.py --db data/warehouse.duckdb --dia 2026-09-30   # vista previa HTML idempotente en disco, sin correo ni API
+python scripts/cargar_modelo_sqlserver.py --db data/warehouse.duckdb   # por defecto solo muestra el plan; --aplicar --entorno-pruebas carga Gold a SQL Server de pruebas
+python scripts/reconciliar_fuentes.py --raw data/original --db data/warehouse.duckdb   # diagnóstico de altas/bajas entre snapshots; nunca aplica bajas
+python scripts/respaldo_local.py respaldar|restaurar <origen> <destino>   # respaldo/restauración en frío bajo el lock de la aplicación
+python scripts/revision_etiquetas.py plantilla|auditar <archivo>   # plantilla y auditoría de anotación humana de tickets, sin generar decisiones
+python scripts/generar_csv_sinteticos.py --out .local/sinteticos   # CSV con cada error sembrado, para validar plataforma sin datos personales
+python scripts/ensayar_cambio.py              # ensayo aislado de un canal nuevo sobre copia temporal, sin tocar fuentes ni la base del caso
 ```
 
 Ejecutar Spark localmente en Windows: el venv `.venv/` es Python 3.11 y tiene PySpark; `finanzauto/` es 3.12 y no sirve para Spark. Las pruebas que escriben tablas (`test_sql_spark.py`) siguen omitiéndose sin `HADOOP_HOME`.
